@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Use Case: Forwarding Registration</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+	</head>
+	<body>
+		<h1>Παράδειγμα Περίπτωσης Χρήσης: Καταχώριση Προώθησης</h1>
+		<ul>
+			<li>
+				<p>
+					<strong>Δράστες:</strong> προωθών, αποδέκτης, client προωθόντα, forwarding server, βάση δεδομένων
+				</p>
+			</li>
+			<li>
+				<p>
+					<strong>Προαπαιτούμενα (Preconditions):</strong>
+				</p>
+				<ul>
+					<li>Ο προωθών είναι ενεργός.</li>
+					<li>Ο forwarding server είναι ενεργός.</li>
+				</ul>
+			</li>
+			<li>
+				<p>
+					<strong>Βασική Πορεία Χρήσης:</strong>
+				</p>
+				<ol>
+					<li>O προωθών πληκτρολογεί το όνομα χρήστη του αποδέκτη και επιλεγει τη προώθηση.</li>
+					<li>Ο forwarding server λαμβάνει το αίτημα για προώθηση από τον client του προωθόντα.</li>
+					<li>Ο forwarding server αναζητεί στη βάση δεδομένων χρήστη με το όνομα χρήστη του αποδέκτη.</li>
+					<li>[TODO]</li>
+					<li>Ο forwarding server ενημερώνει τη βάση δεδομένων, θέτοντας τον αποδέκτη ως διεύθυνση προώθησης του προωθόντα.</li>
+					<li>Ο forwarding server αποστέλει επιβεβαίωση επιτυχούς προώθησης στον client του προωθόντα.</li>
+					<li>Ο client του προωθόντα εμφανίζει κατάλληλο μύνημα επιτυχίας.</li>
+				</ol>
+			<li>
+				<p>
+					<strong>Εναλλακτικές πορείες χρήσης:</strong>
+				</p>
+				<ul>
+					<li>
+						<p>
+							<strong>Εάν δεν υπάρχει χρήστης με το όνομα χρήστη του αποδέκτη στη βάση δεδομένων:</strong>
+						</p>
+						<ul>
+							<li>Ο forwarding server παράγει μύνημα αποτυχίας προώθησης.</li>
+							<li>Ο forwarding server αποστέλει το μήνυμα στον client του προωθόντα.</li>
+							<li>Ο client του προωθόντα εμφανίζει το σχετικό μύνημα.</li>
+						</ul>
+					</li>
+
+				</ul>
+			</li>
+		</ul>
+	</body>
+</html>

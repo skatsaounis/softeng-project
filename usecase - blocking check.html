@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Use Case 2</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+	</head>
+	<body>
+		<h1>Παράδειγμα Περίπτωσης Χρήσης: Έλεγχος Φραγής</h1>
+		<ul>
+			<li>
+				<p>
+					<strong>Δράστες:</strong> blocking server, proxy server, βάση δεδομένων proxy server
+				</p>
+			</li>
+			<li>
+				<p>
+					<strong>Προαπαιτούμενα (Preconditions):</strong>
+				</p>
+				<ul>
+					<li>Ο proxy server είναι ενεργός.</li>
+					<li>Ο blocking server είναι ενεργός.</li>
+					<li>Ο proxy server ελέγχει για φραγή κλήσεων.</li>
+				</ul>
+			</li>
+			<li>
+				<p>
+					<strong>Βασική Πορεία Χρήσης:</strong>
+				</p>
+				<ol>
+					<li>Ο proxy server ενημερώνει τον blocking server να πραγματοποιήσει έλεγχο για φραγή.</li>
+					<li>Ο blocking server επιβεβαιώνει ότι ο καλών βρίσκεται στις φραγμένες επαφές του καλούμενου, αναζητώντας τη βάση δεδομένων.</li>
+					<li>Ο blocking server ενημερώνει τον proxy server ότι ο καλούμενος έχει ενεργοποιήσει φραγή κλήσεων για τον καλούντα.</li>
+				</ol>
+			<li>
+				<p>
+					<strong>Εναλλακτικές πορείες χρήσης:</strong>
+				</p>
+				<ul>
+					<li>
+						<p>
+							<strong>Εάν ο καλών δεν βρίσκεται στις φραγμένες επαφές του καλούμενου:</strong>
+						</p>
+						<ul>
+							<li>Ο blocking server παράγει σήμα επιτρεπτής κλήσης.</li>
+							<li>Ο blocking server αποστέλει το μήνυμα στον proxy server.</li>
+						</ul>
+					</li>
+
+				</ul>
+			</li>
+		</ul>
+	</body>
+</html>

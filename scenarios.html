@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Scenarios</title>
+		<style type="text/css">
+			p{
+				font-size: 12px;
+			}
+			.test{
+				float: left;
+				width: 300px;
+				height: 180px;
+				margin: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="test">
+			<h3>Standard call</h3>
+
+			<p>User B is online.<br/>
+			User A attempts to call user B.<br/>
+			Call succeeds; Users A and B communicate with each other.
+			</p>
+		</div>
+
+		<div class="test">
+			<h3>Standard call - Busy Callee</h3>
+
+			<p>User B is online and communicates with user C.<br/>
+			User A attempts to call user B.<br/>
+			Call fails; User A is notified that user B is not available - busy.
+			</p>
+		</div>
+
+		<div class="test">
+			<h3>Standard call - Callee rejects call</h3>
+
+			<p>User B is online.<br/>
+			User A attempts to call user B.<br/>
+			User B rejects the call.
+			Call fails; User A is notified that user B is not available - busy.
+			</p>
+		</div>
+
+		<div class="test">
+			<h3>Call to offline user</h3>
+
+			<p>User B is offline.
+			User A attempts to call user B.<br/>
+			Call fails; User A is notified that user B is offline.
+			</p>
+		</div>
+
+		<div class="test">
+			<h3>Self Call</h3>
+			<p>User A calls themselves.</br>
+			Call fails; User A is notified that user A is not available - busy.
+			</p>
+		</div>
+
+		<div class="test">
+			<h3>Blocking scenario</h3>
+
+			<p>User B has blocked user A. User B is either online or offline.<br/>
+			User A attempts to call user B.<br/>
+			Call fails; User A is notified that user B is not available - busy.
+			</p>
+		</div>
+		
+		<div class="test">
+			<h3>Blocking Registration scenario</h3>
+
+			<p>User A either has or has not registered blocking from address B.<br/>
+			User A attempts to register blocking from address B.<br/>
+			Blocking succeeds; From now on, user A has registered blocking from address B.
+			</p>
+		</div>
+
+		<div class="test">
+			<h3>Blocker calls blocked user</h3>
+
+			<p>User A has blocked user B. User B is online.<br/>
+			User A attempts to call user B.<br/>
+			Call succeeds; Users A and B communicate with each other.
+			</p>
+		</div>
+		
+		<div class="test">
+			<h3>Forwarding scenario</h3>
+
+			<p>User B has registered forwarding to address C.<br/>
+			User C is online. User B is either online or offline.<br/>
+			User A attempts to call user B.<br/>
+			Falls to one of <strong>Standard Call</strong> Scenarios.
+			</p>
+		</div>
+		
+		<div class="test">
+			<h3>Forwarding Registration scenario</h3>
+
+			<p>User A has not registered forwarding.<br/>
+			User A attempts to register forwarding to address B.<br/>
+			Forwarding succeeds; From now on, user A has registered forwarding to address B.
+			</p>
+		</div>
+		
+		<div class="test">
+			<h3>Forwarding Registration scenario - ReForwarding</h3>
+
+			<p>User A has registered forwarding to address B.<br/>
+			User A attempts to register forwarding to address C too.<br/>
+			Forwarding succeeds; From now on, user A has registered forwarding to address C.
+			</p>
+		</div>
+
+		<div class="test">
+			<h3>Forwarding Registration, Chain scenario - forwarding cycle</h3>
+			<p>User A has registered forwarding to address B.<br/>
+			User B has registered forwarding to address C.<br/>
+			User C has registered forwarding to address D.<br/>
+			User D attempts to register forwarding to address A, B or C.<br/>
+			Forwarding fails; User D is notified that forwarding cannot succeed due to forwarding cycle.
+			</p>
+		</div>
+
+		<div class="test">
+			<h3>Call to offline forwarded address</h3>
+
+			<p>User B has registered forwarding to address C.<br/>
+			User C is offline. User B is either online or offline.<br/>
+			User A attempts to call user B.<br/>
+			Call fails; User A is notified that user B is offline.
+			</p>
+		</div>
+
+		<div class="test">
+			<h3>Forwarding Scenario - forwardee blocks caller</h3>
+
+			<p>User B has registered forwarding to address C.<br/>
+			User C has registered forwarding to address D.<br/>
+			User D has registered forwarding to address E.<br/>
+			User A attempts to call User B.<br/>
+			Someone from Users C, D or E blocks User A.<br/>
+			Call fails; User A is notified that user B is not available - busy.
+			</p>
+		</div>
+
+		<div class="test">
+			<h3>Forwarding Scenario - forwarder blocks caller</h3>
+
+			<p>User B has registered forwarding to address C.<br/>
+			User A attempts to call User B.<br/>
+			User B has blocked User A.<br/>
+			Call fails; User A is notified that user B is not available - busy.
+			</p>
+		</div>
+
+		<div class="test">
+			<h3>Forwarding Scenario - forwardee blocks forwarder</h3>
+			<p>User A has registered forwarding to address B.<br/>
+			User B has registered forwarding to address C.<br/>
+			User C has registered forwarding to address D.<br/>
+			User E attempts to call D.<br/>
+			Someone from forwardees blocks someone amongst previous forwarders.<br/>
+			Call fails; User E is notified that user D is not available - busy.
+			</p>
+		</div>
+
+		<div class="test">
+			<h3>Call to Forwarding Chain</h3>
+			<p>User A has registered forwarding to address B.<br/>
+			User B has registered forwarding to address C.<br/>
+			User C has registered forwarding to address D.<br/>
+			User D attempts to call A, B or C.<br/>
+			Falls to Self call Scenario.
+			</p>
+		</div>
+
+	</body>
+</html>
