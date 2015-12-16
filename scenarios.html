@@ -12,10 +12,14 @@
 				height: 180px;
 				margin: 10px;
 			}
+
+			.green{
+				color: green;
+			}
 		</style>
 	</head>
 	<body>
-		<div class="test">
+		<div class="test green">
 			<h3>Standard call</h3>
 
 			<p>User B is online.<br/>
@@ -24,7 +28,7 @@
 			</p>
 		</div>
 
-		<div class="test">
+		<div class="test green">
 			<h3>Standard call - Busy Callee</h3>
 
 			<p>User B is online and communicates with user C.<br/>
@@ -33,7 +37,7 @@
 			</p>
 		</div>
 
-		<div class="test">
+		<div class="test green">
 			<h3>Standard call - Callee rejects call</h3>
 
 			<p>User B is online.<br/>
@@ -43,7 +47,7 @@
 			</p>
 		</div>
 
-		<div class="test">
+		<div class="test green">
 			<h3>Call to offline user</h3>
 
 			<p>User B is offline.
@@ -52,14 +56,14 @@
 			</p>
 		</div>
 
-		<div class="test">
+		<div class="test green">
 			<h3>Self Call</h3>
 			<p>User A calls themselves.</br>
 			Call fails; User A is notified that user A is not available - busy.
 			</p>
 		</div>
 
-		<div class="test">
+		<div class="test green">
 			<h3>Blocking scenario</h3>
 
 			<p>User B has blocked user A. User B is either online or offline.<br/>
@@ -68,7 +72,7 @@
 			</p>
 		</div>
 		
-		<div class="test">
+		<div class="test green">
 			<h3>Blocking Registration scenario</h3>
 
 			<p>User A either has or has not registered blocking from address B.<br/>
@@ -77,7 +81,7 @@
 			</p>
 		</div>
 
-		<div class="test">
+		<div class="test green">
 			<h3>Blocking Removal scenario</h3>
 
 			<p>User A either has or has not registered blocking from address B.<br/>
@@ -86,7 +90,7 @@
 			</p>
 		</div>
 
-		<div class="test">
+		<div class="test green">
 			<h3>Blocker calls blocked user</h3>
 
 			<p>User A has blocked user B. User B is online.<br/>
@@ -133,6 +137,14 @@
 			</p>
 		</div>
 
+		<div class="test green">
+			<h3>Forwarding Removal scenario</h3>
+
+			<p>User A attempts to remove forwarding.<br/>
+			Forwarding removal succeeds; From now on, user A does not forward calls.
+			</p>
+		</div>
+
 		<div class="test">
 			<h3>Call to offline forwarded address</h3>
 
@@ -155,7 +167,7 @@
 			</p>
 		</div>
 
-		<div class="test">
+		<div class="test green">
 			<h3>Forwarding Scenario - forwarder blocks caller</h3>
 
 			<p>User B has registered forwarding to address C.<br/>

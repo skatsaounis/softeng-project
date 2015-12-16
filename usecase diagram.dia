@@ -194,7 +194,7 @@
         <dia:point val="-8.84388,7.27853"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="-10.7751,4.52853;-6.91263,10.0285"/>
+        <dia:rectangle val="-11.9314,4.52853;-5.73769,10.0285"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -220,7 +220,7 @@
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#Καλούμενος#</dia:string>
+            <dia:string>#Τελικός Αποδέκτης#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
