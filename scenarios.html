@@ -99,13 +99,13 @@
 			</p>
 		</div>
 		
-		<div class="test">
+		<div class="test green">
 			<h3>Forwarding scenario</h3>
 
 			<p>User B has registered forwarding to address C.<br/>
-			User C is online. User B is either online or offline.<br/>
+			Users B or C are either online or offline.<br/>
 			User A attempts to call user B.<br/>
-			Falls to one of <strong>Standard Call</strong> Scenarios.
+			Falls to one of <strong>Standard Call</strong> Scenarios amongst users A and C.
 			</p>
 		</div>
 		
@@ -145,17 +145,7 @@
 			</p>
 		</div>
 
-		<div class="test">
-			<h3>Call to offline forwarded address</h3>
-
-			<p>User B has registered forwarding to address C.<br/>
-			User C is offline. User B is either online or offline.<br/>
-			User A attempts to call user B.<br/>
-			Call fails; User A is notified that user B is offline.
-			</p>
-		</div>
-
-		<div class="test">
+		<div class="test green">
 			<h3>Forwarding Scenario - forwardee blocks caller</h3>
 
 			<p>User B has registered forwarding to address C.<br/>
@@ -177,7 +167,7 @@
 			</p>
 		</div>
 
-		<div class="test">
+		<div class="test green">
 			<h3>Forwarding Scenario - forwardee blocks forwarder</h3>
 			<p>User A has registered forwarding to address B.<br/>
 			User B has registered forwarding to address C.<br/>
@@ -188,7 +178,7 @@
 			</p>
 		</div>
 
-		<div class="test">
+		<div class="test green">
 			<h3>Call to Forwarding Chain</h3>
 			<p>User A has registered forwarding to address B.<br/>
 			User B has registered forwarding to address C.<br/>
