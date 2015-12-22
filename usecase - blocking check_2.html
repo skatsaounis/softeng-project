@@ -20,6 +20,7 @@
 					<li>Ο forwarding server είναι ενεργός.</li>
 					<li>Ο blocking server είναι ενεργός.</li>
 					<li>Ο forwarding server ελέγχει για φραγή κλήσεων.</li>
+					<li>Ο forwarding server αποστέλει στον blocking server την αλυσίδα forwarding και το όνομα χρήστη του καλούντα.</li>
 				</ul>
 			</li>
 			<li>
@@ -28,8 +29,9 @@
 				</p>
 				<ol>
 					<li>Ο forwarding server ενημερώνει τον blocking server να πραγματοποιήσει έλεγχο για φραγή.</li>
-					<li>Ο blocking server επιβεβαιώνει ότι ο καλών βρίσκεται στις φραγμένες επαφές του καλούμενου, αναζητώντας τη βάση δεδομένων.</li>
-					<li>Ο blocking server ενημερώνει τον forwarding server ότι ο καλούμενος έχει ενεργοποιήσει φραγή κλήσεων για τον καλούντα.</li>
+					<li>Ο blocking server επιβεβαιώνει ότι ο καλών δεν φράσσεται από κάποιον ενδιάμεσο χρήστη της αλυσίδας forwarding, αναζητώντας τη βάση δεδομένων.</li>
+					<li>Ο blocking server επιβεβαιώνει ότι κανείς από τους ενδιάμεσους χρήστες της αλυσίδας forwarding δεν φράσσει κάποιον από τους προηγούμενούς του.</li>
+					<li>Ο blocking server αποστέλει μήνυμα επιτρεπτής κλήσης στον forwarding server.</li>
 				</ol>
 			<li>
 				<p>
@@ -38,13 +40,20 @@
 				<ul>
 					<li>
 						<p>
-							<strong>Εάν ο καλών δεν βρίσκεται στις φραγμένες επαφές του καλούμενου:</strong>
+							<strong>Εάν ο καλών φράσσεται από κάποιον ενδιάμεσο χρήστη της αλυσίδας forwarding:</strong>
 						</p>
 						<ul>
-							<li>Ο blocking server αποστέλει μήνυμα επιτρεπτής κλήσης στον forwarding server.</li>
+							<li>Ο blocking server αποστέλει μήνυμα φραγής στον forwarding server.</li>
 						</ul>
 					</li>
-
+					<li>
+						<p>
+							<strong>Εάν κάποιος από τους ενδιάμεσους χρήστες της αλυσίδας forwarding φράσσει κάποιον από τους προηγούμενούς του:</strong>
+						</p>
+						<ul>
+							<li>Ο blocking server αποστέλει μήνυμα φραγής στον forwarding server.</li>
+						</ul>
+					</li>
 				</ul>
 			</li>
 		</ul>
