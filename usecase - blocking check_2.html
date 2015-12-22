@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Use Case: Blocking Check</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+	</head>
+	<body>
+		<h1>Παράδειγμα Περίπτωσης Χρήσης: Έλεγχος Φραγής</h1>
+		<ul>
+			<li>
+				<p>
+					<strong>Δράστες:</strong> blocking server, forwarding server, βάση δεδομένων
+				</p>
+			</li>
+			<li>
+				<p>
+					<strong>Προαπαιτούμενα (Preconditions):</strong>
+				</p>
+				<ul>
+					<li>Ο forwarding server είναι ενεργός.</li>
+					<li>Ο blocking server είναι ενεργός.</li>
+					<li>Ο forwarding server ελέγχει για φραγή κλήσεων.</li>
+				</ul>
+			</li>
+			<li>
+				<p>
+					<strong>Βασική Πορεία Χρήσης:</strong>
+				</p>
+				<ol>
+					<li>Ο forwarding server ενημερώνει τον blocking server να πραγματοποιήσει έλεγχο για φραγή.</li>
+					<li>Ο blocking server επιβεβαιώνει ότι ο καλών βρίσκεται στις φραγμένες επαφές του καλούμενου, αναζητώντας τη βάση δεδομένων.</li>
+					<li>Ο blocking server ενημερώνει τον forwarding server ότι ο καλούμενος έχει ενεργοποιήσει φραγή κλήσεων για τον καλούντα.</li>
+				</ol>
+			<li>
+				<p>
+					<strong>Εναλλακτικές πορείες χρήσης:</strong>
+				</p>
+				<ul>
+					<li>
+						<p>
+							<strong>Εάν ο καλών δεν βρίσκεται στις φραγμένες επαφές του καλούμενου:</strong>
+						</p>
+						<ul>
+							<li>Ο blocking server αποστέλει μήνυμα επιτρεπτής κλήσης στον forwarding server.</li>
+						</ul>
+					</li>
+
+				</ul>
+			</li>
+		</ul>
+	</body>
+</html>
