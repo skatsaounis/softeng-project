@@ -390,7 +390,7 @@
         <dia:point val="25.22,10.94"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="25.22,10.3264;33.3736,11.1272"/>
+        <dia:rectangle val="25.22,10.345;33.355,11.09"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -582,14 +582,14 @@
         <dia:point val="9.32,22.14"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="9.32,21.545;26.7775,23.89"/>
+        <dia:rectangle val="9.32,21.5264;33.4686,23.9273"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
             <dia:string>#3: dst_exists = search_user(dst): boolean
-4: block_exists = search_is_blocking(src, dst): boolean
-5: [block_exists == false] set_block(src, dst)#</dia:string>
+4.[dst_exists == true]: block_exists = search_is_blocking(src, dst): boolean
+5.[block_exists == false]: set_block(src, dst)#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -647,7 +647,7 @@
         <dia:point val="8.45,4.2"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="8.45,3.58638;16.6036,4.38725"/>
+        <dia:rectangle val="8.45,3.605;16.585,4.35"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -710,13 +710,13 @@
         <dia:point val="7.245,8.19"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="7.245,7.57637;21.3511,9.17725"/>
+        <dia:rectangle val="7.245,7.57637;21.7036,9.17725"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#7: inform success
-5: [dst_exists == false] inform no such user#</dia:string>
+            <dia:string>#7: inform_success
+5.[dst_exists == false]: inform_no_such_user#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -744,13 +744,13 @@
         <dia:point val="21.945,11.19"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="7.8575,10.5764;21.9636,12.1773"/>
+        <dia:rectangle val="7.505,10.5764;21.9636,12.1772"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#6: inform success
-4: [dst_exists == false] inform no such user#</dia:string>
+            <dia:string>#6: inform_success
+4.[dst_exists == false]: inform_no_such_user#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
