@@ -390,7 +390,7 @@
         <dia:point val="27.07,10.89"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="27.07,10.2764;40.3586,12.6773"/>
+        <dia:rectangle val="27.07,10.295;40.34,12.64"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -701,13 +701,13 @@
         <dia:point val="25.01,-1.06"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="25.01,-1.655;41.3675,0.69"/>
+        <dia:rectangle val="25.01,-1.67362;41.3861,0.72725"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
             <dia:string>#2: fsc = is_self_call(src,dst): boolean
-4: fbk = is_blocking(src,dst): boolean
+4: fbk = blocking_check(src,dst): boolean
 5: target = forwarding_analysis(src,dst): username#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
@@ -796,10 +796,10 @@
     </dia:object>
     <dia:object type="Standard - Text" version="1" id="O17">
       <dia:attribute name="obj_pos">
-        <dia:point val="7.595,8.1775"/>
+        <dia:point val="7.645,8.1775"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="7.595,7.56388;22.0536,13.9648"/>
+        <dia:rectangle val="7.645,7.56388;22.1036,13.9648"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -809,8 +809,8 @@
 5.[fbk == true]: inform_busy
 6.[target == None]: inform_busy
 7.[onl == false]: inform_offline
-8.[avail == false]: inform_not_available
-9.[accepted == false]: inform_not_available
+8.[avail == false]: inform_busy
+9.[accepted == false]: inform_busy
 9.[accepted == true]: connect(target)#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
@@ -820,7 +820,7 @@
             <dia:real val="0.80000000000000004"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="7.595,8.1775"/>
+            <dia:point val="7.645,8.1775"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000"/>

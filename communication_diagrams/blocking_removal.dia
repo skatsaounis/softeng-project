@@ -650,7 +650,7 @@
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#3: dst_exists = search_blocked_user(dst): boolean
+            <dia:string>#3: dst_exists = search_user(dst): boolean
 4.[dst_exists == true]: block_exists = search_is_blocking(src, dst): boolean
 5.[block_exists == true]: remove_block(src, dst)#</dia:string>
           </dia:attribute>
@@ -715,7 +715,7 @@
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#4.[dst_exists == false]: inform no such user blocked
+            <dia:string>#4.[dst_exists == false]: inform no such user
 5.[block_exists == false]: inform successful block removal
 6.[block_exists == true]: inform successful block removal
 #</dia:string>
@@ -781,7 +781,7 @@
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#5.[dst_exists == false]: inform no such user blocked
+            <dia:string>#5.[dst_exists == false]: inform no such user
 6.[block_exists == false]: inform successful block removal
 7.[block_exists == true]: inform successful block removal#</dia:string>
           </dia:attribute>

@@ -530,16 +530,16 @@
     </dia:object>
     <dia:object type="Standard - Text" version="1" id="O10">
       <dia:attribute name="obj_pos">
-        <dia:point val="25.1101,2.94"/>
+        <dia:point val="24.4101,2.19"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="25.1101,2.345;46.4676,3.89"/>
+        <dia:rectangle val="24.4101,1.595;44.7901,3.14"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#3: blocking_exists = blocking_check(forwarding_chain): boolean
-4.[blocking exists == false]: self_call = self_call(src, dst): boolean #</dia:string>
+            <dia:string>#3: blocking_exists = blocking_check(caller, fwd_chain): boolean
+4.[blocking exists == false]: is_self_call(src, dst): boolean #</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -548,7 +548,7 @@
             <dia:real val="0.80000000000000004"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="25.1101,2.94"/>
+            <dia:point val="24.4101,2.19"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000"/>
@@ -564,17 +564,17 @@
     </dia:object>
     <dia:object type="UML - Message" version="0" id="O11">
       <dia:attribute name="obj_pos">
-        <dia:point val="19.0001,6.925"/>
+        <dia:point val="25.25,3.5375"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="9.0001,6.525;19.0501,7.625"/>
+        <dia:rectangle val="25.1991,3.18663;27.9575,4.2625"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="conn_endpoints">
-        <dia:point val="19.0001,6.925"/>
-        <dia:point val="9.0501,6.925"/>
+        <dia:point val="25.25,3.5375"/>
+        <dia:point val="27.9,3.5875"/>
       </dia:attribute>
       <dia:attribute name="text_colour">
         <dia:color val="#000000"/>
@@ -589,42 +589,7 @@
         <dia:enum val="0"/>
       </dia:attribute>
       <dia:attribute name="text_pos">
-        <dia:point val="14.0251,7.425"/>
-      </dia:attribute>
-    </dia:object>
-    <dia:object type="Standard - Text" version="1" id="O12">
-      <dia:attribute name="obj_pos">
-        <dia:point val="7.3101,8.29"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="7.3101,7.695;20.8451,10.04"/>
-      </dia:attribute>
-      <dia:attribute name="text">
-        <dia:composite type="text">
-          <dia:attribute name="string">
-            <dia:string>#4.[blocking_exists == true]: inform_busy
-5.[self_call == true]: inform_busy
-5.[self_call == false]: inform final dst user#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="font">
-            <dia:font family="sans" style="0" name="Helvetica"/>
-          </dia:attribute>
-          <dia:attribute name="height">
-            <dia:real val="0.80000000000000004"/>
-          </dia:attribute>
-          <dia:attribute name="pos">
-            <dia:point val="7.3101,8.29"/>
-          </dia:attribute>
-          <dia:attribute name="color">
-            <dia:color val="#000000"/>
-          </dia:attribute>
-          <dia:attribute name="alignment">
-            <dia:enum val="0"/>
-          </dia:attribute>
-        </dia:composite>
-      </dia:attribute>
-      <dia:attribute name="valign">
-        <dia:enum val="3"/>
+        <dia:point val="26.575,4.0625"/>
       </dia:attribute>
     </dia:object>
   </dia:layer>

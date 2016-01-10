@@ -472,12 +472,12 @@
         <dia:point val="10.97,4.34"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="10.97,3.745;21.1375,4.49"/>
+        <dia:rectangle val="10.97,3.72638;25.5486,4.52725"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#1: is_blocking(src, dst): boolean#</dia:string>
+            <dia:string>#1: blocking_check(caller, fwd_chain): boolean#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -505,13 +505,13 @@
         <dia:point val="30.32,10.79"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="30.32,10.195;48.185,11.74"/>
+        <dia:rectangle val="30.32,10.1764;49.3811,11.7772"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#2: block_exists = search_is_blocking(src, dst): boolean
-3: block_exists2 = search_is_blocking(src, dst): boolean#</dia:string>
+            <dia:string>#2: search_is_blocking(src, dst): boolean
+3.[caller not blocked]: search_is_blocking(src, dst): boolean#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -569,14 +569,14 @@
         <dia:point val="10.12,8.69"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="10.12,8.07637;25.8811,11.2772"/>
+        <dia:rectangle val="10.12,8.07637;23.4336,11.2772"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#3.[block_exists == true]: inform active blocking
-4.[block_exists2 == false]: inform allowable call
-4.[block_exists2 == true]: inform active blocking
+            <dia:string>#3.[caller blocked]: inform active blocking
+4.[block-free chain]: inform allowable call
+4.[block exists]: inform active blocking
 #</dia:string>
           </dia:attribute>
           <dia:attribute name="font">

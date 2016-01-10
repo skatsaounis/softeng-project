@@ -390,12 +390,12 @@
         <dia:point val="24.92,12.04"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="24.92,11.445;38.845,12.19"/>
+        <dia:rectangle val="24.92,11.4264;35.8836,12.2272"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#2: forwarding_registration(src,dst): boolean#</dia:string>
+            <dia:string>#2: forwarding_registration(src,dst)#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -582,14 +582,14 @@
         <dia:point val="4.37,20.04"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="4.37,19.4264;28.1436,21.8272"/>
+        <dia:rectangle val="4.37,19.445;25.02,21.79"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
             <dia:string>#3: dst_exists = search_user(dst): boolean
-4.[dst_exists == true]: cycles = find_forwarding_cycles(src,user): boolean
-5.[cycles == false]: register(src, dst)#</dia:string>
+4.[dst_exists == true]: forwarding_chain(dst): list_of_usernames
+5.[no cycles]: set_forwarding(src, dst)#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -647,12 +647,12 @@
         <dia:point val="3.54023,4.87523"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="3.54023,4.28023;14.4027,5.02523"/>
+        <dia:rectangle val="3.54023,4.28023;17.4652,5.02523"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#1: forwarding_to(src,dst): boolean#</dia:string>
+            <dia:string>#1: forwarding_registration(src,dst): boolean#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -675,84 +675,19 @@
         <dia:enum val="3"/>
       </dia:attribute>
     </dia:object>
-    <dia:object type="UML - Message" version="0" id="O13">
-      <dia:attribute name="obj_pos">
-        <dia:point val="22.35,15.05"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="21.9996,8.59688;22.8004,15.1004"/>
-      </dia:attribute>
-      <dia:attribute name="meta">
-        <dia:composite type="dict"/>
-      </dia:attribute>
-      <dia:attribute name="conn_endpoints">
-        <dia:point val="22.35,15.05"/>
-        <dia:point val="22.4,8.65"/>
-      </dia:attribute>
-      <dia:attribute name="text_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="line_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="text">
-        <dia:string>##</dia:string>
-      </dia:attribute>
-      <dia:attribute name="type">
-        <dia:enum val="0"/>
-      </dia:attribute>
-      <dia:attribute name="text_pos">
-        <dia:point val="22.375,12.35"/>
-      </dia:attribute>
-    </dia:object>
-    <dia:object type="Standard - Text" version="1" id="O14">
-      <dia:attribute name="obj_pos">
-        <dia:point val="21.86,11.815"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="10.775,11.2014;21.8786,13.6023"/>
-      </dia:attribute>
-      <dia:attribute name="text">
-        <dia:composite type="text">
-          <dia:attribute name="string">
-            <dia:string>#4.[dst_exists == false]: inform_fail
-5.[cycles == true]: inform_fail
-6: inform_success#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="font">
-            <dia:font family="sans" style="0" name="Helvetica"/>
-          </dia:attribute>
-          <dia:attribute name="height">
-            <dia:real val="0.80000000000000004"/>
-          </dia:attribute>
-          <dia:attribute name="pos">
-            <dia:point val="21.86,11.815"/>
-          </dia:attribute>
-          <dia:attribute name="color">
-            <dia:color val="#000000"/>
-          </dia:attribute>
-          <dia:attribute name="alignment">
-            <dia:enum val="2"/>
-          </dia:attribute>
-        </dia:composite>
-      </dia:attribute>
-      <dia:attribute name="valign">
-        <dia:enum val="3"/>
-      </dia:attribute>
-    </dia:object>
-    <dia:object type="Standard - Text" version="1" id="O15">
+    <dia:object type="Standard - Text" version="1" id="O13">
       <dia:attribute name="obj_pos">
         <dia:point val="4.31,8.065"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="4.31,7.45137;15.4136,9.85225"/>
+        <dia:rectangle val="4.31,7.47;18.75,9.815"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#5.[dst_exists == false]: inform_fail
-6.[cycles == true]: inform_fail
-7: inform_success#</dia:string>
+            <dia:string>#4.[dst_exists == false]: inform_no_such_user
+5.[cycles exist]: inform_fail_fwd
+6: inform_success_fwd#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -775,7 +710,7 @@
         <dia:enum val="3"/>
       </dia:attribute>
     </dia:object>
-    <dia:object type="UML - Message" version="0" id="O16">
+    <dia:object type="UML - Message" version="0" id="O14">
       <dia:attribute name="obj_pos">
         <dia:point val="18.9,6.75"/>
       </dia:attribute>
