@@ -355,40 +355,7 @@
         <dia:connection handle="1" to="O1" connection="3"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Standard - Text" version="1" id="O4">
-      <dia:attribute name="obj_pos">
-        <dia:point val="-8.55,18.35"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="-8.55,17.755;0.3525,18.5"/>
-      </dia:attribute>
-      <dia:attribute name="text">
-        <dia:composite type="text">
-          <dia:attribute name="string">
-            <dia:string>#1.1.1.1: method_a(): type_a#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="font">
-            <dia:font family="sans" style="0" name="Helvetica"/>
-          </dia:attribute>
-          <dia:attribute name="height">
-            <dia:real val="0.80000000000000004"/>
-          </dia:attribute>
-          <dia:attribute name="pos">
-            <dia:point val="-8.55,18.35"/>
-          </dia:attribute>
-          <dia:attribute name="color">
-            <dia:color val="#000000"/>
-          </dia:attribute>
-          <dia:attribute name="alignment">
-            <dia:enum val="0"/>
-          </dia:attribute>
-        </dia:composite>
-      </dia:attribute>
-      <dia:attribute name="valign">
-        <dia:enum val="3"/>
-      </dia:attribute>
-    </dia:object>
-    <dia:object type="UML - Message" version="0" id="O5">
+    <dia:object type="UML - Message" version="0" id="O4">
       <dia:attribute name="obj_pos">
         <dia:point val="11.7,5.6"/>
       </dia:attribute>
@@ -418,7 +385,7 @@
         <dia:point val="17.175,6.1"/>
       </dia:attribute>
     </dia:object>
-    <dia:object type="UML - Message" version="0" id="O6">
+    <dia:object type="UML - Message" version="0" id="O5">
       <dia:attribute name="obj_pos">
         <dia:point val="28.72,8.21"/>
       </dia:attribute>
@@ -448,7 +415,7 @@
         <dia:point val="28.79,11.99"/>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Standard - Line" version="0" id="O7">
+    <dia:object type="Standard - Line" version="0" id="O6">
       <dia:attribute name="obj_pos">
         <dia:point val="27.63,7.01"/>
       </dia:attribute>
@@ -467,12 +434,12 @@
         <dia:connection handle="1" to="O2" connection="1"/>
       </dia:connections>
     </dia:object>
-    <dia:object type="Standard - Text" version="1" id="O8">
+    <dia:object type="Standard - Text" version="1" id="O7">
       <dia:attribute name="obj_pos">
         <dia:point val="10.97,4.34"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="10.97,3.72638;25.5486,4.52725"/>
+        <dia:rectangle val="10.97,3.745;25.53,4.49"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -500,12 +467,12 @@
         <dia:enum val="3"/>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Standard - Text" version="1" id="O9">
+    <dia:object type="Standard - Text" version="1" id="O8">
       <dia:attribute name="obj_pos">
         <dia:point val="30.32,10.79"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="30.32,10.1764;49.3811,11.7772"/>
+        <dia:rectangle val="30.32,10.195;49.3625,11.74"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -534,7 +501,7 @@
         <dia:enum val="3"/>
       </dia:attribute>
     </dia:object>
-    <dia:object type="UML - Message" version="0" id="O10">
+    <dia:object type="UML - Message" version="0" id="O9">
       <dia:attribute name="obj_pos">
         <dia:point val="22.65,7.15"/>
       </dia:attribute>
@@ -564,12 +531,12 @@
         <dia:point val="17.1363,7.64766"/>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Standard - Text" version="1" id="O11">
+    <dia:object type="Standard - Text" version="1" id="O10">
       <dia:attribute name="obj_pos">
         <dia:point val="10.12,8.69"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="10.12,8.07637;23.4336,11.2772"/>
+        <dia:rectangle val="10.12,8.095;23.415,11.24"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
