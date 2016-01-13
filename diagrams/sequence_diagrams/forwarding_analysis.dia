@@ -1579,13 +1579,13 @@
         <dia:point val="11.7429,8.9025"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="-2.0896,8.3075;11.7429,10.6525"/>
+        <dia:rectangle val="-2.0896,8.28887;11.7615,10.6898"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
             <dia:string>#3b. Ο forwarding server αποτυγχάνει να 
-βρει τον τελικό αποδέκτη και αποστέλει 
+βρει τον τελικό αποδέκτη και αποστέλλει 
 μήνυμα απασχολημένου στον proxy server.#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
@@ -1614,13 +1614,13 @@
         <dia:point val="12.232,17.0025"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="-1.6005,16.4075;12.232,18.7525"/>
+        <dia:rectangle val="-1.6005,16.3889;12.2506,18.7898"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
             <dia:string>#4b. Ο forwarding server αποτυγχάνει να 
-βρει τον τελικό αποδέκτη και αποστέλει 
+βρει τον τελικό αποδέκτη και αποστέλλει 
 μήνυμα απασχολημένου στον proxy server.#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
@@ -1835,7 +1835,7 @@
         <dia:point val="16.0029,16.79"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="16.0029,16.1764;27.429,17.7773"/>
+        <dia:rectangle val="16.0029,16.195;27.4104,17.74"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">

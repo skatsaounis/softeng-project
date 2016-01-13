@@ -1466,13 +1466,13 @@
         <dia:point val="12,32"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="0.99,31.405;12,33.75"/>
+        <dia:rectangle val="0.61,31.3864;12.0186,33.7873"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
             <dia:string>#7. Ο forwarding server
-αποστέλει επιβεβαίωση επιτυχούς
+αποστέλλει επιβεβαίωση επιτυχούς
 προώθησης στον proxy server.#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
@@ -1501,13 +1501,13 @@
         <dia:point val="12,36"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="0.99,35.405;12,37.75"/>
+        <dia:rectangle val="0.61,35.3864;12.0186,37.7873"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
             <dia:string>#8. Ο proxy server
-αποστέλει επιβεβαίωση επιτυχούς
+αποστέλλει επιβεβαίωση επιτυχούς
 προώθησης στον προωθόντα.#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
@@ -1536,13 +1536,13 @@
         <dia:point val="12,7"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="2.0875,6.405;12,8.75"/>
+        <dia:rectangle val="2.0875,6.38638;12.0186,8.78725"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
             <dia:string>#4b1. Ο forwarding server
-αποστέλει μήνυμα αποτυχίας
+αποστέλλει μήνυμα αποτυχίας
 προώθησης στον proxy server.#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
@@ -1571,13 +1571,13 @@
         <dia:point val="12,11"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="2.4675,10.405;12,12.75"/>
+        <dia:rectangle val="2.2225,10.3864;12.0186,12.7873"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
             <dia:string>#4b2. Ο proxy server
-αποστέλει μήνυμα αποτυχίας
+αποστέλλει μήνυμα αποτυχίας
 προώθησης στον προωθόντα.#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
@@ -1606,13 +1606,13 @@
         <dia:point val="12,20"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="2.0875,19.405;12,21.75"/>
+        <dia:rectangle val="2.0875,19.3864;12.0186,21.7873"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
             <dia:string>#5b1. Ο forwarding server
-αποστέλει μήνυμα αποτυχίας
+αποστέλλει μήνυμα αποτυχίας
 προώθησης στον proxy server.#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
@@ -1641,13 +1641,13 @@
         <dia:point val="12,24"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="2.4675,23.405;12,25.75"/>
+        <dia:rectangle val="2.2225,23.3864;12.0186,25.7873"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
             <dia:string>#5b2. Ο proxy server
-αποστέλει μήνυμα αποτυχίας
+αποστέλλει μήνυμα αποτυχίας
 προώθησης στον προωθόντα.#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">

@@ -967,12 +967,12 @@
         <dia:point val="11.785,9.87242"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="0.1475,9.27742;11.785,11.6224"/>
+        <dia:rectangle val="0.1475,9.25879;11.8036,11.6597"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#6. Ο blocking server αποστέλει
+            <dia:string>#6. Ο blocking server αποστέλλει
 επιβεβαίωση αφαίρεσης προώθησης
 στον proxy server.#</dia:string>
           </dia:attribute>
@@ -1002,12 +1002,12 @@
         <dia:point val="11.7875,13.4199"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="2.255,12.8249;11.7875,16.7699"/>
+        <dia:rectangle val="2.255,12.8063;11.8061,16.8072"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#7. Ο proxy server αποστέλει
+            <dia:string>#7. Ο proxy server αποστέλλει
 επιβεβαίωση αφαίρεσης
 προώθησης στον προωθόντα.
 
