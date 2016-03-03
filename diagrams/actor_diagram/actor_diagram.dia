@@ -68,7 +68,7 @@
         <dia:point val="13,11"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="11.5875,8.25;14.4125,13.75"/>
+        <dia:rectangle val="11.59,8.25;14.41,13.75"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -119,7 +119,7 @@
         <dia:point val="15,20"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="13.48,17.25;16.52,22.75"/>
+        <dia:rectangle val="13.4812,17.25;16.5188,22.75"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -167,16 +167,16 @@
     </dia:object>
     <dia:object type="UML - Actor" version="0" id="O2">
       <dia:attribute name="obj_pos">
-        <dia:point val="4,27"/>
+        <dia:point val="6.65,26.8"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="2.7,24.25;5.3,30.445"/>
+        <dia:rectangle val="5.35,24.05;7.95,30.2475"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="2.75,24.3"/>
+        <dia:point val="5.4,24.1"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="2.5"/>
@@ -206,7 +206,7 @@ Server#</dia:string>
             <dia:real val="0.80000000000000004"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="4,29.495"/>
+            <dia:point val="6.65,29.295"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000"/>
@@ -222,7 +222,7 @@ Server#</dia:string>
         <dia:point val="10,20"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="8.25,17.25;11.7686,22.75"/>
+        <dia:rectangle val="8.2525,17.25;11.7475,22.75"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -324,7 +324,7 @@ Server#</dia:string>
         <dia:point val="21,17"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="19.4462,14.25;22.5538,19.75"/>
+        <dia:rectangle val="19.4488,14.25;22.5512,19.75"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -372,16 +372,16 @@ Server#</dia:string>
     </dia:object>
     <dia:object type="UML - Actor" version="0" id="O6">
       <dia:attribute name="obj_pos">
-        <dia:point val="10,27"/>
+        <dia:point val="12.65,26.8"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="8.63875,24.25;11.3613,30.445"/>
+        <dia:rectangle val="11.2887,24.05;14.0112,30.2475"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="8.75,24.3"/>
+        <dia:point val="11.4,24.1"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="2.5"/>
@@ -411,7 +411,7 @@ Server#</dia:string>
             <dia:real val="0.80000000000000004"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="10,29.495"/>
+            <dia:point val="12.65,29.295"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000"/>
@@ -424,16 +424,16 @@ Server#</dia:string>
     </dia:object>
     <dia:object type="UML - Actor" version="0" id="O7">
       <dia:attribute name="obj_pos">
-        <dia:point val="16,27"/>
+        <dia:point val="18.5,26.65"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="14.2013,24.25;17.7987,30.445"/>
+        <dia:rectangle val="16.7175,23.9;20.2825,30.0975"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="14.75,24.3"/>
+        <dia:point val="17.25,23.95"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="2.5"/>
@@ -463,7 +463,7 @@ Server#</dia:string>
             <dia:real val="0.80000000000000004"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="16,29.495"/>
+            <dia:point val="18.5,29.145"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000"/>
@@ -476,16 +476,16 @@ Server#</dia:string>
     </dia:object>
     <dia:object type="UML - Actor" version="0" id="O8">
       <dia:attribute name="obj_pos">
-        <dia:point val="22,27"/>
+        <dia:point val="9.6,33.85"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="20.21,24.25;23.79,30.445"/>
+        <dia:rectangle val="7.815,31.1;11.385,37.2975"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="20.75,24.3"/>
+        <dia:point val="8.35,31.15"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="2.5"/>
@@ -515,7 +515,7 @@ Server#</dia:string>
             <dia:real val="0.80000000000000004"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="22,29.495"/>
+            <dia:point val="9.6,36.345"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000"/>
@@ -689,6 +689,58 @@ Server#</dia:string>
         <dia:connection handle="0" to="O0" connection="4"/>
         <dia:connection handle="1" to="O5" connection="3"/>
       </dia:connections>
+    </dia:object>
+    <dia:object type="UML - Actor" version="0" id="O13">
+      <dia:attribute name="obj_pos">
+        <dia:point val="15.555,33.82"/>
+      </dia:attribute>
+      <dia:attribute name="obj_bb">
+        <dia:rectangle val="14.255,31.07;16.855,37.3049"/>
+      </dia:attribute>
+      <dia:attribute name="meta">
+        <dia:composite type="dict"/>
+      </dia:attribute>
+      <dia:attribute name="elem_corner">
+        <dia:point val="14.305,31.12"/>
+      </dia:attribute>
+      <dia:attribute name="elem_width">
+        <dia:real val="2.5"/>
+      </dia:attribute>
+      <dia:attribute name="elem_height">
+        <dia:real val="5.3999999999999995"/>
+      </dia:attribute>
+      <dia:attribute name="line_width">
+        <dia:real val="0.10000000000000001"/>
+      </dia:attribute>
+      <dia:attribute name="line_colour">
+        <dia:color val="#000000"/>
+      </dia:attribute>
+      <dia:attribute name="fill_colour">
+        <dia:color val="#ffffff"/>
+      </dia:attribute>
+      <dia:attribute name="text">
+        <dia:composite type="text">
+          <dia:attribute name="string">
+            <dia:string>#Billing
+Server#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="font">
+            <dia:font family="sans" style="0" name="Helvetica"/>
+          </dia:attribute>
+          <dia:attribute name="height">
+            <dia:real val="0.80000000000000004"/>
+          </dia:attribute>
+          <dia:attribute name="pos">
+            <dia:point val="15.555,36.315"/>
+          </dia:attribute>
+          <dia:attribute name="color">
+            <dia:color val="#000000"/>
+          </dia:attribute>
+          <dia:attribute name="alignment">
+            <dia:enum val="1"/>
+          </dia:attribute>
+        </dia:composite>
+      </dia:attribute>
     </dia:object>
   </dia:layer>
 </dia:diagram>
