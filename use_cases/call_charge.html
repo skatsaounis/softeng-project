@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Use Case: Call Charge</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+	</head>
+	<body>
+		<h1>Παράδειγμα Περίπτωσης Χρήσης: Χρέωση κλήσης</h1>
+		<ul>
+			<li>
+				<p>
+					<strong>Δράστες:</strong> καλών, καλούμενος, billing server, βάση δεδομένων, proxy server
+				</p>
+			</li>
+			<li>
+				<p>
+					<strong>Προαπαιτούμενα (Preconditions):</strong>
+				</p>
+				<ul>
+					<li>Έχει γίνει έναρξη κλήσης.</li>
+					<li>Ο billing server είναι ενεργός.</li>
+				</ul>
+			</li>
+			<li>
+				<p>
+					<strong>Βασική Πορεία Χρήσης:</strong>
+				</p>
+				<ol>
+					<li>O proxy server ενημερώνει τον billing server ότι εκκίνησε η κλήση ανάμεσα στον καλούντα και τον καλούμενο.</li>
+					<li>Ο billing server αναζητεί τον καλούντα στη βάση δεδομένων.</li>
+					<li>Ο billing server καταγράφει στη βάση δεδομένων την έναρξη της κλήσης από τον καλούντα στον καλούμενο, καθώς και το πρόγραμμα χρέωσης του καλούντα.</li>
+					<li>Ο καλών ή ο καλούμενος τερματίζει την κλήση.</li>
+					<li>Ο proxy server ενημερώνει τον billing server ότι τερματίστηκε η κλήση ανάμεσα στον καλούντα και τον καλούμενο.</li>
+					<li>Ο billing server καταγράφει στη βάση δεδομένων τον τερματισμό της κλήσης από τον καλούντα στον καλούμενο.</li>
+				</ol>
+
+		</ul>
+	</body>
+</html>

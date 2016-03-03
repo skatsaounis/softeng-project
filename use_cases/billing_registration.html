@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Use Case: Billing Registration</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+	</head>
+	<body>
+		<h1>Παράδειγμα Περίπτωσης Χρήσης: Καταχώριση Προγράμματος</h1>
+		<ul>
+			<li>
+				<p>
+					<strong>Δράστες:</strong> χρήστης, billing server, βάση δεδομένων, proxy server
+				</p>
+			</li>
+			<li>
+				<p>
+					<strong>Προαπαιτούμενα (Preconditions):</strong>
+				</p>
+				<ul>
+					<li>Ο χρήστης είναι ενεργός.</li>
+					<li>Ο proxy server είναι ενεργός.</li>
+					<li>Ο billing server είναι ενεργός.</li>
+				</ul>
+			</li>
+			<li>
+				<p>
+					<strong>Βασική Πορεία Χρήσης:</strong>
+				</p>
+				<ol>
+					<li>O χρήστης επιλέγει πρόγραμμα χρέωσης.</li>
+					<li>Ο proxy server λαμβάνει το αίτημα για επιλογή προγράμματος χρέωσης από τον χρήστη.</li>
+					<li>Ο proxy server προωθεί το αίτημα στον billing server.</li>
+					<li>Ο billing server αναζητεί στη βάση δεδομένων το όνομα του χρήστη.</li>
+					<li>Ο billing server επιβεβαιώνει ότι ο χρήστης δεν έχει επιλέξει πρόγραμμα τα τελευταία 5 λεπτά, αναζητώντας τη βάση δεδομένων.</li>
+					<li>Ο billing server ενημερώνει τη βάση δεδομένων, αλλάζοντας το πρόγραμμα χρέωσης του χρήστη.</li>
+					<li>Ο billing server αποστέλλει επιβεβαίωση επιτυχούς αλλαγής προγράμματος χρέωσης στον proxy server.</li>
+					<li>Ο proxy server αποστέλλει επιβεβαίωση επιτυχούς αλλαγής προγράμματος χρέωσης στον χρήστη.</li>
+				</ol>
+			<li>
+				<p>
+					<strong>Εναλλακτικές πορείες χρήσης:</strong>
+				</p>
+				<ul>
+					<li>
+						<p>
+							<strong>Εάν ο χρήστης έχει επιλέξει πρόγραμμα χρέωσης έως και 5 λεπτά νωρίτερα:</strong>
+						</p>
+						<ul>
+							<li>Ο billing server αποστέλλει μήνυμα αποτυχίας αλλαγής προγράμματος χρέωσης στον proxy server.</li>
+							<li>Ο proxy server αποστέλλει μήνυμα αποτυχίας αλλαγής προγράμματος χρέωσης στον χρήστη.</li>
+						</ul>
+					</li>
+
+				</ul>
+			</li>
+		</ul>
+	</body>
+</html>
