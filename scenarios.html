@@ -16,6 +16,11 @@
 			.green{
 				color: green;
 			}
+
+			.red{
+				color: red;
+			}
+
 		</style>
 	</head>
 	<body>
@@ -71,7 +76,7 @@
 			Call fails; User A is notified that user B is not available - busy.
 			</p>
 		</div>
-		
+
 		<div class="test green">
 			<h3>Blocking Registration scenario</h3>
 
@@ -98,7 +103,7 @@
 			Call succeeds; Users A and B communicate with each other.
 			</p>
 		</div>
-		
+
 		<div class="test green">
 			<h3>Forwarding scenario</h3>
 
@@ -108,7 +113,7 @@
 			Falls to one of <strong>Standard Call</strong> Scenarios amongst users A and C.
 			</p>
 		</div>
-		
+
 		<div class="test green">
 			<h3>Forwarding Registration scenario</h3>
 
@@ -117,7 +122,7 @@
 			Forwarding succeeds; From now on, user A has registered forwarding to address B.
 			</p>
 		</div>
-		
+
 		<div class="test green">
 			<h3>Forwarding Registration scenario - ReForwarding</h3>
 
@@ -185,6 +190,41 @@
 			User C has registered forwarding to address D.<br/>
 			User D attempts to call A, B or C.<br/>
 			Falls to Self call Scenario.
+			</p>
+		</div>
+
+		<div class="test red">
+			<h3>User Selects a Program</h3>
+			<p>
+				User wants to select program_A from available programs.<br/>
+				User has not added a program the last (5 minutes).<br/>
+				From now on, program_A is applied to user's calls.
+			</p>
+		</div>
+
+		<div class="test red">
+			<h3>User Selects a Program before expiration of a previous program.</h3>
+			<p>
+				User wants to select program_A from available programs.<br/>
+				User has added program_B (3 minutes) ago.<br/>
+				User is notified that they cannot change program_B yet.
+			</p>
+		</div>
+
+		<div class="test red">
+			<h3>Basic call charge recording</h3>
+			<p>
+				Caller and callee start to communicate.<br/>
+				Caller or callee decides to end call.<br/>
+				Caller is charged according to their billing program.
+			</p>
+		</div>
+
+		<div class="test red">
+			<h3>Total charge request</h3>
+			<p>
+				User A requests to view the total charge they are required to pay.<br/>
+				User is notified of their total charge.
 			</p>
 		</div>
 
