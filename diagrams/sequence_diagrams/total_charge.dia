@@ -432,7 +432,7 @@
         <dia:point val="3.3454,-11.6975"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="3.2954,-11.7475;11.9954,-9.9475"/>
+        <dia:rectangle val="3.2954,-11.7475;8.9154,-9.9475"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -441,7 +441,7 @@
         <dia:point val="3.3454,-11.6975"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
-        <dia:real val="8.5999999999999996"/>
+        <dia:real val="5.5199999999999996"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
         <dia:real val="1.7000000000000002"/>
@@ -458,7 +458,7 @@
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#Billing Registration#</dia:string>
+            <dia:string>#Total Charge#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="monospace" style="0" name="Courier"/>
@@ -483,7 +483,7 @@
         <dia:point val="11.7954,-7.7975"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="2.54171,-8.41119;11.7954,-6.00762"/>
+        <dia:rectangle val="2.5604,-8.3925;11.7954,-6.045"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -518,7 +518,7 @@
         <dia:point val="11.84,-4.835"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="3.25381,-5.44869;11.84,-2.24512"/>
+        <dia:rectangle val="3.2725,-5.43;11.84,-2.2825"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -554,7 +554,7 @@
         <dia:point val="12.44,-0.585"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="3.63631,-1.19869;12.44,2.00488"/>
+        <dia:rectangle val="3.655,-1.18;12.44,1.9675"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -590,7 +590,7 @@
         <dia:point val="14.8054,-7.50337"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="14.7438,-7.70337;24.802,-4.35468"/>
+        <dia:rectangle val="14.7438,-7.70337;24.802,-4.35467"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -707,7 +707,7 @@
         <dia:point val="11.5575,6.5725"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="1.83131,5.95881;11.5575,8.36238"/>
+        <dia:rectangle val="1.85,5.9775;11.5575,8.325"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -742,7 +742,7 @@
         <dia:point val="11.6241,10.9141"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="2.20791,10.3004;11.6241,12.704"/>
+        <dia:rectangle val="2.2266,10.3191;11.6241,12.6666"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -1051,7 +1051,7 @@
         <dia:point val="34.4,2.10913"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="34.349,0.885814;43.2471,2.32596"/>
+        <dia:rectangle val="34.349,0.88581;43.2471,2.32596"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -1119,7 +1119,7 @@
         <dia:point val="25.3462,-4.00337"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="25.2819,-4.06768;33.972,-0.498587"/>
+        <dia:rectangle val="25.2819,-4.06768;33.972,-0.498588"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -1214,7 +1214,7 @@
         <dia:point val="37.5195,3.4125"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="37.5195,2.79881;41.6557,4.40238"/>
+        <dia:rectangle val="37.5195,2.8175;41.637,4.365"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
