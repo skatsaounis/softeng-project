@@ -1,8 +1,6 @@
 billing-SRS
 billing-SDD
 ~~~
-SDD-doc (remaining)
-~~~
 Code Implementation
 -Forwarding Server
 -Billing Server

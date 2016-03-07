@@ -645,7 +645,7 @@
         <dia:point val="9.27,20.29"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="9.27,19.6764;33.4186,22.0772"/>
+        <dia:rectangle val="9.27,19.695;33.4,22.04"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -677,72 +677,6 @@
     </dia:object>
     <dia:object type="UML - Message" version="0" id="O13">
       <dia:attribute name="obj_pos">
-        <dia:point val="22.55,15.55"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="22.0899,8.13918;22.8907,15.6004"/>
-      </dia:attribute>
-      <dia:attribute name="meta">
-        <dia:composite type="dict"/>
-      </dia:attribute>
-      <dia:attribute name="conn_endpoints">
-        <dia:point val="22.55,15.55"/>
-        <dia:point val="22.4903,8.19242"/>
-      </dia:attribute>
-      <dia:attribute name="text_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="line_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="text">
-        <dia:string>##</dia:string>
-      </dia:attribute>
-      <dia:attribute name="type">
-        <dia:enum val="0"/>
-      </dia:attribute>
-      <dia:attribute name="text_pos">
-        <dia:point val="22.5751,12.4062"/>
-      </dia:attribute>
-    </dia:object>
-    <dia:object type="Standard - Text" version="1" id="O14">
-      <dia:attribute name="obj_pos">
-        <dia:point val="22.3375,12.84"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="3.595,12.2264;22.3561,15.4273"/>
-      </dia:attribute>
-      <dia:attribute name="text">
-        <dia:composite type="text">
-          <dia:attribute name="string">
-            <dia:string>#4.[dst_exists == false]: inform no such user
-5.[block_exists == false]: inform successful block removal
-6.[block_exists == true]: inform successful block removal
-#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="font">
-            <dia:font family="sans" style="0" name="Helvetica"/>
-          </dia:attribute>
-          <dia:attribute name="height">
-            <dia:real val="0.80000000000000004"/>
-          </dia:attribute>
-          <dia:attribute name="pos">
-            <dia:point val="22.3375,12.84"/>
-          </dia:attribute>
-          <dia:attribute name="color">
-            <dia:color val="#000000"/>
-          </dia:attribute>
-          <dia:attribute name="alignment">
-            <dia:enum val="2"/>
-          </dia:attribute>
-        </dia:composite>
-      </dia:attribute>
-      <dia:attribute name="valign">
-        <dia:enum val="3"/>
-      </dia:attribute>
-    </dia:object>
-    <dia:object type="UML - Message" version="0" id="O15">
-      <dia:attribute name="obj_pos">
         <dia:point val="18.2754,7.15005"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
@@ -771,19 +705,19 @@
         <dia:point val="13.999,7.62268"/>
       </dia:attribute>
     </dia:object>
-    <dia:object type="Standard - Text" version="1" id="O16">
+    <dia:object type="Standard - Text" version="1" id="O14">
       <dia:attribute name="obj_pos">
         <dia:point val="3.22,8.19"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="3.22,7.57637;21.9811,9.97725"/>
+        <dia:rectangle val="3.22,7.57637;19.3936,9.97725"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#5.[dst_exists == false]: inform no such user
-6.[block_exists == false]: inform successful block removal
-7.[block_exists == true]: inform successful block removal#</dia:string>
+            <dia:string>#4.[dst_exists == false]: inform_no_such_user
+5.[block_exists == false]: inform_success_unblock
+6.[block_exists == true]: inform_success_unblock#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
