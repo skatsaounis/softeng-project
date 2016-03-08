@@ -1,3 +1,5 @@
+//import java.sql.Connection;
+
 public class ProxyServer {
 	
 	public ProxyServer() {
@@ -54,10 +56,16 @@ public class ProxyServer {
 		int dst = 1;
 		int username = 1;
 		int name = 1;
+		int my_plan = 1;
+		int timestamp = 1;
+		
+		/*String db = "test.db";
+		Connection c = null;*/
 		
 		ProxyServer proxy_server = new ProxyServer();
 		BlockingServer blocking_server = new BlockingServer();
 		ForwardingServer forwarding_server = new ForwardingServer();
+		BillingServer billing_server = new BillingServer();
 		Database database = new Database();
 		
 		System.out.println("Proxy Server");
@@ -94,6 +102,23 @@ public class ProxyServer {
 		database.forwarding_chain(username);
 		database.set_forwarding(src, dst);
 		database.remove_forwarding(src, dst);
+		database.get_plan(name);
+		database.set_plan(name, my_plan);
+		database.record_call_start(src, timestamp);
+		database.record_call_end(src, timestamp);
+		database.search_user_calls(name);
+		System.out.println("---");
+		
+		/*System.out.println("---");
+		c = database.init_connection(db);
+		database.close_connection(c);*/
+		
+		System.out.println("Billing Server");
+		billing_server.select_plan(username, my_plan);
+		billing_server.call_charge_start(src, dst, timestamp);
+		billing_server.call_charge_end(src, dst, timestamp);
+		billing_server.total_charge(name);
+		billing_server.private_fun();
 		System.out.println("---");
 		
 	}
