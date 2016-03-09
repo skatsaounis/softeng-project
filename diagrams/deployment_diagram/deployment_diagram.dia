@@ -142,7 +142,7 @@
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#mySQL 
+            <dia:string>#SQL 
 Database#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
@@ -418,7 +418,7 @@ Application#</dia:string>
         <dia:point val="12.19,2.0025"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="12.14,1.9525;19.1,5.5525"/>
+        <dia:rectangle val="12.14,1.9525;19.145,5.5525"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -427,7 +427,7 @@ Application#</dia:string>
         <dia:point val="12.19,2.0025"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
-        <dia:real val="6.8600000000000003"/>
+        <dia:real val="6.9049999999999994"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
         <dia:real val="3.5"/>
@@ -571,7 +571,7 @@ Application#</dia:string>
         <dia:point val="20.5,5.9125"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="20.45,5.8625;26.915,9.4625"/>
+        <dia:rectangle val="20.45,5.8625;26.9475,9.4625"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -580,7 +580,7 @@ Application#</dia:string>
         <dia:point val="20.5,5.9125"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
-        <dia:real val="6.3650000000000002"/>
+        <dia:real val="6.3975"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
         <dia:real val="3.5"/>
