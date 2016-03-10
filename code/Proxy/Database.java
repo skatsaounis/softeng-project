@@ -43,14 +43,15 @@ public class Database {
 	
 	public int[] forwarding_chain(int username){
 		System.out.println("8. forwarding_chain");
-		return null;
+		int[] fwd_chain = {1};
+		return fwd_chain;
 	}
 	
 	public void set_forwarding(int src, int dst){
 		System.out.println("9. set_forwarding");
 	}
 	
-	public void remove_forwarding(int src, int dst){
+	public void remove_forwarding(int username){
 		System.out.println("10. remove_forwarding");
 	}
 	
