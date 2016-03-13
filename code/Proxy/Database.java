@@ -19,16 +19,21 @@ public class Database {
 	
 	public boolean is_available(int name){
 		System.out.println("3. is_available");
-		return true;
+		return false;
 	}
 	
 	public boolean search_is_blocking(int src, int dst){
 		System.out.println("4. search_is_blocking");
-		return true;
+		return false;
 	}
 	
 	public boolean set_block(int src, int dst){
 		System.out.println("5. set_block");
+		Connection connection = init_connection();
+		String sql = "INSERT INTO call (caller,callee,cost) " +
+	            "VALUES (" + src + "," + dst + ",42.0);";
+		do_update(connection, sql);
+		close_connection(connection);
 		return true;
 	}
 	
@@ -76,11 +81,11 @@ public class Database {
 		return null;
 	}
 	
-	public Connection init_connection(String db){
+	public Connection init_connection(){
 		Connection c = null;
 	    try {
 	      Class.forName("org.sqlite.JDBC");
-	      c = DriverManager.getConnection("jdbc:sqlite:"+db);
+	      c = DriverManager.getConnection("jdbc:sqlite:softeng.db");
 	      c.setAutoCommit(false);
 	      System.out.println("Opened database successfully");
 	    } catch ( Exception e ) {

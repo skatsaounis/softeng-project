@@ -37,7 +37,7 @@ public class Proxy {
 		System.out.println("Blocking Server");
 		blocking_server.is_blocking(src, dst);
 		blocking_server.blocking_check(1, fwd_chain);
-		blocking_server.request_block(src, dst);
+		blocking_server.request_block(3, 1);
 		blocking_server.remove_block(src, dst);
 		System.out.println("---");
 		
