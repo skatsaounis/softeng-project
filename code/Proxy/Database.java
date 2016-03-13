@@ -30,8 +30,8 @@ public class Database {
 	public boolean set_block(int src, int dst){
 		System.out.println("5. set_block");
 		Connection connection = init_connection();
-		String sql = "INSERT INTO call (caller,callee,cost) " +
-	            "VALUES (" + src + "," + dst + ",42.0);";
+		String sql = "INSERT INTO block (blocker,blockee) " +
+	            "VALUES (" + src + "," + dst + ");";
 		do_update(connection, sql);
 		close_connection(connection);
 		return true;
