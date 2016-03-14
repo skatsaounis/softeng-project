@@ -28,22 +28,24 @@ public class BlockingServer {
 		return true;
 	}
 	
-	public boolean request_block(int src, int dst){
+	public boolean request_block(int src, String dst){
 		System.out.println("3. request_block (\\/)");
-		if(database.search_user(dst)){
-			if(!database.search_is_blocking(src, dst))
-				database.set_block(src, dst);
+		int dest = database.search_user(dst);
+		if(dest>0){
+			if(!database.search_is_blocking(src, dest))
+				database.set_block(src, dest);
 			return true;
 		}
 		else
 			return false;
 	}
 	
-	public boolean remove_block(int src, int dst){
+	public boolean remove_block(int src, String dst){
 		System.out.println("4. remove_block (\\/)");
-		if(database.search_user(dst)){
-			if(database.search_is_blocking(src, dst))
-				database.remove_block(src, dst);
+		int dest = database.search_user(dst);
+		if(dest>0){
+			if(database.search_is_blocking(src, dest))
+				database.remove_block(src, dest);
 			return true;
 		}
 		else

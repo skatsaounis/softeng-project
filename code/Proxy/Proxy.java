@@ -64,12 +64,19 @@ public class Proxy {
 		database.set_forwarding(4, 5);
 		database.remove_forwarding(4);
 		database.set_plan(4, 43);
-		database.close_connection(database.connection);*/
+		database.close_connection(database.connection);
 		database.set_forwarding(1, 2);
 		database.set_forwarding(2, 3);
 		database.set_forwarding(3, 4);
 		database.set_forwarding(4, 5);
-		System.out.println(database.forwarding_chain(1).toString());
+		System.out.println(database.forwarding_chain(1).toString());*/
+		database.search_user("stamatis");
+		database.search_user("maria");
+		database.is_available(1);
+		database.is_online(1);
+		database.search_is_blocking(2, 3);
+		database.set_block(2, 3);
+		database.search_is_blocking(2, 3);
 	}
 
 }
