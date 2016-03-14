@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Database {
 	Connection connection;
@@ -44,10 +45,33 @@ public class Database {
 		return true;
 	}
 	
-	public int[] forwarding_chain(int username){
+	public ArrayList<Integer> forwarding_chain(int username){
 		System.out.println("8. forwarding_chain");
-		int[] fwd_chain = {1};
-		return fwd_chain;
+		ArrayList<Integer> fwd_chain = new ArrayList<Integer>();
+		String sql = "SELECT * FROM user WHERE user_id = "+username+" ;";
+		ResultSet rs;
+		int forwardee;
+		
+		while(true){
+			rs = do_query(connection, sql);
+			try {
+				while ( rs.next() ) {
+					forwardee = rs.getInt("forwardee");
+					if(forwardee > 0){
+						fwd_chain.add(forwardee);
+						sql = "SELECT * FROM user WHERE user_id = "+forwardee+" ;";
+					}
+					else{
+						close_resultset(rs);
+						return fwd_chain;
+					}
+				  }
+			} catch (SQLException e) {
+				e.printStackTrace();
+				close_resultset(rs);
+				return fwd_chain;
+			}
+		}
 	}
 	
 	public void set_forwarding(int src, int dst){
@@ -64,8 +88,9 @@ public class Database {
 		do_update(connection, sql);
 	}
 	
-	public void get_plan(int name){
+	public int get_plan(int name){
 		System.out.println("11. get_plan");
+		return 1;
 	}
 	
 	public void set_plan(int name, int my_plan){

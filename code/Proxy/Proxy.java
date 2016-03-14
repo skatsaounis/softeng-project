@@ -57,14 +57,19 @@ public class Proxy {
 		billing_server.call_charge_end(src, dst, timestamp);
 		billing_server.total_charge(name);
 		System.out.println("---");*/
-		database.record_call_start(5, 4);
+		/*database.record_call_start(5, 4);
 		database.record_call_end(5, 4);
 		database.search_user_calls(5);
 		database.set_block(3, 5);
 		database.set_forwarding(4, 5);
 		database.remove_forwarding(4);
 		database.set_plan(4, 43);
-		database.close_connection(database.connection);
+		database.close_connection(database.connection);*/
+		database.set_forwarding(1, 2);
+		database.set_forwarding(2, 3);
+		database.set_forwarding(3, 4);
+		database.set_forwarding(4, 5);
+		System.out.println(database.forwarding_chain(1).toString());
 	}
 
 }

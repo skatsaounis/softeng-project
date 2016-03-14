@@ -1,10 +1,13 @@
 CREATE TABLE user
 (
-    user_id     INTEGER     PRIMARY KEY AUTOINCREMENT,
-    forwardee   INTEGER     DEFAULT NULL,
-    name        TEXT        NOT NULL,
-    program     INTEGER     NOT NULL DEFAULT '1',
-    FOREIGN KEY (forwardee) REFERENCES user(id)
+    user_id        INTEGER     PRIMARY KEY AUTOINCREMENT,
+    forwardee      INTEGER     DEFAULT '0',
+    name           TEXT        NOT NULL UNIQUE,
+    program        INTEGER     NOT NULL DEFAULT '1',
+    p_registration TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
+    online         INTEGER     DEFAULT '0',
+    available      INTEGER     DEFAULT '1',
+    FOREIGN KEY    (forwardee) REFERENCES user(id)
 ) ;
 
 CREATE TABLE block
