@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 public class BillingServer {
 	Database database;
@@ -27,13 +29,13 @@ public class BillingServer {
 	}
 	
 	public int total_charge(int name){
-		int [] call_list;
+		ArrayList<CallDuration> call_list;
 		System.out.println("4. total_charge (\\/)");
 		call_list = database.search_user_calls(name);
 		return calculate_total_charge(name, call_list);
 	}
 	
-	private int calculate_total_charge(int name, int[] call_list){
+	private int calculate_total_charge(int name, ArrayList<CallDuration> call_list){
 		System.out.println("5. calculate_total_charge");
 		return 1;
 	}
