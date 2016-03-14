@@ -23,13 +23,14 @@ public class ForwardingServer {
 		return -1;
 	}
 	
-	public boolean forwarding_registration(int src, int dst){
+	public boolean forwarding_registration(int src, String dst){
 		System.out.println("2. forwarding_registration (\\/)");
 		ArrayList<Integer> list_of_usernames;
-		if(database.search_user(dst)){
-			list_of_usernames = database.forwarding_chain(dst);
+		int dest = database.search_user(dst);
+		if(dest>0){
+			list_of_usernames = database.forwarding_chain(dest);
 			if(list_of_usernames != null){
-				database.set_forwarding(src, dst);
+				database.set_forwarding(src, dest);
 				return true;
 			}
 		}

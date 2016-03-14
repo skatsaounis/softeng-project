@@ -6,20 +6,19 @@ public class BillingServer {
 		this.database = database;
 	}
 
-	public void select_plan(int name, int my_plan){
+	public void select_plan(String name, int my_plan){
 		System.out.println("1. select_plan (\\/)");
-		database.search_user(name);
-		database.get_plan(name);
-		if(name==1) /* must be replaced. If plan can be changed */
-			database.set_plan(name, my_plan);
+		int user = database.search_user(name);
+		if(database.get_plan(user)>0) /* must be replaced. If plan can be changed */
+			database.set_plan(user, my_plan);
 		else
 			System.out.println("Inform failure");
 	}
 	
-	public void call_charge_start(int src, int dst){
+	public void call_charge_start(int src, String dst){
 		System.out.println("2. call_charge_start (\\/)");
-		database.search_user(dst);
-		database.record_call_start(src, dst);
+		int dest = database.search_user(dst);
+		database.record_call_start(src, dest);
 	}
 	
 	public void call_charge_end(int src, int dst){
