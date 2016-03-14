@@ -1,10 +1,10 @@
 import java.sql.*;
 
 public class Database {
-	Connection c;
+	Connection connection;
 	
 	public Database() {
-		this.c = null;
+		connection = init_connection();
 	}
 
 	public boolean search_user(int name){
@@ -29,11 +29,9 @@ public class Database {
 	
 	public boolean set_block(int src, int dst){
 		System.out.println("5. set_block");
-		Connection connection = init_connection();
 		String sql = "INSERT INTO block (blocker,blockee) " +
 	            "VALUES (" + src + "," + dst + ");";
 		do_update(connection, sql);
-		close_connection(connection);
 		return true;
 	}
 	
@@ -54,10 +52,16 @@ public class Database {
 	
 	public void set_forwarding(int src, int dst){
 		System.out.println("9. set_forwarding");
+		String sql = "UPDATE user SET forwardee=" +
+				dst + " WHERE user_id=" + src + " ;";
+		do_update(connection, sql);
 	}
 	
 	public void remove_forwarding(int username){
 		System.out.println("10. remove_forwarding");
+		String sql = "UPDATE user SET forwardee=NULL " +
+				"WHERE user_id=" + username + " ;";
+		do_update(connection, sql);
 	}
 	
 	public void get_plan(int name){
@@ -66,18 +70,49 @@ public class Database {
 	
 	public void set_plan(int name, int my_plan){
 		System.out.println("12. set_plan");
+		String sql = "UPDATE user SET program=" +
+				my_plan + " WHERE user_id=" + name + " ;";
+		do_update(connection, sql);
 	}
 	
-	public void record_call_start(int src, int timestamp){
+	public void record_call_start(int src, int dst){
 		System.out.println("13. record_call_start");
+		String sql = "INSERT INTO call (caller,callee, cost) " +
+	            "VALUES (" + src + "," + dst + ",-1.0);";
+		do_update(connection, sql);
 	}
 	
-	public void record_call_end(int src, int timestamp){
+	public void record_call_end(int src, int dst){
 		System.out.println("14. record_call_end");
+		String sql = "UPDATE call SET end=CURRENT_TIMESTAMP WHERE caller=" +
+				src + " AND callee=" + dst + " AND cost=-1.0";
+		do_update(connection, sql);
 	}
 	
 	public int[] search_user_calls(int name){
 		System.out.println("15. search_user_calls");
+		String sql = "SELECT * FROM call WHERE caller = "+name+" ;";
+		ResultSet rs;
+		rs = do_query(connection, sql);
+		
+		try {
+			while ( rs.next() ) {
+			     int call_id= rs.getInt("call_id");
+			     int caller  = rs.getInt("caller");
+			     int callee  = rs.getInt("callee");
+			     float cost = rs.getFloat("cost");
+			     System.out.println( "CALL_ID = " + call_id );
+			     System.out.println( "CALLER = " + caller );
+			     System.out.println( "CALLEE = " + callee );
+			     System.out.println( "COST = " + cost );
+			     System.out.println();
+			  }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		close_resultset(rs);
 		return null;
 	}
 	

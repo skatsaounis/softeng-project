@@ -16,15 +16,15 @@ public class BillingServer {
 			System.out.println("Inform failure");
 	}
 	
-	public void call_charge_start(int src, int dst, int timestamp){
+	public void call_charge_start(int src, int dst){
 		System.out.println("2. call_charge_start (\\/)");
 		database.search_user(dst);
-		database.record_call_start(src, timestamp);
+		database.record_call_start(src, dst);
 	}
 	
-	public void call_charge_end(int src, int dst, int timestamp){
+	public void call_charge_end(int src, int dst){
 		System.out.println("3. call_charge_end (\\/)");
-		database.record_call_end(src, timestamp);
+		database.record_call_end(src, dst);
 	}
 	
 	public int total_charge(int name){
