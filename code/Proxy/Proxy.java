@@ -77,6 +77,10 @@ public class Proxy {
 		database.search_is_blocking(2, 3);
 		database.set_block(2, 3);
 		database.search_is_blocking(2, 3);
+		database.get_plan(1);
+		database.set_plan(2, 12);
+		database.get_plan(1);
+		database.set_plan(2, 12);
 	}
 
 }

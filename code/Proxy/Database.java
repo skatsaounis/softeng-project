@@ -1,4 +1,7 @@
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Database {
@@ -171,14 +174,51 @@ public class Database {
 	
 	public int get_plan(int name){
 		System.out.println("11. get_plan");
-		return 1;
+		String sql = "SELECT * FROM user WHERE user_id= "+name+" ;";
+		ResultSet rs;
+		rs = do_query(connection, sql);
+		int program=1;
+		try {
+			while ( rs.next() ) {
+			     program = rs.getInt("program");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		close_resultset(rs);
+		System.out.println("User's program is " + program);
+		return program;
 	}
 	
 	public void set_plan(int name, int my_plan){
 		System.out.println("12. set_plan");
-		String sql = "UPDATE user SET program=" +
+		Date date= new Date(System.currentTimeMillis()-2*60*60*1000);
+		Timestamp time = new Timestamp(date.getTime());
+		Timestamp p_registration = time;
+		
+		String sql = "SELECT * FROM user WHERE user_id = "+name+" ;";
+		ResultSet rs;
+		rs = do_query(connection, sql);
+		try {
+			while ( rs.next() ) {
+				 p_registration = Timestamp.valueOf((rs.getString("p_registration")));
+			  }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		close_resultset(rs);
+		long temp = (time.getTime() - p_registration.getTime())/1000;
+		if(temp > 5){
+			sql = "UPDATE user SET program=" +
 				my_plan + " WHERE user_id=" + name + " ;";
-		do_update(connection, sql);
+			do_update(connection, sql);
+			sql = "UPDATE user SET p_registration=CURRENT_TIMESTAMP " +
+				"WHERE user_id=" + name + " ;";
+			do_update(connection, sql);
+			System.out.println("Program changed to program " + my_plan);
+		}
+		else
+			System.out.println("Program cannot be changed");
 	}
 	
 	public void record_call_start(int src, int dst){
