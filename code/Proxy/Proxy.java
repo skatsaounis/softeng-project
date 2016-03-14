@@ -23,7 +23,7 @@ public class Proxy {
 		ProxyServer proxy_server = new ProxyServer(blocking_server, forwarding_server, billing_server, database);
 		
 		
-		System.out.println("Proxy Server");
+		/*System.out.println("Proxy Server");
 		proxy_server.call_start(src, dst);
 		proxy_server.request_block(src, dst);
 		proxy_server.remove_block(src, dst);
@@ -49,15 +49,22 @@ public class Proxy {
 		
 		/*System.out.println("---");
 		c = database.init_connection(db);
-		database.close_connection(c);*/
+		database.close_connection(c);
 		
 		System.out.println("Billing Server");
 		billing_server.select_plan(username, my_plan);
 		billing_server.call_charge_start(src, dst, timestamp);
 		billing_server.call_charge_end(src, dst, timestamp);
 		billing_server.total_charge(name);
-		System.out.println("---");
-		
+		System.out.println("---");*/
+		database.record_call_start(5, 4);
+		database.record_call_end(5, 4);
+		database.search_user_calls(5);
+		database.set_block(3, 5);
+		database.set_forwarding(4, 5);
+		database.remove_forwarding(4);
+		database.set_plan(4, 43);
+		database.close_connection(database.connection);
 	}
 
 }

@@ -20,7 +20,6 @@ public class ProxyServer {
 	
 	public void call_start(int src, int dst){
 		int target;
-		int timestamp = 1;
 		
 		System.out.println("1. call_start (\\/)");
 		if(!this.is_self_call(src, dst)){
@@ -32,7 +31,7 @@ public class ProxyServer {
 					System.out.println("Inform busy");
 				else{
 					System.out.println("Init call_from");
-					billing_server.call_charge_start(src, dst, timestamp);
+					billing_server.call_charge_start(src, dst);
 				}
 			}
 		}
@@ -41,8 +40,7 @@ public class ProxyServer {
 	
 	public void call_end(int src, int dst){
 		System.out.println("11. call_end (\\/)");
-		int timestamp = 1;
-		billing_server.call_charge_end(src, dst, timestamp);
+		billing_server.call_charge_end(src, dst);
 	}
 	
 	public boolean request_block(int src, int dst){
