@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+
 
 public class Proxy {
 
@@ -74,6 +77,8 @@ public class Proxy {
 		database.search_user("maria");
 		database.is_available(1);
 		database.is_online(1);
+		if(!database.search_is_blocking(2, 3))
+			database.set_block(2, 3);
 		database.search_is_blocking(2, 3);
 		database.set_block(2, 3);
 		database.search_is_blocking(2, 3);
@@ -81,6 +86,47 @@ public class Proxy {
 		database.set_plan(2, 12);
 		database.get_plan(1);
 		database.set_plan(2, 12);
+
+		if(!database.search_is_blocking(1, 2))
+			database.set_block(1, 2);
+		if(database.search_is_blocking(2, 3))
+			database.remove_block(2, 3);
+		database.set_forwarding(1, 2);
+		database.search_forwarding(1);
+		database.remove_forwarding(1);
+		database.search_forwarding(1);
+		database.set_forwarding(2, 4);
+		database.search_forwarding(2);
+		database.record_call_start(5, 4);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		database.record_call_end(5, 4);
+		database.record_call_start(5, 3);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		database.record_call_end(5, 3);
+		database.record_call_start(5, 4);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		database.record_call_end(5, 4);
+		ArrayList<CallDuration> call_list = database.search_user_calls(5);
+		Iterator<CallDuration> itr = call_list.iterator();
+		while (itr.hasNext()){
+			CallDuration call = itr.next();
+			System.out.println(call.getCall_id() + ", " + call.getStart().toString() + ", " + call.getEnd().toString());
+		}
 	}
 
 }

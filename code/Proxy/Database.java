@@ -122,11 +122,33 @@ public class Database {
 	
 	public void remove_block(int src, int dst){
 		System.out.println("6. remove_block");
+		String sql = "DELETE FROM block WHERE blocker=" + src + " AND blockee=" + dst + " ;";
+		do_update(connection, sql);
 	}
 	
 	public boolean search_forwarding(int username){
 		System.out.println("7. search_forwarding");
-		return true;
+		String sql = "SELECT * FROM user WHERE user_id= " + username +";";
+		ResultSet rs;
+		rs = do_query(connection, sql);
+		int is_forwarding=0;
+		try {
+			while ( rs.next() ) {
+				is_forwarding= rs.getInt("forwardee");
+			  }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		close_resultset(rs);
+		if (is_forwarding != 0){
+			System.out.println("Forwading has been found!");
+			return true;
+		}
+		else{
+			System.out.println("No forwarding found!");
+			return false;
+		}
 	}
 	
 	public ArrayList<Integer> forwarding_chain(int username){
@@ -167,7 +189,7 @@ public class Database {
 	
 	public void remove_forwarding(int username){
 		System.out.println("10. remove_forwarding");
-		String sql = "UPDATE user SET forwardee=NULL " +
+		String sql = "UPDATE user SET forwardee=0 " +
 				"WHERE user_id=" + username + " ;";
 		do_update(connection, sql);
 	}
@@ -231,34 +253,30 @@ public class Database {
 	public void record_call_end(int src, int dst){
 		System.out.println("14. record_call_end");
 		String sql = "UPDATE call SET end=CURRENT_TIMESTAMP WHERE caller=" +
-				src + " AND callee=" + dst + " AND cost=-1.0";
+				src + " AND callee=" + dst + " AND end='0000-00-00 00:00:00' AND cost=-1.0";
 		do_update(connection, sql);
 	}
 	
-	public int[] search_user_calls(int name){
+	public ArrayList<CallDuration> search_user_calls(int name){
 		System.out.println("15. search_user_calls");
 		String sql = "SELECT * FROM call WHERE caller = "+name+" ;";
+		ArrayList<CallDuration> call_list = new ArrayList<CallDuration>();
 		ResultSet rs;
 		rs = do_query(connection, sql);
 		
 		try {
 			while ( rs.next() ) {
-			     int call_id= rs.getInt("call_id");
-			     int caller  = rs.getInt("caller");
-			     int callee  = rs.getInt("callee");
-			     float cost = rs.getFloat("cost");
-			     System.out.println( "CALL_ID = " + call_id );
-			     System.out.println( "CALLER = " + caller );
-			     System.out.println( "CALLEE = " + callee );
-			     System.out.println( "COST = " + cost );
-			     System.out.println();
+			     CallDuration new_call = new CallDuration(rs.getInt("call_id"), 
+			    		Timestamp.valueOf(rs.getString("start")), Timestamp.valueOf(rs.getString("end")));
+			     call_list.add(new_call);
 			  }
+			close_resultset(rs);
+			return call_list;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			close_resultset(rs);
+			return call_list;
 		}
-		
-		close_resultset(rs);
-		return null;
 	}
 	
 	public Connection init_connection(){
