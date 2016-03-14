@@ -1,9 +1,10 @@
-INSERT INTO user (name,program)
-VALUES ('stamatis',1);
-INSERT INTO user (forwardee,name,program)
-VALUES (1,'ilias',2);
-INSERT INTO user (forwardee,name,program)
-VALUES (1,'thanasis',3);
-
-INSERT INTO call (caller,callee,cost)
-VALUES (1,2,34.5);
+INSERT INTO user (name)
+VALUES ('stamatis');
+INSERT INTO user (name)
+VALUES ('ilias');
+INSERT INTO user (name)
+VALUES ('thanasis');
+INSERT INTO user (name)
+VALUES ('alexandra');
+INSERT INTO user (name)
+VALUES ('nikos');

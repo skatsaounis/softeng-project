@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class BlockingServer {
 	Database database;
 	
@@ -10,12 +12,12 @@ public class BlockingServer {
 		return database.search_is_blocking(src, dst);
 	}
 	
-	public boolean blocking_check(int caller, int[] fwd_chain){
+	public boolean blocking_check(int caller, ArrayList<Integer> fwd_chain){
 		System.out.println("2. blocking_check (\\/)");
 		int i;
 		int dst;
-		for(i=0; i<(fwd_chain.length-1); i++){
-			dst = fwd_chain[i];
+		for(i=0; i<(fwd_chain.size()-1); i++){
+			dst = fwd_chain.get(i);
 			if(database.search_is_blocking(caller, dst)){
 				System.out.println("Blocked by someone in fwd_chain");
 				return false;
