@@ -9,16 +9,14 @@ public class Proxy {
 	}
 
 	public static void main(String[] args) {
-		int[] fwd_chain = {1};
+		/* int[] fwd_chain = {1};
 		int src = 1;
 		int dst = 1;
 		int username = 1;
 		int name = 1;
 		int my_plan = 1;
-		int timestamp = 1;
+		int timestamp = 1; */
 		
-		/*String db = "test.db";
-		Connection c = null;*/
 		Database database = new Database();
 		BlockingServer blocking_server = new BlockingServer(database);
 		ForwardingServer forwarding_server = new ForwardingServer(blocking_server, database);
@@ -127,6 +125,8 @@ public class Proxy {
 			CallDuration call = itr.next();
 			System.out.println(call.getCall_id() + ", " + call.getStart().toString() + ", " + call.getEnd().toString());
 		}
+		
+		System.out.println(billing_server.total_charge(5));
 	}
 
 }

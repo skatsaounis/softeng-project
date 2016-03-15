@@ -88,7 +88,7 @@ public class ProxyServer {
 		billing_server.select_plan(name, my_plan);
 	}
 
-	public int total_charge_request(int name){
+	public long total_charge_request(int name){
 		System.out.println("10. total_charge_request  (\\/)");
 		return billing_server.total_charge(name);
 	}

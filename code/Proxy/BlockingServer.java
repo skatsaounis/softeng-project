@@ -14,16 +14,27 @@ public class BlockingServer {
 	
 	public boolean blocking_check(int caller, ArrayList<Integer> fwd_chain){
 		System.out.println("2. blocking_check (\\/)");
-		int i;
+		int i, j;
 		int dst;
+		int source;
 		for(i=0; i<(fwd_chain.size()-1); i++){
 			dst = fwd_chain.get(i);
 			if(database.search_is_blocking(caller, dst)){
-				System.out.println("Blocked by someone in fwd_chain");
+				System.out.println("Blocked by someone in fwd_chain!");
 				return false;
 			}
 		}
-		/* To be added -- Check if anyone in chain is blocked by its previous */
+		/* Check if anyone in chain is blocked by its previous */
+		for(i=0; i<(fwd_chain.size()-1); i++){
+			dst = fwd_chain.get(i);
+			for(j=0;j<i;j++){
+				source = fwd_chain.get(i);
+				if(database.search_is_blocking(source, dst)){
+					System.out.println("Someone in fwd_chain is blocked by someone previous!");
+					return false;
+				}
+			}
+		}
 		System.out.println("Acceptable Call");
 		return true;
 	}
