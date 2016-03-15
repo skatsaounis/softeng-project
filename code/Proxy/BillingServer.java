@@ -28,16 +28,39 @@ public class BillingServer {
 		database.record_call_end(src, dst);
 	}
 	
-	public int total_charge(int name){
+	public long total_charge(int name){
 		ArrayList<CallDuration> call_list;
 		System.out.println("4. total_charge (\\/)");
 		call_list = database.search_user_calls(name);
 		return calculate_total_charge(name, call_list);
 	}
 	
-	private int calculate_total_charge(int name, ArrayList<CallDuration> call_list){
-		System.out.println("5. calculate_total_charge");
-		return 1;
+	private long calculate_total_charge(int name, ArrayList<CallDuration> call_list){
+		System.out.println("5. calculate_total_charge (\\/)");
+		int plan = database.get_plan(name);
+		long total_charge = 0;
+		long duration;
+		int i;
+		System.out.println("User's plan is 1");
+		for(i=0; i<(call_list.size()-1); i++){
+			duration = (call_list.get(i).getEnd().getTime() - call_list.get(i).getStart().getTime())/1000;
+			switch (plan){
+				case 1:
+					System.out.println("User's plan is 1");
+					total_charge += duration * 1.0;
+					break;
+				case 2:
+					System.out.println("User's plan is 2");
+					total_charge += duration * 2.0;
+					break;
+				case 3:
+					System.out.println("User's plan is 3");
+					total_charge += duration * 3.0;
+					break;
+			}
+		}
+		
+		return total_charge;
 	}
 	
 }

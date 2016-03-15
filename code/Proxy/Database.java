@@ -1,7 +1,4 @@
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Database {
@@ -12,7 +9,7 @@ public class Database {
 	}
 
 	public int search_user(String name){
-		System.out.println("1. search_user");
+		System.out.println("1. search_user (\\/)");
 		String sql = "SELECT * FROM user WHERE name=\"" + name + "\" ;";
 		ResultSet rs;
 		rs = do_query(connection, sql);
@@ -37,7 +34,7 @@ public class Database {
 	}
 	
 	public boolean is_online(int name){
-		System.out.println("2. is_online");
+		System.out.println("2. is_online (\\/)");
 		String sql = "SELECT * FROM user WHERE user_id= " + name + " ;";
 		ResultSet rs;
 		rs = do_query(connection, sql);
@@ -62,7 +59,7 @@ public class Database {
 	}
 	
 	public boolean is_available(int name){
-		System.out.println("3. is_available");
+		System.out.println("3. is_available (\\/)");
 		String sql = "SELECT * FROM user WHERE user_id= "+name+" ;";
 		ResultSet rs;
 		rs = do_query(connection, sql);
@@ -87,7 +84,7 @@ public class Database {
 	}
 	
 	public boolean search_is_blocking(int src, int dst){
-		System.out.println("4. search_is_blocking");
+		System.out.println("4. search_is_blocking (\\/)");
 		String sql = "SELECT * FROM block WHERE blocker= " +
 				src +" AND blockee=" + dst + ";";
 		ResultSet rs;
@@ -113,7 +110,7 @@ public class Database {
 	}
 	
 	public boolean set_block(int src, int dst){
-		System.out.println("5. set_block");
+		System.out.println("5. set_block (\\/)");
 		String sql = "INSERT INTO block (blocker,blockee) " +
 	            "VALUES (" + src + "," + dst + ");";
 		do_update(connection, sql);
@@ -121,13 +118,13 @@ public class Database {
 	}
 	
 	public void remove_block(int src, int dst){
-		System.out.println("6. remove_block");
+		System.out.println("6. remove_block (\\/)");
 		String sql = "DELETE FROM block WHERE blocker=" + src + " AND blockee=" + dst + " ;";
 		do_update(connection, sql);
 	}
 	
 	public boolean search_forwarding(int username){
-		System.out.println("7. search_forwarding");
+		System.out.println("7. search_forwarding (\\/)");
 		String sql = "SELECT * FROM user WHERE user_id= " + username +";";
 		ResultSet rs;
 		rs = do_query(connection, sql);
@@ -152,7 +149,7 @@ public class Database {
 	}
 	
 	public ArrayList<Integer> forwarding_chain(int username){
-		System.out.println("8. forwarding_chain");
+		System.out.println("8. forwarding_chain (\\/)");
 		ArrayList<Integer> fwd_chain = new ArrayList<Integer>();
 		String sql = "SELECT * FROM user WHERE user_id = "+username+" ;";
 		ResultSet rs;
@@ -181,21 +178,21 @@ public class Database {
 	}
 	
 	public void set_forwarding(int src, int dst){
-		System.out.println("9. set_forwarding");
+		System.out.println("9. set_forwarding (\\/)");
 		String sql = "UPDATE user SET forwardee=" +
 				dst + " WHERE user_id=" + src + " ;";
 		do_update(connection, sql);
 	}
 	
 	public void remove_forwarding(int username){
-		System.out.println("10. remove_forwarding");
+		System.out.println("10. remove_forwarding (\\/)");
 		String sql = "UPDATE user SET forwardee=0 " +
 				"WHERE user_id=" + username + " ;";
 		do_update(connection, sql);
 	}
 	
 	public int get_plan(int name){
-		System.out.println("11. get_plan");
+		System.out.println("11. get_plan (\\/)");
 		String sql = "SELECT * FROM user WHERE user_id= "+name+" ;";
 		ResultSet rs;
 		rs = do_query(connection, sql);
@@ -213,7 +210,7 @@ public class Database {
 	}
 	
 	public void set_plan(int name, int my_plan){
-		System.out.println("12. set_plan");
+		System.out.println("12. set_plan (\\/)");
 		Date date= new Date(System.currentTimeMillis()-2*60*60*1000);
 		Timestamp time = new Timestamp(date.getTime());
 		Timestamp p_registration = time;
@@ -244,21 +241,21 @@ public class Database {
 	}
 	
 	public void record_call_start(int src, int dst){
-		System.out.println("13. record_call_start");
+		System.out.println("13. record_call_start (\\/)");
 		String sql = "INSERT INTO call (caller,callee, cost) " +
 	            "VALUES (" + src + "," + dst + ",-1.0);";
 		do_update(connection, sql);
 	}
 	
 	public void record_call_end(int src, int dst){
-		System.out.println("14. record_call_end");
+		System.out.println("14. record_call_end (\\/)");
 		String sql = "UPDATE call SET end=CURRENT_TIMESTAMP WHERE caller=" +
 				src + " AND callee=" + dst + " AND end='0000-00-00 00:00:00' AND cost=-1.0";
 		do_update(connection, sql);
 	}
 	
 	public ArrayList<CallDuration> search_user_calls(int name){
-		System.out.println("15. search_user_calls");
+		System.out.println("15. search_user_calls (\\/)");
 		String sql = "SELECT * FROM call WHERE caller = "+name+" ;";
 		ArrayList<CallDuration> call_list = new ArrayList<CallDuration>();
 		ResultSet rs;
