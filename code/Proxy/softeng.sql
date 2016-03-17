@@ -24,6 +24,7 @@ CREATE TABLE call
     call_id      INTEGER    PRIMARY KEY AUTOINCREMENT,
     caller       INTEGER    NOT NULL,
     callee       INTEGER    NOT NULL,
+    callers_prog INTEGER    NOT NULL,
     start        TIMESTAMP  DEFAULT CURRENT_TIMESTAMP,
     end          TIMESTAMP  DEFAULT '0000-00-00 00:00:00',
     cost         REAL       NOT NULL,

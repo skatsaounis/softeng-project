@@ -16,11 +16,14 @@ public class ForwardingServer {
 	public int route(int src, int dst){
 		System.out.println("1. route (\\/)");
 		ArrayList<Integer> fwd_chain = database.forwarding_chain(dst);
-		if(!blocking_check(src, fwd_chain))
-			if(!is_self_call(src, fwd_chain.get(fwd_chain.size()-1)))
-				return fwd_chain.get(fwd_chain.size()-1);
-		System.out.println("Inform busy");
-		return -1;
+		if(fwd_chain.size()>0){
+			if(blocking_check(src, fwd_chain))
+				if(!is_self_call(src, fwd_chain.get(fwd_chain.size()-1)))
+					return fwd_chain.get(fwd_chain.size()-1);
+			System.out.println("Inform busy");
+			return -1;
+		} else
+			return dst;
 	}
 	
 	public boolean forwarding_registration(int src, String dst){

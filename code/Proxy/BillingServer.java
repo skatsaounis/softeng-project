@@ -37,25 +37,30 @@ public class BillingServer {
 	
 	private long calculate_total_charge(int name, ArrayList<CallDuration> call_list){
 		System.out.println("5. calculate_total_charge (\\/)");
-		int plan = database.get_plan(name);
+		long call_cost;
 		long total_charge = 0;
 		long duration;
 		int i;
-		System.out.println("User's plan is 1");
-		for(i=0; i<(call_list.size()-1); i++){
+		for(i=0; i<call_list.size(); i++){
 			duration = (call_list.get(i).getEnd().getTime() - call_list.get(i).getStart().getTime())/1000;
-			switch (plan){
+			switch (call_list.get(i).getCall_prog()){
 				case 1:
-					System.out.println("User's plan is 1");
-					total_charge += duration * 1.0;
+					System.out.println("User's plan was 1");
+					call_cost = (long)(duration * 1.0);
+					database.record_call_cost(call_list.get(i).getCall_id(), call_cost);
+					total_charge += call_cost;
 					break;
 				case 2:
-					System.out.println("User's plan is 2");
-					total_charge += duration * 2.0;
+					System.out.println("User's plan was 2");
+					call_cost = (long)(duration * 2.0);
+					database.record_call_cost(call_list.get(i).getCall_id(), call_cost);
+					total_charge += call_cost;
 					break;
 				case 3:
-					System.out.println("User's plan is 3");
-					total_charge += duration * 3.0;
+					System.out.println("User's plan was 3");
+					call_cost = (long)(duration * 3.0);
+					database.record_call_cost(call_list.get(i).getCall_id(), call_cost);
+					total_charge += call_cost;
 					break;
 			}
 		}
