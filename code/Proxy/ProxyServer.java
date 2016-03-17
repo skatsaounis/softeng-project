@@ -24,17 +24,20 @@ public class ProxyServer {
 		System.out.println("1. call_start (\\/)");
 		int dest = database.search_user(dst);
 		if(!this.is_self_call(src, dst)){
-			if(!this.blocking_check(src, dest)){
-				target = this.forwarding_analysis(src, dest);
-				if(!database.is_online(target))
-					System.out.println("Inform offline");
-				else if(!database.is_available(target))
-					System.out.println("Inform busy");
-				else{
-					System.out.println("Init call_from");
-					billing_server.call_charge_start(src, dst);
+			if(dest == 0)
+				System.out.println("Inform no such user");
+			else
+				if(!this.blocking_check(src, dest)){
+					target = this.forwarding_analysis(src, dest);
+					if(!database.is_online(target))
+						System.out.println("Inform offline");
+					else if(!database.is_available(target))
+						System.out.println("Inform busy");
+					else{
+						System.out.println("Init call_from");
+						billing_server.call_charge_start(src, dst);
+					}
 				}
-			}
 		}
 		System.out.println("Inform busy");
 	}

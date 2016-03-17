@@ -161,6 +161,8 @@ public class Database {
 				while ( rs.next() ) {
 					forwardee = rs.getInt("forwardee");
 					if(forwardee > 0){
+						if (fwd_chain.size()==0)
+							fwd_chain.add(username);
 						fwd_chain.add(forwardee);
 						sql = "SELECT * FROM user WHERE user_id = "+forwardee+" ;";
 					}
@@ -242,8 +244,8 @@ public class Database {
 	
 	public void record_call_start(int src, int dst){
 		System.out.println("13. record_call_start (\\/)");
-		String sql = "INSERT INTO call (caller,callee, cost) " +
-	            "VALUES (" + src + "," + dst + ",-1.0);";
+		String sql = "INSERT INTO call (caller,callee,callers_prog,cost) " +
+	            "VALUES (" + src + "," + dst + "," + get_plan(src) + ",-1.0);";
 		do_update(connection, sql);
 	}
 	
@@ -263,7 +265,7 @@ public class Database {
 		
 		try {
 			while ( rs.next() ) {
-			     CallDuration new_call = new CallDuration(rs.getInt("call_id"), 
+			     CallDuration new_call = new CallDuration(rs.getInt("call_id"), rs.getInt("callers_prog"), 
 			    		Timestamp.valueOf(rs.getString("start")), Timestamp.valueOf(rs.getString("end")));
 			     call_list.add(new_call);
 			  }
@@ -274,6 +276,13 @@ public class Database {
 			close_resultset(rs);
 			return call_list;
 		}
+	}
+	
+	public void record_call_cost(int call_id,long cost){
+		System.out.println("16. record_call_cost (\\/)");
+		String sql = "UPDATE call SET cost=" + cost + " WHERE call_id=" +
+				call_id + " AND cost=-1.0";
+		do_update(connection, sql);
 	}
 	
 	public Connection init_connection(){
