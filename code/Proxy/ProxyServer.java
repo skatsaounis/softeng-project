@@ -35,7 +35,7 @@ public class ProxyServer {
 						System.out.println("Inform busy");
 					else{
 						System.out.println("Init call_from");
-						billing_server.call_charge_start(src, dst);
+						billing_server.call_charge_start(src, dest);
 					}
 				}
 		}
@@ -78,7 +78,7 @@ public class ProxyServer {
 	
 	private boolean blocking_check(int src, int dst){
 		System.out.println("7. blocking_check (\\/)");
-		return database.search_is_blocking(src, dst);
+		return blocking_server.is_blocking(src, dst);
 	}
 	
 	private int forwarding_analysis(int src, int dst){

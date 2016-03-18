@@ -19,7 +19,7 @@ public class BlockingServer {
 		int source;
 		for(i=1; i<fwd_chain.size(); i++){
 			dst = fwd_chain.get(i);
-			if(database.search_is_blocking(dst, caller)){
+			if(is_blocking(dst, caller)){
 				System.out.println("Blocked by someone in fwd_chain!");
 				return false;
 			}
@@ -29,7 +29,7 @@ public class BlockingServer {
 			dst = fwd_chain.get(i);
 			for(j=0;j<i;j++){
 				source = fwd_chain.get(j);
-				if(database.search_is_blocking(dst, source)){
+				if(is_blocking(dst, source)){
 					System.out.println("Someone in fwd_chain is blocked by someone next!");
 					return false;
 				}
