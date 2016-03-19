@@ -394,6 +394,74 @@ public class SipCommunicator
         }
     }
 
+    @Override
+	public void handleBlockRequest(UserCallInitiationEvent evt) {
+		// TODO Auto-generated method stub
+    	try {
+            console.trace(
+                "Entering handleDialRequest(UserCallInitiationEvent)");
+            String blockee = (String) evt.getSource();
+            String sdpData = null;
+            try {
+                sdpData = mediaManager.generateSdpDescription();
+            }
+            catch (MediaException ex) {
+                console.showException("Failed to Generate an SDP description",
+                                      ex);
+                return;
+            }
+            try {
+                Call call = sipManager.establishBlock(blockee, sdpData);
+                call.addStateChangeListener(this);
+                Interlocutor interlocutor = new Interlocutor();
+                interlocutor.setCall(call);
+                guiManager.addInterlocutor(interlocutor);
+            }
+            catch (CommunicationsException exc) {
+                console.showException("Could not establish call!\nError was: "
+                                      + exc.getMessage(),
+                                      exc);
+            }
+        }
+        finally {
+            console.logExit();
+        }
+	}
+
+	@Override
+	public void handleForwardRequest(UserCallInitiationEvent evt) {
+		// TODO Auto-generated method stub
+		try {
+            console.trace(
+                "Entering handleDialRequest(UserCallInitiationEvent)");
+            String forwardee = (String) evt.getSource();
+            String sdpData = null;
+            try {
+                sdpData = mediaManager.generateSdpDescription();
+            }
+            catch (MediaException ex) {
+                console.showException("Failed to Generate an SDP description",
+                                      ex);
+                return;
+            }
+            try {
+                Call call = sipManager.establishForward(forwardee, sdpData);
+                call.addStateChangeListener(this);
+                Interlocutor interlocutor = new Interlocutor();
+                interlocutor.setCall(call);
+                guiManager.addInterlocutor(interlocutor);
+            }
+            catch (CommunicationsException exc) {
+                console.showException("Could not establish call!\nError was: "
+                                      + exc.getMessage(),
+                                      exc);
+            }
+        }
+        finally {
+            console.logExit();
+        }
+	}
+    
     public void handleHangupRequest(UserCallControlEvent evt)
     {
         try {

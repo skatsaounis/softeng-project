@@ -115,6 +115,8 @@ class PhoneFrame
     BorderLayout borderLayout4 = new BorderLayout();
     JPanel dialPanel = new JPanel();
     JButton dialButton = new JButton();
+    JButton blockButton = new JButton();
+    JButton forwardButton = new JButton();
     JComboBox contactBox = new JComboBox();
 
     public PhoneFrame(GuiManager guiManCallback) //throws HeadlessException
@@ -192,11 +194,18 @@ class PhoneFrame
         statusPanel.setLayout(borderLayout5);
 //        participantsTable.setMinimumSize(new Dimension(45, 300));
         borderLayout4.setHgap(10);
+
         dialPanel.setLayout(borderLayout4);
         dialPanel.setBorder(border7);
         dialButton.setEnabled(false);
         dialButton.setMnemonic('D');
         dialButton.setText("Dial");
+        blockButton.setEnabled(false);
+        blockButton.setMnemonic('B');
+        blockButton.setText("Block");
+        forwardButton.setEnabled(false);
+        forwardButton.setMnemonic('F');
+        forwardButton.setText("Forward");
         contactBox.setBorder(null);
         contactBox.setDebugGraphicsOptions(0);
         contactBox.setActionMap(null);
@@ -227,7 +236,9 @@ class PhoneFrame
         statusPanel.add(registrationAddressLabel, BorderLayout.CENTER);
         this.getContentPane().add(dialPanel, BorderLayout.NORTH);
         dialPanel.add(dialButton, BorderLayout.EAST);
-        dialPanel.add(contactBox, BorderLayout.CENTER);
+        dialPanel.add(forwardButton, BorderLayout.CENTER);
+        dialPanel.add(blockButton, BorderLayout.WEST);
+        dialPanel.add(contactBox, BorderLayout.NORTH);
 //        splitPane.setDividerLocation(200);
     }
 
