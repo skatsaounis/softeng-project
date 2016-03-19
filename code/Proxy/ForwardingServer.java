@@ -20,7 +20,7 @@ public class ForwardingServer {
 			if(blocking_check(src, fwd_chain))
 				if(!is_self_call(src, fwd_chain.get(fwd_chain.size()-1)))
 					return fwd_chain.get(fwd_chain.size()-1);
-			System.out.println("Inform busy");
+			System.out.println("Inform busy"); //not necessary
 			return -1;
 		} else
 			return dst;
