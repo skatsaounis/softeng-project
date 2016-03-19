@@ -292,7 +292,7 @@ public class NetworkAddressManager
 
                                     )
                                     continue;
-                                //publicAddress = address;
+                                publicAddress = address;
                                 selectedInterface = iFace.getDisplayName();
                             }
                         }

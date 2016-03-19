@@ -277,6 +277,8 @@ public class GuiManager
     {
 //        phoneFrame.contactBox.setEnabled(enabled);
         phoneFrame.dialButton.setEnabled(enabled);
+        phoneFrame.blockButton.setEnabled(enabled);
+        phoneFrame.forwardButton.setEnabled(enabled);
         phoneFrame.hangupButton.setEnabled(enabled);
         phoneFrame.answerButton.setEnabled(enabled);
     }
@@ -331,6 +333,34 @@ public class GuiManager
 
 //----------------- Event dispatching------------------------
     void dialButton_actionPerformed(EventObject evt)
+    {
+        //TODO temporarily close alerts from here.
+        alertManager.stopAllAlerts();
+        String callee = phoneFrame.contactBox.getSelectedItem().toString();
+        if (callee == null || callee.trim().length() < 1) {
+            return;
+        }
+        UserCallInitiationEvent commEvt = new UserCallInitiationEvent(callee);
+        for (int i = listeners.size() - 1; i >= 0; i--) {
+            ( (UserActionListener) listeners.get(i)).handleDialRequest(commEvt);
+        }
+    }
+    
+    void forwardButton_actionPerformed(EventObject evt)
+    {
+        //TODO temporarily close alerts from here.
+        alertManager.stopAllAlerts();
+        String callee = phoneFrame.contactBox.getSelectedItem().toString();
+        if (callee == null || callee.trim().length() < 1) {
+            return;
+        }
+        UserCallInitiationEvent commEvt = new UserCallInitiationEvent(callee);
+        for (int i = listeners.size() - 1; i >= 0; i--) {
+            ( (UserActionListener) listeners.get(i)).handleDialRequest(commEvt);
+        }
+    }
+    
+    void blockButton_actionPerformed(EventObject evt)
     {
         //TODO temporarily close alerts from here.
         alertManager.stopAllAlerts();
@@ -613,7 +643,26 @@ public class GuiManager
                 dialButton_actionPerformed(evt);
             }
         };
+        
+        ActionListener blockListener = new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+                blockButton_actionPerformed(evt);
+            }
+        };
+        
+        ActionListener forwardListener = new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+                forwardButton_actionPerformed(evt);
+            }
+        };
+        
         phoneFrame.dialButton.addActionListener(dialListener);
+        phoneFrame.blockButton.addActionListener(blockListener);
+        phoneFrame.forwardButton.addActionListener(forwardListener);
         phoneFrame.contactBox.addItemListener(new ContactBoxListener());
         phoneFrame.answerButton.addActionListener(new ActionListener()
         {
