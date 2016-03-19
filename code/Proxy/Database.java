@@ -165,6 +165,10 @@ public class Database {
 							fwd_chain.add(username);
 						fwd_chain.add(forwardee);
 						sql = "SELECT * FROM user WHERE user_id = "+forwardee+" ;";
+						if (forwardee == username){
+							close_resultset(rs);
+							return fwd_chain;
+						}
 					}
 					else{
 						close_resultset(rs);
