@@ -1,3 +1,6 @@
 *~
 *.jpeg
 *.autosave
+*.class
+*.project
+*.classpath
