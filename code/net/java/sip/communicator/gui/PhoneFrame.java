@@ -114,6 +114,10 @@ class PhoneFrame
     private GuiManager guiManCallback = null;
     BorderLayout borderLayout4 = new BorderLayout();
     JPanel dialPanel = new JPanel();
+    JPanel programPanel = new JPanel();
+    JButton Button1 = new JButton();
+    JButton Button2 = new JButton();
+    JButton Button3 = new JButton();
     JButton dialButton = new JButton();
     JButton blockButton = new JButton();
     JButton forwardButton = new JButton();
@@ -206,6 +210,15 @@ class PhoneFrame
         forwardButton.setEnabled(false);
         forwardButton.setMnemonic('F');
         forwardButton.setText("Forward");
+        Button1.setEnabled(false);
+        Button1.setMnemonic('1');
+        Button1.setText("1");
+        Button2.setEnabled(false);
+        Button2.setMnemonic('2');
+        Button2.setText("2");
+        Button3.setEnabled(false);
+        Button3.setMnemonic('3');
+        Button3.setText("3");
         contactBox.setBorder(null);
         contactBox.setDebugGraphicsOptions(0);
         contactBox.setActionMap(null);
@@ -239,6 +252,10 @@ class PhoneFrame
         dialPanel.add(forwardButton, BorderLayout.CENTER);
         dialPanel.add(blockButton, BorderLayout.WEST);
         dialPanel.add(contactBox, BorderLayout.NORTH);
+        programPanel.add(Button1, BorderLayout.EAST);
+        programPanel.add(Button2, BorderLayout.CENTER);
+        programPanel.add(Button3, BorderLayout.WEST);
+        this.getContentPane().add(programPanel, BorderLayout.SOUTH);
 //        splitPane.setDividerLocation(200);
     }
 
