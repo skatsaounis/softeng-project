@@ -64,6 +64,7 @@ import javax.swing.*;
 import net.java.sip.communicator.common.*;
 import net.java.sip.communicator.common.Console;
 import net.java.sip.communicator.gui.event.*;
+
 import java.awt.SystemColor;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import net.java.sip.communicator.gui.plaf.SipCommunicatorColorTheme;
@@ -281,6 +282,10 @@ public class GuiManager
         phoneFrame.forwardButton.setEnabled(enabled);
         phoneFrame.hangupButton.setEnabled(enabled);
         phoneFrame.answerButton.setEnabled(enabled);
+        phoneFrame.Button1.setEnabled(enabled);
+        phoneFrame.Button1.setBackground(Color.green);
+        phoneFrame.Button2.setEnabled(enabled);
+        phoneFrame.Button3.setEnabled(enabled);
     }
 
     public void addUserActionListener(UserActionListener l)
@@ -371,6 +376,31 @@ public class GuiManager
         UserCallInitiationEvent commEvt = new UserCallInitiationEvent(callee);
         for (int i = listeners.size() - 1; i >= 0; i--) {
             ( (UserActionListener) listeners.get(i)).handleDialRequest(commEvt);
+        }
+    }
+    
+    void programButton_actionPerformed(EventObject evt, String program)
+    {
+        //TODO temporarily close alerts from here.
+        alertManager.stopAllAlerts();
+        if (program == "1"){
+        	phoneFrame.Button1.setBackground(Color.green);
+        	phoneFrame.Button2.setBackground(defaultBackground);
+        	phoneFrame.Button3.setBackground(defaultBackground);
+        }
+        else if (program == "2"){
+        	phoneFrame.Button1.setBackground(defaultBackground);
+        	phoneFrame.Button2.setBackground(Color.green);
+        	phoneFrame.Button3.setBackground(defaultBackground);
+        }
+        else{
+        	phoneFrame.Button1.setBackground(defaultBackground);
+        	phoneFrame.Button2.setBackground(defaultBackground);
+        	phoneFrame.Button3.setBackground(Color.green);
+        }
+        UserProgramEvent commEvt = new UserProgramEvent(program);
+        for (int i = listeners.size() - 1; i >= 0; i--) {
+            ( (UserActionListener) listeners.get(i)).handleProgramRequest(commEvt);
         }
     }
 
@@ -659,6 +689,20 @@ public class GuiManager
                 forwardButton_actionPerformed(evt);
             }
         };
+        
+        ActionListener programListener = new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+            	JButton button = (JButton)evt.getSource();
+            	String label = button.getText();
+            	programButton_actionPerformed(evt, label);
+            }
+        };
+        
+        phoneFrame.Button1.addActionListener(programListener);
+        phoneFrame.Button2.addActionListener(programListener);
+        phoneFrame.Button3.addActionListener(programListener);
         
         phoneFrame.dialButton.addActionListener(dialListener);
         phoneFrame.blockButton.addActionListener(blockListener);

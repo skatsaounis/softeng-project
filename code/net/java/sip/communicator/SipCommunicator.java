@@ -462,6 +462,11 @@ public class SipCommunicator
         }
 	}
     
+	@Override
+	public void handleProgramRequest(UserProgramEvent evt) {
+		// TODO Auto-generated method stub
+    }
+	
     public void handleHangupRequest(UserCallControlEvent evt)
     {
         try {
