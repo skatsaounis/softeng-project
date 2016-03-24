@@ -1,4 +1,8 @@
+package gov.nist.sip.proxy;
+
 import java.util.ArrayList;
+
+import javax.sip.message.Response;
 
 public class BlockingServer {
 	Database database;
@@ -39,28 +43,20 @@ public class BlockingServer {
 		return true;
 	}
 	
-	public boolean request_block(int src, String dst){
+	public void request_block(int src, String dst) throws ErrorResponse{
 		System.out.println("3. request_block (\\/)");
 		int dest = database.search_user(dst);
-		if(dest>0){
-			if(!database.search_is_blocking(src, dest))
-				database.set_block(src, dest);
-			return true;
-		}
-		else
-			return false;
+		if(dest <= 0) throw new ErrorResponse(Response.NOT_FOUND, "Blockee unknown");
+		if(!database.search_is_blocking(src, dest))
+			database.set_block(src, dest);
 	}
 	
-	public boolean remove_block(int src, String dst){
+	public void remove_block(int src, String dst) throws ErrorResponse{
 		System.out.println("4. remove_block (\\/)");
 		int dest = database.search_user(dst);
-		if(dest>0){
-			if(database.search_is_blocking(src, dest))
-				database.remove_block(src, dest);
-			return true;
-		}
-		else
-			return false;
+		if(dest <= 0) throw new ErrorResponse(Response.NOT_FOUND, "Blockee unknown");
+		if(database.search_is_blocking(src, dest))
+			database.remove_block(src, dest);
 	}
 	
 }

@@ -1,4 +1,8 @@
+package gov.nist.sip.proxy;
+
 import java.util.ArrayList;
+
+import javax.sip.message.Response;
 
 
 public class BillingServer {
@@ -8,13 +12,12 @@ public class BillingServer {
 		this.database = database;
 	}
 
-	public void select_plan(String name, int my_plan){
+	public void select_plan(int src, int my_plan) throws ErrorResponse{
 		System.out.println("1. select_plan (\\/)");
-		int user = database.search_user(name);
-		if(database.get_plan(user)>0) /* must be replaced. If plan can be changed */
-			database.set_plan(user, my_plan);
-		else
-			System.out.println("Inform failure");
+		if (!database.can_change_plan(src)) throw new ErrorResponse(
+				Response.TEMPORARILY_UNAVAILABLE, "You may not change billing plan that frequently.");
+		if (database.get_plan(src) == my_plan) return;  // Desired plan already selected. 
+		database.set_plan(src, my_plan);
 	}
 	
 	public void call_charge_start(int src, int dst){

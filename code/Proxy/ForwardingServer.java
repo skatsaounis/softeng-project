@@ -1,4 +1,8 @@
+package gov.nist.sip.proxy;
+
 import java.util.ArrayList;
+
+import javax.sip.message.Response;
 
 public class ForwardingServer {
 	BlockingServer blocking;
@@ -26,19 +30,18 @@ public class ForwardingServer {
 			return dst;
 	}
 
-	public boolean forwarding_registration(int src, String dst){
+	public void forwarding_registration(int src, String dst) throws ErrorResponse{
 		System.out.println("2. forwarding_registration (\\/)");
 		int dest = database.search_user(dst);
-		if (dest <= 0) return false;  // nonexistent user.
+		if (dest <= 0) throw new ErrorResponse(Response.NOT_FOUND, "Forwardee unknown");
 
         // Confirm that the new forwarding
         // will not create a forwarding loop.
         ArrayList<Integer> dest_fwdees = database.forwarding_chain(dest);
-        if (dest_fwdees == null) return false;  // unexpected internal error.
-        if (dest_fwdees.contains(src)) return false;  // loop exists.
+        if (dest_fwdees == null) throw new ErrorResponse(Response.SERVER_INTERNAL_ERROR, "Unexpected internal error");
+        if (dest_fwdees.contains(src)) throw new ErrorResponse(Response.FORBIDDEN, "Forwarding creates loop");
 
         database.set_forwarding(src, dest);
-        return true;
 	}
 
 	public void forwarding_removal(int username){

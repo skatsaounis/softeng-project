@@ -1,3 +1,5 @@
+package gov.nist.sip.proxy;
+
 //import java.sql.Connection;
 
 public class ProxyServer {
@@ -51,24 +53,24 @@ public class ProxyServer {
 		billing_server.call_charge_end(src, dst);
 	}
 	
-	public boolean request_block(int src, String dst){
+	public void request_block(int src, String dst) throws ErrorResponse{
 		System.out.println("2. request_block (\\/)");
-		return blocking_server.request_block(src, dst);
+		blocking_server.request_block(src, dst);
 	}
 	
-	public boolean remove_block(int src, String dst){
+	public void remove_block(int src, String dst) throws ErrorResponse{
 		System.out.println("3. remove_block (\\/)");
-		return blocking_server.remove_block(src, dst);
+		blocking_server.remove_block(src, dst);
 	}
 	
-	public boolean forwarding_registration(int src, String dst){
+	public void forwarding_registration(int src, String dst) throws ErrorResponse{
 		System.out.println("4. forwarding_registration (\\/)");
-		return forwarding_server.forwarding_registration(src, dst);
+		forwarding_server.forwarding_registration(src, dst);
 	}
 	
-	public void forwarding_removal(int username){
+	public void forwarding_removal(int src) {
 		System.out.println("5. forwarding_removal (\\/)");
-		forwarding_server.forwarding_removal(username);
+		forwarding_server.forwarding_removal(src);
 	}
 	
 	private boolean is_self_call(int src, String dst){
@@ -90,14 +92,14 @@ public class ProxyServer {
 		return forwarding_server.route(src, dst);
 	}
 	
-	public void select_plan(String name, int my_plan){
+	public void select_plan(int src, int my_plan) throws ErrorResponse{
 		System.out.println("9. select_plan (\\/)");
-		billing_server.select_plan(name, my_plan);
+		billing_server.select_plan(src, my_plan);
 	}
 
-	public long total_charge_request(int name){
+	public long total_charge_request(int src){
 		System.out.println("10. total_charge_request  (\\/)");
-		return billing_server.total_charge(name);
+		return billing_server.total_charge(src);
 	}
 
 }

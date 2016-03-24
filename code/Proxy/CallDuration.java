@@ -1,3 +1,5 @@
+package gov.nist.sip.proxy;
+
 import java.sql.*;
 
 public class CallDuration {

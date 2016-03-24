@@ -1,3 +1,5 @@
+package gov.nist.sip.proxy;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -195,6 +197,10 @@ public class Database {
 		String sql = "UPDATE user SET forwardee=0 " +
 				"WHERE user_id=" + username + " ;";
 		do_update(connection, sql);
+	}
+	
+	public boolean can_change_plan(int src){
+		return true;  // TODO
 	}
 	
 	public int get_plan(int name){
