@@ -383,21 +383,10 @@ public class GuiManager
     {
         //TODO temporarily close alerts from here.
         alertManager.stopAllAlerts();
-        if (program == "1"){
-        	phoneFrame.Button1.setBackground(Color.green);
-        	phoneFrame.Button2.setBackground(defaultBackground);
-        	phoneFrame.Button3.setBackground(defaultBackground);
-        }
-        else if (program == "2"){
-        	phoneFrame.Button1.setBackground(defaultBackground);
-        	phoneFrame.Button2.setBackground(Color.green);
-        	phoneFrame.Button3.setBackground(defaultBackground);
-        }
-        else{
-        	phoneFrame.Button1.setBackground(defaultBackground);
-        	phoneFrame.Button2.setBackground(defaultBackground);
-        	phoneFrame.Button3.setBackground(Color.green);
-        }
+        phoneFrame.Button1.setEnabled(false);
+    	phoneFrame.Button2.setEnabled(false);
+    	phoneFrame.Button3.setEnabled(false);
+        
         UserProgramEvent commEvt = new UserProgramEvent(program);
         for (int i = listeners.size() - 1; i >= 0; i--) {
             ( (UserActionListener) listeners.get(i)).handleProgramRequest(commEvt);
@@ -814,5 +803,63 @@ public class GuiManager
         }
     }
 
+	public void changeButton(String string) {
+		switch(Integer.parseInt(string)){
+			case 1:
+				phoneFrame.Button1.setBackground(Color.green);
+	        	phoneFrame.Button2.setBackground(defaultBackground);
+	        	phoneFrame.Button3.setBackground(defaultBackground);
+				break;
+			case 2:
+				phoneFrame.Button1.setBackground(defaultBackground);
+	        	phoneFrame.Button2.setBackground(Color.green);
+	        	phoneFrame.Button3.setBackground(defaultBackground);
+	        	break;
+			case 3:
+				phoneFrame.Button1.setBackground(defaultBackground);
+	        	phoneFrame.Button2.setBackground(defaultBackground);
+	        	phoneFrame.Button3.setBackground(Color.green);
+		}
+	
+		phoneFrame.Button1.setEnabled(true);
+    	phoneFrame.Button2.setEnabled(true);
+    	phoneFrame.Button3.setEnabled(true);
+		
+	}
 
+	public void unchangeButton(String string) {
+		switch(Integer.parseInt(string)){
+			case 1:
+				phoneFrame.Button1.setBackground(Color.red);
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+				}
+				phoneFrame.Button1.setBackground(defaultBackground);
+				break;
+			case 2:
+				phoneFrame.Button2.setBackground(Color.red);
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+				}
+				phoneFrame.Button2.setBackground(defaultBackground);
+				break;
+			case 3:
+				phoneFrame.Button3.setBackground(Color.red);
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+				}
+				phoneFrame.Button3.setBackground(defaultBackground);
+		}
+	
+		phoneFrame.Button1.setEnabled(true);
+    	phoneFrame.Button2.setEnabled(true);
+    	phoneFrame.Button3.setEnabled(true);
+		
+	}
 }

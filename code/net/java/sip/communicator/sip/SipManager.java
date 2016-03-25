@@ -62,9 +62,11 @@ import java.text.*;
 import java.util.*;
 import javax.sip.*;
 import javax.sip.address.*;
+import javax.sip.address.URI;
 import javax.sip.header.*;
 import javax.sip.message.*;
 import net.java.sip.communicator.common.*;
+import net.java.sip.communicator.gui.GuiManager;
 import net.java.sip.communicator.sip.event.*;
 import net.java.sip.communicator.sip.security.*;
 import net.java.sip.communicator.sip.simple.*;
@@ -96,7 +98,7 @@ public class SipManager
      */
     protected static final long RETRY_OBJECT_DELETES_AFTER = 500;
 
-
+    private GuiManager guiManager;
     protected static final Console console = Console.getConsole(SipManager.class);
     protected static final String DEFAULT_TRANSPORT = "udp";
     //jain-sip objects - package accessibility as they should be
@@ -232,9 +234,10 @@ public class SipManager
      * Constructor. It only creates a SipManager instance without initializing
      * the stack itself.
      */
-    public SipManager()
+    public SipManager(GuiManager guiManager)
     {
-        registerProcessing    = new RegisterProcessing(this);
+        this.guiManager = guiManager;
+    	registerProcessing    = new RegisterProcessing(this);
         callProcessing        = new CallProcessing(this);
         watcher               = new Watcher(this);
         presenceAgent         = new PresenceAgent(this);
@@ -1697,6 +1700,7 @@ public class SipManager
             String method = ( (CSeqHeader) response.getHeader(CSeqHeader.NAME)).
                 getMethod();
             Response responseClone = (Response) response.clone();
+            System.out.println("I am "+response.getStatusCode()+ " my method is" +method+" my reason is"+response.getReasonPhrase());
             //OK
             if (response.getStatusCode() == Response.OK) {
                 //REGISTER
@@ -1715,7 +1719,23 @@ public class SipManager
                 else if (method.equals(Request.SUBSCRIBE)) {
                     watcher.processSubscribeOK(clientTransaction, response);
                 }
-
+                else if (method.equals(Request.INFO)){
+                	if(responseClone.getReasonPhrase().startsWith("plan")){
+                		this.guiManager.changeButton(responseClone.getReasonPhrase().split(":")[1]);
+                	}
+                	else if(responseClone.getReasonPhrase().startsWith("block")){
+                		
+                	}
+                	else if(responseClone.getReasonPhrase().startsWith("unblock")){
+                		
+                	}
+                	else if(responseClone.getReasonPhrase().startsWith("forward")){
+                		
+                	}
+                	else if(responseClone.getReasonPhrase().startsWith("unforward")){
+                		
+                	}
+                }
             }
             //ACCEPTED
             else if (response.getStatusCode() == Response.ACCEPTED) {
@@ -1817,9 +1837,17 @@ public class SipManager
                if (method.equals(Request.INVITE)) {
                    callProcessing.processCallError(clientTransaction, response);
                }
-               else {
-                   fireUnknownMessageReceived(response);
-               }
+               else if (response.getStatusCode() ==
+                       Response.TEMPORARILY_UNAVAILABLE) {
+                  /** @todo add proper request handling */
+              	if (method.equals(Request.INFO)){
+                  	if(responseClone.getReasonPhrase().startsWith("plan")){
+                  		this.guiManager.unchangeButton(responseClone.getReasonPhrase().split(":")[1]);
+                  	}
+              	}
+                  else
+                  	fireUnknownMessageReceived(response);
+              }
 
             }
             else if (response.getStatusCode() == Response.ACCEPTED) {
@@ -1970,7 +1998,13 @@ public class SipManager
             else if (response.getStatusCode() ==
                      Response.TEMPORARILY_UNAVAILABLE) {
                 /** @todo add proper request handling */
-                fireUnknownMessageReceived(response);
+            	if (method.equals(Request.INFO)){
+                	if(responseClone.getReasonPhrase().startsWith("plan")){
+                		this.guiManager.unchangeButton(responseClone.getReasonPhrase().split(":")[1]);
+                	}
+            	}
+                else
+                	fireUnknownMessageReceived(response);
             }
             else if (response.getStatusCode() == Response.TOO_MANY_HOPS) {
                 /** @todo add proper request handling */
@@ -1999,6 +2033,7 @@ public class SipManager
                 fireUnknownMessageReceived(response);
             }
             else { //We couldn't recognise the message
+            	System.out.println("asdasdasd");
                 fireUnknownMessageReceived(response);
             }
         }
@@ -2165,4 +2200,91 @@ public class SipManager
 
     }
 
+    public String sendMessage(java.lang.String to, byte[] messageBody,
+			String contentType, String contentEncoding)
+	throws CommunicationsException 	{
+		try {
+			System.out.println("Mphke sto try...........................");
+			to = to.trim();
+			String defaultDomainName = Utils.getProperty("net.java.sip.communicator.sip.DEFAULT_DOMAIN_NAME");
+			if (defaultDomainName != null && !to.trim().startsWith("tel:") && to.indexOf('@') == -1)
+				to = to + "@" + defaultDomainName;
+			if (to.toLowerCase().indexOf("sip:") == -1 && to.indexOf('@') != -1)
+				to = "sip:" + to;
+			
+			//Request URI
+			URI requestURI = null;
+			System.out.println(to);
+			
+			try { requestURI = addressFactory.createURI(to); 
+			System.out.println("Mphke shmeio 1..............................................1");}
+			catch (ParseException ex) { throw new CommunicationsException(to + " is not a legal SIP uri!", ex); }
+			
+			//Call ID
+			CallIdHeader callIdHeader = sipProvider.getNewCallId();
+			
+			//CSeq
+			CSeqHeader cSeqHeader;
+
+			try { cSeqHeader = headerFactory.createCSeqHeader(1,	Request.INFO);
+			System.out.println("Mphke shmeio 2..............................................2");}
+			catch (Exception ex) { throw new CommunicationsException("An unexpected erro occurred while constructing the CSeqHeadder", ex); }
+			
+			//FromHeader
+			FromHeader fromHeader = getFromHeader();
+			
+			//ToHeader
+			Address toAddress = addressFactory.createAddress(requestURI);
+			ToHeader toHeader;
+			try { toHeader = headerFactory.createToHeader(toAddress, null); 
+			System.out.println("Mphke shmeio 3..............................................3");}
+			catch (ParseException ex) { throw new CommunicationsException("Null is not an allowed tag for the to header!", ex); }
+
+			//ContentTypeHeader
+			ContentTypeHeader contentTypeHeader = null;
+			try {
+				String[] contentTypeTab = contentType.split("/");
+				contentTypeHeader = headerFactory.createContentTypeHeader(contentTypeTab[0], contentTypeTab[1]);
+				System.out.println("Mphke shmeio 4..............................................4");}
+			catch (ParseException ex) { throw new CommunicationsException("ContentType Header must look like type/subtype!", ex); }
+
+			//ContentLengthHeader
+			ContentLengthHeader contentLengthHeader = null;
+			try { contentLengthHeader = headerFactory.createContentLengthHeader(messageBody.length);
+			System.out.println("Mphke shmeio 5..............................................5");}
+			catch (InvalidArgumentException ex) { throw new CommunicationsException("Cseq Header must contain a integer value!", ex); }
+
+			//ViaHeaders
+			ArrayList viaHeaders = getLocalViaHeaders();
+			
+			//MaxForwards
+			MaxForwardsHeader maxForwards = getMaxForwardsHeader();
+			
+			//Create the message
+			Request message = null;
+			try {
+				message = messageFactory.createRequest(requestURI,
+						Request.INFO,
+						callIdHeader, cSeqHeader, fromHeader, toHeader, viaHeaders,
+						maxForwards);
+				message.setContent(messageBody, contentTypeHeader);
+				message.setContentLength(contentLengthHeader);
+				System.out.println("Mphke shmeio 6..............................................6");}
+			catch (ParseException ex) { throw new CommunicationsException("Failed to create message Request!", ex); }
+
+			ClientTransaction messageTransaction = null;
+
+			try { messageTransaction = sipProvider.getNewClientTransaction(message); 
+			System.out.println("Mphke shmeio 7..............................................7");}
+			catch (TransactionUnavailableException ex) { throw new CommunicationsException("Failed to create messageTransaction.", ex); }
+
+			try { messageTransaction.sendRequest(); 
+			System.out.println("Mphke shmeio 8..............................................8");}
+			catch (SipException ex) { throw new CommunicationsException("An error occurred while sending message request", ex); }
+
+			return messageTransaction.toString();
+
+		} finally {}
+	}
+    
 }

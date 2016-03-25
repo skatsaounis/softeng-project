@@ -112,7 +112,7 @@ public class SipCommunicator
 
             guiManager = new GuiManager();
             mediaManager = new MediaManager();
-            sipManager = new SipManager();
+            sipManager = new SipManager(guiManager);
             simpleContactList = new SimpleContactList();
 
             guiManager.addUserActionListener(this);
@@ -464,7 +464,15 @@ public class SipCommunicator
     
 	@Override
 	public void handleProgramRequest(UserProgramEvent evt) {
-		// TODO Auto-generated method stub
+		String program = (String) evt.getSource();
+		
+		String message = "billing:selectplan@"+program;
+		try {
+			sipManager.sendMessage("billing:selectplan", message.getBytes(), "text/plain", "plain");
+		} catch (CommunicationsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
     }
 	
     public void handleHangupRequest(UserCallControlEvent evt)
