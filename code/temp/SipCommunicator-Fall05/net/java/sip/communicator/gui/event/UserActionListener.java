@@ -81,6 +81,10 @@ public interface UserActionListener
     
     public void handleForwardRequest(UserForwardEvent evt);
     
+    public void handleUnBlockRequest(UserBlockEvent evt);
+    
+    public void handleUnForwardRequest(UserForwardEvent evt);
+    
     public void handleProgramRequest(UserProgramEvent evt);
     
     public void handleExitRequest();

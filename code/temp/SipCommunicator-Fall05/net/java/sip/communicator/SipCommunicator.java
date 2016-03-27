@@ -407,6 +407,31 @@ public class SipCommunicator
 		}
 	}
 
+    @Override
+	public void handleUnBlockRequest(UserBlockEvent evt) {
+    	String blockee = (String) evt.getSource();
+		
+		String message = "blocking:unblock@" + blockee;
+		try {
+			sipManager.sendMessage("blocking:unblock", message.getBytes(), "text/plain", "plain");
+		} catch (CommunicationsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+    
+    @Override
+	public void handleUnForwardRequest(UserForwardEvent evt) {
+		
+		String message = "forwarding:unforward";
+		try {
+			sipManager.sendMessage("forwarding:unforward", message.getBytes(), "text/plain", "plain");
+		} catch (CommunicationsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+    
 	@Override
 	public void handleForwardRequest(UserForwardEvent evt) {
 		String forwardee = (String) evt.getSource();

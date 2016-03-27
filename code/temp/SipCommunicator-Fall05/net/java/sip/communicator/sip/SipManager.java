@@ -1724,16 +1724,16 @@ public class SipManager
                 		this.guiManager.changeButton(responseClone.getReasonPhrase().split(":")[1]);
                 	}
                 	else if(responseClone.getReasonPhrase().startsWith("block")){
-                		this.guiManager.blockOK();
+                		this.guiManager.blockOK("block");
                 	}
                 	else if(responseClone.getReasonPhrase().startsWith("unblock")){
-                		
+                		this.guiManager.blockOK("unblock");
                 	}
                 	else if(responseClone.getReasonPhrase().startsWith("forward")){
-                		this.guiManager.forwardOK();
+                		this.guiManager.forwardOK("forward");
                 	}
                 	else if(responseClone.getReasonPhrase().startsWith("unforward")){
-                		
+                		this.guiManager.forwardOK("unforward");
                 	}
                 }
             }

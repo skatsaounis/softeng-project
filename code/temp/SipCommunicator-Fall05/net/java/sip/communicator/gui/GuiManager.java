@@ -280,6 +280,8 @@ public class GuiManager
         phoneFrame.dialButton.setEnabled(enabled);
         phoneFrame.blockButton.setEnabled(enabled);
         phoneFrame.forwardButton.setEnabled(enabled);
+        phoneFrame.unblockButton.setEnabled(enabled);
+        phoneFrame.unforwardButton.setEnabled(enabled);
         phoneFrame.hangupButton.setEnabled(enabled);
         phoneFrame.answerButton.setEnabled(enabled);
         phoneFrame.Button1.setEnabled(enabled);
@@ -361,6 +363,28 @@ public class GuiManager
         UserForwardEvent commEvt = new UserForwardEvent(forwardee);
         for (int i = listeners.size() - 1; i >= 0; i--) {
             ( (UserActionListener) listeners.get(i)).handleForwardRequest(commEvt);
+        }
+    }
+    
+    void unforwardButton_actionPerformed(EventObject evt)
+    {
+        alertManager.stopAllAlerts();
+        UserForwardEvent commEvt = new UserForwardEvent("empty");
+        for (int i = listeners.size() - 1; i >= 0; i--) {
+            ( (UserActionListener) listeners.get(i)).handleUnForwardRequest(commEvt);
+        }
+    }
+    
+    void unblockButton_actionPerformed(EventObject evt)
+    {
+        alertManager.stopAllAlerts();
+        String blockee = phoneFrame.contactBox.getSelectedItem().toString();
+        if (blockee == null || blockee.trim().length() < 1) {
+            return;
+        }
+        UserBlockEvent commEvt = new UserBlockEvent(blockee);
+        for (int i = listeners.size() - 1; i >= 0; i--) {
+            ( (UserActionListener) listeners.get(i)).handleUnBlockRequest(commEvt);
         }
     }
     
@@ -677,6 +701,22 @@ public class GuiManager
             }
         };
         
+        ActionListener unblockListener = new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+                unblockButton_actionPerformed(evt);
+            }
+        };
+        
+        ActionListener unforwardListener = new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+                unforwardButton_actionPerformed(evt);
+            }
+        };
+        
         ActionListener programListener = new ActionListener()
         {
             public void actionPerformed(ActionEvent evt)
@@ -694,6 +734,8 @@ public class GuiManager
         phoneFrame.dialButton.addActionListener(dialListener);
         phoneFrame.blockButton.addActionListener(blockListener);
         phoneFrame.forwardButton.addActionListener(forwardListener);
+        phoneFrame.unblockButton.addActionListener(unblockListener);
+        phoneFrame.unforwardButton.addActionListener(unforwardListener);
         phoneFrame.contactBox.addItemListener(new ContactBoxListener());
         phoneFrame.answerButton.addActionListener(new ActionListener()
         {
@@ -861,25 +903,36 @@ public class GuiManager
 		
 	}
 
-	public void blockOK() {
-		phoneFrame.blockButton.setBackground(Color.green);
+	public void blockOK(String button) {
+		if(button.startsWith("block"))
+			phoneFrame.blockButton.setBackground(Color.green);
+		else
+			phoneFrame.unblockButton.setBackground(Color.green);
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 		}
-		phoneFrame.blockButton.setBackground(defaultBackground);
+		if(button.startsWith("block"))
+			phoneFrame.blockButton.setBackground(defaultBackground);
+		else
+			phoneFrame.unblockButton.setBackground(defaultBackground);
 	}
 
-	public void forwardOK() {
-		phoneFrame.forwardButton.setBackground(Color.green);
+	public void forwardOK(String button) {
+		if(button.startsWith("forward"))
+			phoneFrame.forwardButton.setBackground(Color.green);
+		else
+			phoneFrame.unforwardButton.setBackground(Color.green);
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 		}
-		phoneFrame.forwardButton.setBackground(defaultBackground);
-		
+		if(button.startsWith("forward"))
+			phoneFrame.forwardButton.setBackground(defaultBackground);
+		else
+			phoneFrame.unforwardButton.setBackground(defaultBackground);
 	}
 
 	public void redButton(String reasonPhrase) {
@@ -900,6 +953,15 @@ public class GuiManager
 				// TODO Auto-generated catch block
 			}
 			phoneFrame.forwardButton.setBackground(defaultBackground);
+		}
+		else if(reasonPhrase.startsWith("unblock")){
+			phoneFrame.unblockButton.setBackground(Color.red);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			}
+			phoneFrame.unblockButton.setBackground(defaultBackground);
 		}
 	}
 }

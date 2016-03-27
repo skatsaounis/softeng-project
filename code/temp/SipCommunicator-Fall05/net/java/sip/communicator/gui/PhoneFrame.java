@@ -114,6 +114,7 @@ class PhoneFrame
     private GuiManager guiManCallback = null;
     BorderLayout borderLayout4 = new BorderLayout();
     JPanel dialPanel = new JPanel();
+    JPanel newPanel = new JPanel();
     JPanel programPanel = new JPanel();
     JButton Button1 = new JButton();
     JButton Button2 = new JButton();
@@ -121,6 +122,8 @@ class PhoneFrame
     JButton dialButton = new JButton();
     JButton blockButton = new JButton();
     JButton forwardButton = new JButton();
+    JButton unblockButton = new JButton();
+    JButton unforwardButton = new JButton();
     JComboBox contactBox = new JComboBox();
 
     public PhoneFrame(GuiManager guiManCallback) //throws HeadlessException
@@ -210,6 +213,12 @@ class PhoneFrame
         forwardButton.setEnabled(false);
         forwardButton.setMnemonic('F');
         forwardButton.setText("Forward");
+        unblockButton.setEnabled(false);
+        unblockButton.setMnemonic('U');
+        unblockButton.setText("UnBlock");
+        unforwardButton.setEnabled(false);
+        unforwardButton.setMnemonic('R');
+        unforwardButton.setText("UnForward");
         Button1.setEnabled(false);
         Button1.setMnemonic('1');
         Button1.setText("1");
@@ -248,6 +257,7 @@ class PhoneFrame
         statusPanel.add(registrationLabel, BorderLayout.WEST);
         statusPanel.add(registrationAddressLabel, BorderLayout.CENTER);
         this.getContentPane().add(dialPanel, BorderLayout.NORTH);
+        dialPanel.add(newPanel, BorderLayout.SOUTH);
         dialPanel.add(dialButton, BorderLayout.EAST);
         dialPanel.add(forwardButton, BorderLayout.CENTER);
         dialPanel.add(blockButton, BorderLayout.WEST);
@@ -255,6 +265,8 @@ class PhoneFrame
         programPanel.add(Button1, BorderLayout.EAST);
         programPanel.add(Button2, BorderLayout.CENTER);
         programPanel.add(Button3, BorderLayout.WEST);
+        newPanel.add(unforwardButton, BorderLayout.EAST);
+        newPanel.add(unblockButton, BorderLayout.WEST);
         this.getContentPane().add(programPanel, BorderLayout.SOUTH);
 //        splitPane.setDividerLocation(200);
     }
