@@ -348,7 +348,16 @@ public class SipCommunicator
                 return;
             }
             try {
-                sipManager.answerCall(interlocutor.getID(), sdpData);
+                
+                String caller = sipManager.answerCall(interlocutor.getID(), sdpData);
+        		
+        		String message = "answer@" + caller;
+        		try {
+        			sipManager.sendMessage("answer", message.getBytes(), "text/plain", "plain");
+        		} catch (CommunicationsException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
             }
             catch (CommunicationsException exc) {
                 console.showException("Could not answer call!\nError was: "
@@ -462,10 +471,18 @@ public class SipCommunicator
     {
         try {
             console.logEntry();
-            sipManager.endCall(evt.getAssociatedInterlocutor().getID());
+            String remote = sipManager.endCall(evt.getAssociatedInterlocutor().getID());
             //no further action should be taken here. Close
             //(mediaManager.closeStream guiManager.removeInterlocutor)
             //should be perfomed by corresponding call listeners
+        
+            String message = "hangup@" + remote;
+    		try {
+    			sipManager.sendMessage("hangup", message.getBytes(), "text/plain", "plain");
+    		} catch (CommunicationsException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
         }
         catch (CommunicationsException exc) {
             console.showException("Could not properly terminate call!\n"
@@ -474,7 +491,7 @@ public class SipCommunicator
                                   );
         }
         finally {
-            console.logExit();
+        	console.logExit();
         }
     }
 

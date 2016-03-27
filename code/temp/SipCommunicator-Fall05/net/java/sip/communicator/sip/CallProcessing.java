@@ -908,10 +908,10 @@ public class CallProcessing
     }
 
     //end call
-    void endCall(int callID) throws CommunicationsException
+    String endCall(int callID) throws CommunicationsException
     {
         try
-        {
+        {	String remote = null;
             console.logEntry();
 
             Call call = callDispatcher.getCall(callID);
@@ -923,6 +923,8 @@ public class CallProcessing
                     "Could not find call with id=" +
                     callID);
             }
+            remote = call.getRemoteName();
+            
             Dialog dialog = call.getDialog();
             if (call.getState().equals(Call.CONNECTED)
                 || call.getState().equals(Call.RECONNECTED)) {
@@ -970,6 +972,7 @@ public class CallProcessing
                 throw new CommunicationsException
                     ("Could not determine call state!");
             }
+            return remote;
         }
         finally
         {
@@ -1108,14 +1111,14 @@ public class CallProcessing
     } //busy here
 
     //------------------ say ok
-    public void sayOK(int callID, String sdpContent) throws
+    public String sayOK(int callID, String sdpContent) throws
         CommunicationsException
-    {
+    {Call call;
         try
         {
             console.logEntry();
 
-            Call call = callDispatcher.getCall(callID);
+            call = callDispatcher.getCall(callID);
             if (call == null) {
                 console.error("Failed to find call with id=" + callID);
                 throw new CommunicationsException(
@@ -1225,10 +1228,12 @@ public class CallProcessing
                     ex
                     );
             }
+            return call.getRemoteName();
+            
         }
         finally
         {
-            console.logExit();
+        	console.logExit();
         }
 
     } //answer call

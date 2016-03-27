@@ -722,12 +722,12 @@ public class SipManager
      * @throws CommunicationsException if an exception occurs while invoking this
      * method.
      */
-    public void endCall(int callID) throws CommunicationsException
+    public String endCall(int callID) throws CommunicationsException
     {
         try {
             console.logEntry();
             checkIfStarted();
-            callProcessing.endCall(callID);
+            return callProcessing.endCall(callID);
         }
         finally {
             console.logExit();
@@ -764,13 +764,13 @@ public class SipManager
      * @throws CommunicationsException if an axeption occurs while invoking this
      * method.
      */
-    public void answerCall(int callID, String sdpContent) throws
+    public String answerCall(int callID, String sdpContent) throws
         CommunicationsException
     {
         try {
             console.logEntry();
             checkIfStarted();
-            callProcessing.sayOK(callID, sdpContent);
+            return callProcessing.sayOK(callID, sdpContent);
         }
         finally {
             console.logExit();
