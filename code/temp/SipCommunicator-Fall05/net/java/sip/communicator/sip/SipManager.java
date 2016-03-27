@@ -1735,6 +1735,9 @@ public class SipManager
                 	else if(responseClone.getReasonPhrase().startsWith("unforward")){
                 		this.guiManager.forwardOK("unforward");
                 	}
+                	else if(responseClone.getReasonPhrase().startsWith("totalcost")){
+                		this.guiManager.totalCost();
+                	}
                 }
             }
             //ACCEPTED

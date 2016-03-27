@@ -57,6 +57,8 @@
  */
 package net.java.sip.communicator.gui.event;
 
+import java.util.*;
+
 /**
  * <p>Title: SIP COMMUNICATOR</p>
  * <p>Description:JAIN-SIP Audio/Video phone application</p>
@@ -68,31 +70,11 @@ package net.java.sip.communicator.gui.event;
  * @version 1.1
  *
  */
-public interface UserActionListener
-    extends java.util.EventListener
+public class TotalCostEvent
+    extends EventObject
 {
-    public void handleDialRequest(UserCallInitiationEvent evt);
-
-    public void handleHangupRequest(UserCallControlEvent evt);
-
-    public void handleAnswerRequest(UserCallControlEvent evt);
-
-    public void handleBlockRequest(UserBlockEvent evt);
-    
-    public void handleForwardRequest(UserForwardEvent evt);
-    
-    public void handleUnBlockRequest(UserBlockEvent evt);
-    
-    public void handleUnForwardRequest(UserForwardEvent evt);
-    
-    public void handleTotalCostRequest(TotalCostEvent evt);
-    
-    public void handleProgramRequest(UserProgramEvent evt);
-    
-    public void handleExitRequest();
-
-/** @todo remove after testing */
-//    public void handlePropertiesSaveRequest();
-
-    public void handleDebugToolLaunch();
+    public TotalCostEvent(String program)
+    {
+        super(program);
+    }
 }

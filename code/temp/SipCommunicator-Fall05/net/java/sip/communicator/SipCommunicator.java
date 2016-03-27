@@ -467,6 +467,19 @@ public class SipCommunicator
 		}		
     }
 	
+	@Override
+	public void handleTotalCostRequest(TotalCostEvent evt) {
+		String program = (String) evt.getSource();
+		
+		String message = "totalcost";
+		try {
+			sipManager.sendMessage("totalcost", message.getBytes(), "text/plain", "plain");
+		} catch (CommunicationsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+    }
+	
     public void handleHangupRequest(UserCallControlEvent evt)
     {
         try {

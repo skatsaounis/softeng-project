@@ -288,6 +288,7 @@ public class GuiManager
         phoneFrame.Button1.setBackground(Color.green);
         phoneFrame.Button2.setEnabled(enabled);
         phoneFrame.Button3.setEnabled(enabled);
+        phoneFrame.totalButton.setEnabled(enabled);
     }
 
     public void addUserActionListener(UserActionListener l)
@@ -372,6 +373,15 @@ public class GuiManager
         UserForwardEvent commEvt = new UserForwardEvent("empty");
         for (int i = listeners.size() - 1; i >= 0; i--) {
             ( (UserActionListener) listeners.get(i)).handleUnForwardRequest(commEvt);
+        }
+    }
+    
+    void totalCostButton_actionPerformed(EventObject evt)
+    {
+        alertManager.stopAllAlerts();
+        TotalCostEvent commEvt = new TotalCostEvent("empty");
+        for (int i = listeners.size() - 1; i >= 0; i--) {
+            ( (UserActionListener) listeners.get(i)).handleTotalCostRequest(commEvt);
         }
     }
     
@@ -727,9 +737,18 @@ public class GuiManager
             }
         };
         
+        ActionListener totalListener = new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+            	totalCostButton_actionPerformed(evt);
+            }
+        };
+        
         phoneFrame.Button1.addActionListener(programListener);
         phoneFrame.Button2.addActionListener(programListener);
         phoneFrame.Button3.addActionListener(programListener);
+        phoneFrame.totalButton.addActionListener(totalListener);
         
         phoneFrame.dialButton.addActionListener(dialListener);
         phoneFrame.blockButton.addActionListener(blockListener);
@@ -900,7 +919,7 @@ public class GuiManager
 		phoneFrame.Button1.setEnabled(true);
     	phoneFrame.Button2.setEnabled(true);
     	phoneFrame.Button3.setEnabled(true);
-		
+		phoneFrame.totalButton.setEnabled(true);
 	}
 
 	public void blockOK(String button) {
@@ -963,5 +982,18 @@ public class GuiManager
 			}
 			phoneFrame.unblockButton.setBackground(defaultBackground);
 		}
+	}
+
+	public void totalCost() {
+		phoneFrame.totalButton.setBackground(Color.green);
+		String a = "42.00";
+		phoneFrame.costLabel.setText(a);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+		}
+		phoneFrame.totalButton.setBackground(defaultBackground);
+		
 	}
 }

@@ -119,13 +119,15 @@ class PhoneFrame
     JButton Button1 = new JButton();
     JButton Button2 = new JButton();
     JButton Button3 = new JButton();
+    JButton totalButton = new JButton();
     JButton dialButton = new JButton();
     JButton blockButton = new JButton();
     JButton forwardButton = new JButton();
     JButton unblockButton = new JButton();
     JButton unforwardButton = new JButton();
     JComboBox contactBox = new JComboBox();
-
+    JLabel costLabel = new JLabel();
+    
     public PhoneFrame(GuiManager guiManCallback) //throws HeadlessException
     {
         try {
@@ -201,7 +203,9 @@ class PhoneFrame
         statusPanel.setLayout(borderLayout5);
 //        participantsTable.setMinimumSize(new Dimension(45, 300));
         borderLayout4.setHgap(10);
-
+        
+        programPanel.setLayout(gridLayout1);
+        programPanel.setBorder(border4);
         dialPanel.setLayout(borderLayout4);
         dialPanel.setBorder(border7);
         dialButton.setEnabled(false);
@@ -219,6 +223,7 @@ class PhoneFrame
         unforwardButton.setEnabled(false);
         unforwardButton.setMnemonic('R');
         unforwardButton.setText("UnForward");
+        costLabel.setText("0.00");
         Button1.setEnabled(false);
         Button1.setMnemonic('1');
         Button1.setText("1");
@@ -228,6 +233,9 @@ class PhoneFrame
         Button3.setEnabled(false);
         Button3.setMnemonic('3');
         Button3.setText("3");
+        totalButton.setEnabled(false);
+        totalButton.setMnemonic('T');
+        totalButton.setText("Total Cost");
         contactBox.setBorder(null);
         contactBox.setDebugGraphicsOptions(0);
         contactBox.setActionMap(null);
@@ -262,9 +270,11 @@ class PhoneFrame
         dialPanel.add(forwardButton, BorderLayout.CENTER);
         dialPanel.add(blockButton, BorderLayout.WEST);
         dialPanel.add(contactBox, BorderLayout.NORTH);
+        programPanel.add(costLabel, BorderLayout.NORTH);
         programPanel.add(Button1, BorderLayout.EAST);
         programPanel.add(Button2, BorderLayout.CENTER);
         programPanel.add(Button3, BorderLayout.WEST);
+        programPanel.add(totalButton, BorderLayout.SOUTH);
         newPanel.add(unforwardButton, BorderLayout.EAST);
         newPanel.add(unblockButton, BorderLayout.WEST);
         this.getContentPane().add(programPanel, BorderLayout.SOUTH);
