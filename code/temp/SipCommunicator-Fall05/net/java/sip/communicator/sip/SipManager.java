@@ -688,32 +688,6 @@ public class SipManager
         }
     } //CALL
 
-    public Call establishBlock(String blockee, String sdpContent) throws
-    CommunicationsException
-	{
-	    try {
-	        console.logEntry();
-	        checkIfStarted();
-	        return callProcessing.invite(blockee, sdpContent);
-	    }
-	    finally {
-	        console.logExit();
-	    }
-	} //Block
-    
-    public Call establishForward(String forwardee, String sdpContent) throws
-    CommunicationsException
-	{
-	    try {
-	        console.logEntry();
-	        checkIfStarted();
-	        return callProcessing.invite(forwardee, sdpContent);
-	    }
-	    finally {
-	        console.logExit();
-	    }
-	} //CALL
-    
     //------------------ hang up on
     /**
      * Causes the CallProcessing object to send a terminating request (CANCEL,
