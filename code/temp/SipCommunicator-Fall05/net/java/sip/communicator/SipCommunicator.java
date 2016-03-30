@@ -351,13 +351,13 @@ public class SipCommunicator
                 
                 String caller = sipManager.answerCall(interlocutor.getID(), sdpData);
         		
-        		String message = "answer@" + caller;
+        		/*String message = "answer@" + caller;
         		try {
         			sipManager.sendMessage("answer", message.getBytes(), "text/plain", "plain");
         		} catch (CommunicationsException e) {
         			// TODO Auto-generated catch block
         			e.printStackTrace();
-        		}
+        		}*/
             }
             catch (CommunicationsException exc) {
                 console.showException("Could not answer call!\nError was: "

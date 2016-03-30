@@ -202,7 +202,7 @@ public class CallProcessing
         try
         {
             console.logEntry();
-
+            System.out.println("PRocessInviteOk1");
             //find the call
             Call call = callDispatcher.findCall(clientTransaction.
                                                 getDialog());
@@ -218,7 +218,7 @@ public class CallProcessing
                     createRequest(Request.ACK);
                 clientTransaction.getDialog().sendAck(ack);
             }
-            catch (SipException ex) {
+            catch (SipException ex) {System.out.println("PRocessInviteOk2");
                 console.error("Failed to acknowledge call!", ex);
                 call.setState(Call.DISCONNECTED);
                 sipManCallback.fireCommunicationsError(
@@ -227,13 +227,13 @@ public class CallProcessing
                     , ex)
                     );
                 return;
-            }
+            }System.out.println("PRocessInviteOk3");
             // !!! set sdp content before setting call state as that is where
             //listeners get alerted and they need the sdp
             call.setRemoteSdpDescription(new String(ok.getRawContent()));
             //change status
             if (!call.getState().equals(Call.CONNECTED)) {
-                call.setState(Call.CONNECTED);
+                call.setState(Call.CONNECTED);System.out.println("PRocessInviteOk4");
             }
         }
         finally
@@ -1146,6 +1146,7 @@ public class CallProcessing
                     Response.OK,
                     dialog.getFirstTransaction().getRequest());
                 sipManCallback.attachToTag(ok, dialog);
+                //ok.setReasonPhrase(call.getRemoteName());
             }
             catch (ParseException ex) {
                 call.setState(Call.DISCONNECTED);
