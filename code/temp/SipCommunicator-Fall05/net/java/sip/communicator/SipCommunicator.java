@@ -471,9 +471,9 @@ public class SipCommunicator
 	public void handleTotalCostRequest(TotalCostEvent evt) {
 		String program = (String) evt.getSource();
 		
-		String message = "totalcost";
+		String message = "billing:totalcharge";
 		try {
-			sipManager.sendMessage("totalcost", message.getBytes(), "text/plain", "plain");
+			sipManager.sendMessage("billing:totalcharge", message.getBytes(), "text/plain", "plain");
 		} catch (CommunicationsException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

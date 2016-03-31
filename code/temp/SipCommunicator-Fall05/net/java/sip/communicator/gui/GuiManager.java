@@ -984,10 +984,9 @@ public class GuiManager
 		}
 	}
 
-	public void totalCost() {
+	public void totalCost(String total_charge) {
 		phoneFrame.totalButton.setBackground(Color.green);
-		String a = "42.00";
-		phoneFrame.costLabel.setText(a);
+		phoneFrame.costLabel.setText(total_charge);
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {

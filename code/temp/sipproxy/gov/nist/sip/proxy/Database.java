@@ -286,28 +286,47 @@ public class Database {
 		System.out.println("Database record_call_end");
 		String sql = "SELECT * FROM call WHERE caller = " + src +
 				" AND callee = " + dst + " AND end='0000-00-00 00:00:00' AND cost=-1.0";
-		boolean flag=false;
+		boolean flag1=false, flag2=false;
 		ResultSet rs = do_query(connection, sql);
 		try {
 			while ( rs.next() ) {
-				flag = true;
+				flag1 = true;
 			  }
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		close_resultset(rs);
-		if (flag){
+		
+		sql = "SELECT * FROM call WHERE caller = " + dst +
+				" AND callee = " + src + " AND end='0000-00-00 00:00:00' AND cost=-1.0";
+		rs = do_query(connection, sql);
+		try {
+			while ( rs.next() ) {
+				flag2 = true;
+			  }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		close_resultset(rs);
+		
+		if (flag1){
 			sql = "UPDATE call SET end=CURRENT_TIMESTAMP WHERE caller=" +
 				src + " AND callee=" + dst + " AND end='0000-00-00 00:00:00' AND cost=-1.0";
 			System.out.println("Database: swtch1 caller is "+get_name(src) + " and callee is "+get_name(dst));
+			do_update(connection, sql);
 		}
-		else{
+		else if (flag2){
 			sql = "UPDATE call SET end=CURRENT_TIMESTAMP WHERE caller=" +
 				dst + " AND callee=" + src + " AND end='0000-00-00 00:00:00' AND cost=-1.0";
 			System.out.println("Database: swtch2 caller is "+get_name(dst) + " and callee is "+get_name(src));
+			do_update(connection, sql);
 		}
-		do_update(connection, sql);
+		else {
+			System.out.println("Error: Extra INFO:end_call message received.");
+		}
+		
 	}
 	
 	public ArrayList<CallDuration> search_user_calls(int name){

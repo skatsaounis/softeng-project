@@ -589,7 +589,7 @@ public class Proxy implements SipListener  {
 	    	 
 	    	 
 			 if (message[0].equals("billing:totalcharge"))
-				 response.setReasonPhrase("Total charge: "+Long.valueOf(proxyServer.total_charge_request(src)).toString());
+				 response.setReasonPhrase("Total charge:"+Long.valueOf(proxyServer.total_charge_request(src)).toString());
 			 else if (message[0].equals("billing:selectplan")){
 				 proxyServer.select_plan(src, Integer.parseInt(message[1]));
 				 response.setReasonPhrase("plan:" + database.get_plan(src));
@@ -622,9 +622,6 @@ public class Proxy implements SipListener  {
 				 proxyServer.database.record_call_end(src, remote);
 				 proxyServer.database.set_available(src, 1);
 				 proxyServer.database.set_available(remote, 1);
-			 }
-			 else if (message[0].equals("totalcost")){
-				 response.setReasonPhrase("totalcost");
 			 }
 			 else throw new ErrorResponse(Response.NOT_IMPLEMENTED);
 	     }
