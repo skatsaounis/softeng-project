@@ -891,19 +891,13 @@ public class Proxy implements SipListener  {
 		        	    	 if (dst <= 0) throw new ErrorResponse(Response.NOT_FOUND, "You are not in the database.");
 		
 		        	    	 int target = proxyServer.call_start(src, dst);
-		        	    	 String toTarget = proxyServer.database.get_name(target);
+		        	    	 String targetName = proxyServer.database.get_name(target);
 		        	    	 
-		        	    	 StringTokenizer toIP = new StringTokenizer(request.getHeader("To").toString(),"@");
-	        	    	     toIP.nextToken();
-	        	    	     StringTokenizer toProxyIP = new StringTokenizer(toIP.nextToken(),">");
-	        				 String ipString = toProxyIP.nextToken();
-	        				 System.out.println("Ayto poy mpainei= "+ipString);
-	        				 String newCallee = "sip:" + toTarget + "@" + ipString;
-	        				 requestURI = addressFactory.createURI(newCallee);
-	        				 Address toAddress = addressFactory.createAddress(requestURI);
-	        				 ToHeader toHeader = null;
-	        				 toHeader = headerFactory.createToHeader(toAddress, null);
+		        	    	 ToHeader toHeader = (ToHeader) request.getHeader(ToHeader.NAME);
+		        	    	 String ipString = toHeader.getAddress().getURI().toString().split("@")[1];
+	        				 requestURI = addressFactory.createURI("sip:" + targetName + "@" + ipString);
 	        				 request.setRequestURI(requestURI);
+	        				 toHeader.setAddress(addressFactory.createAddress(requestURI));
 	        				 request.setHeader(toHeader);
         				 }
         				 
