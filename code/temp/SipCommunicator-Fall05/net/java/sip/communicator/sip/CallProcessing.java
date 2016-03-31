@@ -214,8 +214,8 @@ public class CallProcessing
             try {
                 //Need to use dialog generated ACKs so that the remote UA core
                 //sees them - Fixed by M.Ranganathan
-                Request ack = (Request) clientTransaction.getDialog().
-                    createRequest(Request.ACK);
+            	clientTransaction.getRequest().setHeader((ToHeader) ok.getHeader(ToHeader.NAME));
+                Request ack = (Request) clientTransaction.getDialog().createRequest(Request.ACK);
                 clientTransaction.getDialog().sendAck(ack);
             }
             catch (SipException ex) {System.out.println("PRocessInviteOk2");
