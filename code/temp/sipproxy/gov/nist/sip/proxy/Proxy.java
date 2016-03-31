@@ -589,7 +589,7 @@ public class Proxy implements SipListener  {
 	    	 
 	    	 
 			 if (message[0].equals("billing:totalcharge"))
-				 response.setReasonPhrase("Total charge:"+Long.valueOf(proxyServer.total_charge_request(src)).toString());
+				 response.setReasonPhrase("Total charge:"+proxyServer.total_charge_request(src));
 			 else if (message[0].equals("billing:selectplan")){
 				 proxyServer.select_plan(src, Integer.parseInt(message[1]));
 				 response.setReasonPhrase("plan:" + database.get_plan(src));
@@ -759,6 +759,47 @@ public class Proxy implements SipListener  {
              }
       
            
+             try {
+    	    	 if (request.getMethod().equals(Request.INVITE) ) {
+        	    	 String srcName = Registrar.getCleanUri(((FromHeader) request.getHeader(FromHeader.NAME)).getAddress().getURI()).toString();
+        	    	 srcName = srcName.split("@")[0].split(":")[1];
+        	    	 System.out.println("Incoming INVITE request from " + srcName);
+        	    	 int src = database.search_user(srcName);
+        	    	 if (src <= 0) throw new ErrorResponse(Response.NOT_FOUND, "You are not in the database.");
+        		     
+        	    	 String dstName = Registrar.getCleanUri(((ToHeader) request.getHeader(ToHeader.NAME)).getAddress().getURI()).toString();
+        	    	 dstName = dstName.split("@")[0].split(":")[1];
+        	    	 System.out.println("Incoming INVITE request to " + dstName);
+        	    	 int dst = database.search_user(dstName);
+        	    	 if (dst <= 0) throw new ErrorResponse(Response.NOT_FOUND, "You are not in the database.");
+
+        	    	 int target = proxyServer.call_start(src, dst);
+        	    	 String targetName = proxyServer.database.get_name(target);
+        	    	 
+        	    	 ToHeader toHeader = (ToHeader) request.getHeader(ToHeader.NAME);
+        	    	 String ipString = toHeader.getAddress().getURI().toString().split("@")[1];
+    				 requestURI = addressFactory.createURI("sip:" + targetName + "@" + ipString);
+    				 request.setRequestURI(requestURI);
+    				 toHeader.setAddress(addressFactory.createAddress(requestURI));
+    				 request.setHeader(toHeader);
+				 }
+				    	 
+             	
+
+    	     
+    	    
+    	     }
+    		 catch (ErrorResponse err) {
+            	 Response response = messageFactory.createResponse(Response.OK, request);
+    			 response=messageFactory.createResponse(err.m_responseEnum, request);
+    			 response.setReasonPhrase(err.m_reason);
+    			 if (serverTransaction!=null)
+    			     serverTransaction.sendResponse(response);
+    			 else 
+    			     sipProvider.sendResponse(response);
+    			 return;
+    		 }
+             
 
             if ( registrar.hasRegistration(request)  ) {
                
@@ -873,49 +914,10 @@ public class Proxy implements SipListener  {
                 	// End of ECE355 change
                 	 
                 	 */
-            	     try {
-            	    	 if (request.getMethod().equals(Request.INVITE) ) {
-		        	    	 String srcName = Registrar.getCleanUri(((FromHeader) request.getHeader(FromHeader.NAME)).getAddress().getURI()).toString();
-		        	    	 srcName = srcName.split("@")[0].split(":")[1];
-		        	    	 System.out.println("Incoming INVITE request from " + srcName);
-		        	    	 int src = database.search_user(srcName);
-		        	    	 if (src <= 0) throw new ErrorResponse(Response.NOT_FOUND, "You are not in the database.");
-		        		     
-		        	    	 String dstName = Registrar.getCleanUri(((ToHeader) request.getHeader(ToHeader.NAME)).getAddress().getURI()).toString();
-		        	    	 dstName = dstName.split("@")[0].split(":")[1];
-		        	    	 System.out.println("Incoming INVITE request to " + dstName);
-		        	    	 int dst = database.search_user(dstName);
-		        	    	 if (dst <= 0) throw new ErrorResponse(Response.NOT_FOUND, "You are not in the database.");
-		
-		        	    	 int target = proxyServer.call_start(src, dst);
-		        	    	 String targetName = proxyServer.database.get_name(target);
-		        	    	 
-		        	    	 ToHeader toHeader = (ToHeader) request.getHeader(ToHeader.NAME);
-		        	    	 String ipString = toHeader.getAddress().getURI().toString().split("@")[1];
-	        				 requestURI = addressFactory.createURI("sip:" + targetName + "@" + ipString);
-	        				 request.setRequestURI(requestURI);
-	        				 toHeader.setAddress(addressFactory.createAddress(requestURI));
-	        				 request.setHeader(toHeader);
-        				 }
-        				 
-            	    	 
-                     	// 4. Forward the request statefully to each target Section 16.6.:
-                      	requestForwarding.forwardRequest
-                      	(targetURIList,sipProvider,
-                      			request,serverTransaction,true);
-
-            	     
-            	    
-            	     }
-            		 catch (ErrorResponse err) {
-                    	 Response response = messageFactory.createResponse(Response.OK, request);
-            			 response=messageFactory.createResponse(err.m_responseEnum, request);
-            			 response.setReasonPhrase(err.m_reason);
-            			 if (serverTransaction!=null)
-            			     serverTransaction.sendResponse(response);
-            			 else 
-            			     sipProvider.sendResponse(response);
-            		 }
+                	// 4. Forward the request statefully to each target Section 16.6.:
+                  	requestForwarding.forwardRequest
+                  	(targetURIList,sipProvider,
+                  			request,serverTransaction,true);
                 	return;
                 } else {
                 	// Let's continue and try the default hop.
