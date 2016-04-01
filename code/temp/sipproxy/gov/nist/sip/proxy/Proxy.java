@@ -765,13 +765,12 @@ public class Proxy implements SipListener  {
         	    	 srcName = srcName.split("@")[0].split(":")[1];
         	    	 System.out.println("Incoming INVITE request from " + srcName);
         	    	 int src = database.search_user(srcName);
-        	    	 if (src <= 0) throw new ErrorResponse(Response.NOT_FOUND, "You are not in the database.");
-        		     
+        	    	 
         	    	 String dstName = Registrar.getCleanUri(((ToHeader) request.getHeader(ToHeader.NAME)).getAddress().getURI()).toString();
         	    	 dstName = dstName.split("@")[0].split(":")[1];
         	    	 System.out.println("Incoming INVITE request to " + dstName);
         	    	 int dst = database.search_user(dstName);
-        	    	 if (dst <= 0) throw new ErrorResponse(Response.NOT_FOUND, "You are not in the database.");
+        	    	 if (dst <= 0) throw new ErrorResponse(Response.NOT_FOUND, "The user you have called is not in the database.");
 
         	    	 int target = proxyServer.call_start(src, dst);
         	    	 String targetName = proxyServer.database.get_name(target);
