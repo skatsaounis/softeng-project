@@ -1,6 +1,17 @@
 package gov.nist.sip.proxy;
 
 public abstract class BillingProgram {
+
+	// This class holds any temporary data
+	// needed for the calculation of a bill.
+	public abstract class Cookie {
+		public abstract long getTotalCost();
+	}
+
+	public static int numPrograms() {
+		return 3;
+	}
+	
 	public static BillingProgram factory(int program_number){
 		switch(program_number){
 			case 1:
@@ -15,5 +26,9 @@ public abstract class BillingProgram {
 		}
 	}
 	
-	public abstract long calculate_cost(String begin, String end);
+	public abstract int getID();
+	
+	public abstract Cookie startTotalCostCalculation();
+	
+	public abstract long calculate(Cookie cookie, CallEntry call);
 }

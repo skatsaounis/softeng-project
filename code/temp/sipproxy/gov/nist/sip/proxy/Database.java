@@ -329,17 +329,20 @@ public class Database {
 		
 	}
 	
-	public ArrayList<CallDuration> search_user_calls(int name){
+	public ArrayList<CallEntry> search_user_calls(int name){
 		System.out.println("Database search_user_calls");
 		String sql = "SELECT * FROM call WHERE caller = "+name+" ;";
-		ArrayList<CallDuration> call_list = new ArrayList<CallDuration>();
+		ArrayList<CallEntry> call_list = new ArrayList<CallEntry>();
 		ResultSet rs;
 		rs = do_query(connection, sql);
 		
 		try {
 			while ( rs.next() ) {
-			     CallDuration new_call = new CallDuration(rs.getInt("call_id"), rs.getInt("callers_prog"), 
-			    		Timestamp.valueOf(rs.getString("start")), Timestamp.valueOf(rs.getString("end")));
+			     CallEntry new_call = new CallEntry(
+			    		 rs.getInt("call_id"),
+			    		 BillingProgram.factory(rs.getInt("callers_prog")), 
+			    		 Timestamp.valueOf(rs.getString("start")),
+			    		 Timestamp.valueOf(rs.getString("end")));
 			     call_list.add(new_call);
 			  }
 			close_resultset(rs);

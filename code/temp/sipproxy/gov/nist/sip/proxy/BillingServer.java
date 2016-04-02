@@ -2,9 +2,6 @@ package gov.nist.sip.proxy;
 
 import java.util.ArrayList;
 
-import javax.sip.message.Response;
-
-
 public class BillingServer {
 	Database database;
 	
@@ -29,43 +26,18 @@ public class BillingServer {
 	}
 	
 	public long total_charge(int name){
-		ArrayList<CallDuration> call_list;
+		ArrayList<CallEntry> call_list;
 		System.out.println("Billing total_charge (\\/)");
 		call_list = database.search_user_calls(name);
 		return calculate_total_charge(name, call_list);
 	}
 	
-	private long calculate_total_charge(int name, ArrayList<CallDuration> call_list){
+	private long calculate_total_charge(int name, ArrayList<CallEntry> call_list){
 		System.out.println("5. calculate_total_charge (\\/)");
-		long call_cost;
-		long total_charge = 0;
-		long duration;
-		int i;
-		for(i=0; i<call_list.size(); i++){
-			duration = (call_list.get(i).getEnd().getTime() - call_list.get(i).getStart().getTime())/1000;
-			switch (call_list.get(i).getCall_prog()){
-				case 1:
-					System.out.println("User's plan was 1");
-					call_cost = (long)(duration * 1.0);
-					database.record_call_cost(call_list.get(i).getCall_id(), call_cost);
-					total_charge += call_cost;
-					break;
-				case 2:
-					System.out.println("User's plan was 2");
-					call_cost = (long)(duration * 2.0);
-					database.record_call_cost(call_list.get(i).getCall_id(), call_cost);
-					total_charge += call_cost;
-					break;
-				case 3:
-					System.out.println("User's plan was 3");
-					call_cost = (long)(duration * 3.0);
-					database.record_call_cost(call_list.get(i).getCall_id(), call_cost);
-					total_charge += call_cost;
-					break;
-			}
-		}
-		
-		return total_charge;
+		TotalCostCalculator calc = new TotalCostCalculator();
+		for (CallEntry call: call_list)
+			calc.add(call);
+		return calc.getTotalCost();
 	}
 	
 }
