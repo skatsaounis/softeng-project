@@ -4,13 +4,14 @@ public class TotalCostCalculator {
 	private BillingProgram.Cookie[] programCookies;
 	
 	public TotalCostCalculator() {
-		programCookies = new BillingProgram.Cookie[BillingProgram.numPrograms()];
+		programCookies = new BillingProgram.Cookie[BillingProgram.numPrograms() + 1];
 	}
 	
 	public long getTotalCost() {
 		long total = 0;
 		for (BillingProgram.Cookie cookie: programCookies)
-			total += cookie.getTotalCost();
+			if (cookie != null)
+				total += cookie.getTotalCost();
 		return total;
 	}
 	
