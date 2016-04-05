@@ -40,11 +40,11 @@ public class BillingProgram2 extends BillingProgram {
 		long timestamp = call.getStart().getTime();
 		cal = Calendar.getInstance();
 		cal.setTimeInMillis(timestamp);		
-		
+		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
 		if ((cal.get(Calendar.HOUR_OF_DAY) >= 0) && (cal.get(Calendar.HOUR_OF_DAY) <= 6))
 			callCost = 0;
-		else if ((cal.get(Calendar.DAY_OF_WEEK) == 0) || (cal.get(Calendar.DAY_OF_WEEK) == 4) 
-				|| (cal.get(Calendar.DAY_OF_WEEK) == 5 || (cal.get(Calendar.DAY_OF_WEEK) == 6)))
+		else if ((cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) || (cal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) 
+				|| (cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY || (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)))
 			callCost = 0;
 		else {
 			duration = (call.getEnd().getTime() - call.getStart().getTime())/1000;
