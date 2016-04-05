@@ -36,7 +36,7 @@ public class BillingServer {
 		System.out.println("5. calculate_total_charge (\\/)");
 		TotalCostCalculator calc = new TotalCostCalculator();
 		for (CallEntry call: call_list)
-			calc.add(call);
+			database.record_call_cost(call.getID(), calc.add(call));
 		return calc.getTotalCost();
 	}
 	

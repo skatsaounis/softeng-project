@@ -5,6 +5,9 @@ public abstract class BillingProgram {
 	// This class holds any temporary data
 	// needed for the calculation of a bill.
 	public abstract class Cookie {
+		
+		public long totalCost;
+		
 		public abstract long getTotalCost();
 	}
 

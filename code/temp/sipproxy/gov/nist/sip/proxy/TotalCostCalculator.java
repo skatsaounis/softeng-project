@@ -15,11 +15,12 @@ public class TotalCostCalculator {
 		return total;
 	}
 	
-	public void add(CallEntry call) {
+	public long add(CallEntry call) {
+			
 		if (programCookies[call.getBillingProgram().getID()] == null)
 			programCookies[call.getBillingProgram().getID()]
 					= call.getBillingProgram().startTotalCostCalculation();
-		call.getBillingProgram().calculate(
+		return call.getBillingProgram().calculate(
 				programCookies[call.getBillingProgram().getID()],
 				call);
 	}

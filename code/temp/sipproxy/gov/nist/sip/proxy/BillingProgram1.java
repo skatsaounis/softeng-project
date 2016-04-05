@@ -5,12 +5,13 @@ import gov.nist.sip.proxy.BillingProgram;
 public class BillingProgram1 extends BillingProgram {
 	
 	public class Cookie extends BillingProgram.Cookie {
-		
-		// TODO (ilias)
+				
+		public Cookie () {
+			totalCost = 0;
+		}
 		
 		public long getTotalCost() {
-			// TODO (ilias)
-			return 0;
+			return totalCost;
 		}
 	}
 	
@@ -32,7 +33,11 @@ public class BillingProgram1 extends BillingProgram {
 	}
 	
 	public long calculate(BillingProgram.Cookie cookie, CallEntry call) {
-		// TODO (ilias)
-		return 1;
+		long duration, callCost;
+		
+		duration = (call.getEnd().getTime() - call.getStart().getTime())/1000;
+		callCost = (long)(duration * 1.0);
+		cookie.totalCost += callCost;
+		return callCost;
 	}
 }

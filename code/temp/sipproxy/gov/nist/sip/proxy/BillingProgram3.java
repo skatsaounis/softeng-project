@@ -6,11 +6,12 @@ public class BillingProgram3 extends BillingProgram {
 	
 	public class Cookie extends BillingProgram.Cookie {
 		
-		// TODO (ilias)
+		public Cookie () {
+			totalCost = 0;
+		}
 		
 		public long getTotalCost() {
-			// TODO (ilias)
-			return 0;
+			return totalCost;
 		}
 	}
 
@@ -32,8 +33,16 @@ public class BillingProgram3 extends BillingProgram {
 	}
 
 	public long calculate(BillingProgram.Cookie cookie, CallEntry call) {
-		// TODO (ilias)
-		return 1;
+		long duration, callCost;
+		long fixed_charge = (long) 5.0;
+		
+		duration = (call.getEnd().getTime() - call.getStart().getTime())/1000;
+		if (duration > 10.0)
+			duration = (long) 10.0;
+		callCost = fixed_charge +(long)(duration * 1.0);
+		cookie.totalCost += callCost;
+		return callCost;
+		
 	}
 
 }
