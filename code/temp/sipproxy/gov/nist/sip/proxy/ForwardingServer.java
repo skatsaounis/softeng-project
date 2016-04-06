@@ -21,7 +21,7 @@ public class ForwardingServer {
 		System.out.println("1. route");
 		ArrayList<Integer> fwd_chain = Database.getInstance().forwarding_chain(dst);
 		if(fwd_chain.size()>0){
-			if(BlockingServer.getInstance()_check(src, fwd_chain))
+			if(BlockingServer.getInstance().blocking_check(src, fwd_chain))
 				if(!is_self_call(src, fwd_chain.get(fwd_chain.size()-1)))
 					return fwd_chain.get(fwd_chain.size()-1);
 			System.out.println("Inform busy"); //not necessary

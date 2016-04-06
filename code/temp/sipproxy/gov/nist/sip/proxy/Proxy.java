@@ -57,8 +57,6 @@ public class Proxy implements SipListener  {
     protected ResponseForwarding responseForwarding;
 
     public boolean to_be_deleted = false;
-	private int pending_src=-1;
-	private int pending_dst=-1;
     public RequestForwarding getRequestForwarding() {
         return requestForwarding;
     }
@@ -1031,7 +1029,7 @@ public class Proxy implements SipListener  {
 			    	srcName = Registrar.getCleanUri(((FromHeader) response.getHeader(FromHeader.NAME)).getAddress().getURI()).toString();
 			    	srcName = srcName.split("@")[0].split(":")[1];
 			    	int src = Database.getInstance().search_user(srcName);
-			    	billingServer.getInstance().call_charge_start(src, dst);
+			    	BillingServer.getInstance().call_charge_start(src, dst);
 			    	Database.getInstance().set_available(src, 0);
 					Database.getInstance().set_available(dst, 0);
 			    }
