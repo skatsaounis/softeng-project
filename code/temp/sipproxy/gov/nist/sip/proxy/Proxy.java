@@ -30,81 +30,76 @@ import sim.java.net.*;
  *
  *@version  JAIN-SIP-1.1
  *
- *@author Olivier Deruelle <deruelle@nist.gov>  
+ *@author Olivier Deruelle <deruelle@nist.gov>
  * M. Ranganathan <mranga@nist.gov> (convert to simulation) <br/>
  * Henrik Leion: Some changes in how SUBSCRIBE and NOTIFY  are processed. <br/>
  *<a href="{@docRoot}/uncopyright.html">This code is in the public domain.</a>
  *
  */
 public class Proxy implements SipListener  {
-    
+
     protected LinkedList listeningPoints;
     // Map the server transactions with the client transactions
     protected SipStack sipStack;
     protected SipProvider defaultProvider;
-    
+
     protected MessageFactory messageFactory;
     protected HeaderFactory headerFactory;
     protected AddressFactory addressFactory;
-    
+
     protected Configuration configuration;
     protected PresenceServer presenceServer;
-  
+
     protected Registrar registrar;
     protected ProxyUtilities proxyUtilities;
     protected Authentication authentication;
     protected RequestForwarding requestForwarding;
     protected ResponseForwarding responseForwarding;
-    
-    protected Database database;
-    protected ProxyServer proxyServer;
-    protected BlockingServer blockingServer;
-    protected ForwardingServer forwardingServer;
-    protected BillingServer billingServer;
-	public boolean to_be_deleted = false;
+
+    public boolean to_be_deleted = false;
 	private int pending_src=-1;
 	private int pending_dst=-1;
     public RequestForwarding getRequestForwarding() {
         return requestForwarding;
     }
-     
+
     public ResponseForwarding getResponseForwarding() {
         return responseForwarding;
     }
-    
+
     public AddressFactory getAddressFactory() {
         return addressFactory;
     }
-    
+
     public MessageFactory getMessageFactory() {
         return messageFactory;
     }
-    
+
     public HeaderFactory getHeaderFactory() {
         return headerFactory;
     }
-    
+
     public Registrar getRegistrar() {
         return registrar;
     }
-    
-        
+
+
     public boolean isPresenceServer() {
         return configuration.enablePresenceServer;
     }
-    
+
     public PresenceServer getPresenceServer() {
             return presenceServer;
     }
-   
+
     public ProxyUtilities getProxyUtilities() {
         return proxyUtilities;
     }
-    
+
     public SipStack getSipStack() {
         return sipStack;
     }
-    
+
     public Configuration getConfiguration() {
         return configuration;
     }
@@ -113,20 +108,20 @@ public class Proxy implements SipListener  {
     public SipProvider getSipProvider() {
 		return this.defaultProvider;
     }
-    
+
     public Authentication getAuthentication() {
         return authentication;
     }
 
     public boolean managesDomain( String domainAddress ) {
-       return   configuration.hasDomain(domainAddress) || 
+       return   configuration.hasDomain(domainAddress) ||
 		registrar.hasRegistration("sip:"+domainAddress);
     }
-    
-    
+
+
     /** Creates new Proxy */
     public Proxy(String confFile) throws Exception{
-      
+
 	this.listeningPoints = new LinkedList();
         if (confFile==null) {
             System.out.println
@@ -135,7 +130,7 @@ public class Proxy implements SipListener  {
         }
         else {
             try {
-               
+
                 // First, let's parse the configuration file.
                 ProxyConfigurationHandler handler=
                 new ProxyConfigurationHandler(confFile);
@@ -150,17 +145,12 @@ public class Proxy implements SipListener  {
                     " Correct the errors first.");
                 }
                 else {
-                  
+
                     proxyUtilities=new ProxyUtilities(this);
                     presenceServer=new PresenceServer(this);
                     registrar=new Registrar(this);
                     requestForwarding=new RequestForwarding(this);
                     responseForwarding=new ResponseForwarding(this);
-                    database=new Database();
-                    blockingServer=new BlockingServer(database);
-                    forwardingServer=new ForwardingServer(blockingServer, database);
-                    billingServer=new BillingServer(database);
-                    proxyServer=new ProxyServer(blockingServer, forwardingServer, billingServer, database);
                 }
             }
             catch (Exception ex) {
@@ -172,34 +162,34 @@ public class Proxy implements SipListener  {
             }
         }
     }
-    
-   
-   
+
+
+
     /** This is a listener method.
-     */ 
+     */
     public void processRequest(RequestEvent requestEvent) {
         Request request = requestEvent.getRequest();
-        
+
         SipProvider sipProvider = (SipProvider) requestEvent.getSource();
         ServerTransaction serverTransaction=requestEvent.getServerTransaction();
         try {
-            
+
             if (ProxyDebug.debug)
                 ProxyDebug.println
                 ("\n****************************************************"+
                 "\nRequest " + request.getMethod() +
 			" received:\n"+request.toString());
-            
-       
-            if (ProxyDebug.debug) 
+
+
+            if (ProxyDebug.debug)
                  ProxyUtilities.printTransaction(serverTransaction);
-               
-       
-            
+
+
+
 /*******************************************************************************/
 /***********************  PROXY BEHAVIOR    ************************************/
 /*******************************************************************************/
-            
+
             /* RFC 3261: 16.2:
              * For all new requests, including any with unknown methods, an element
              * intending to proxy the request MUST:
@@ -214,16 +204,16 @@ public class Proxy implements SipListener  {
              *
              * 5. Process all responses (Section 16.7)
              */
-            
+
 /*******************************************************************************/
 /***************************** 1. Validate the request (Section 16.3) **********/
 /*******************************************************************************/
-             
+
            /*
             Before an element can proxy a request, it MUST verify the message's
             validity
             */
-            
+
             RequestValidation requestValidation=new RequestValidation(this);
             if ( !requestValidation.validateRequest
 		(sipProvider,request,serverTransaction) ) {
@@ -238,7 +228,7 @@ public class Proxy implements SipListener  {
                 " sent back)");
                 return;
             }
-            
+
             // Let's check if the ACK is for the proxy: if there is no Route
             // header: it is mandatory for the ACK to be forwarded
             if ( request.getMethod().equals(Request.ACK) ) {
@@ -251,12 +241,12 @@ public class Proxy implements SipListener  {
                     return;
                 }
             }
-            
-           
-               
+
+
+
             if (serverTransaction==null) {
-                String method=request.getMethod();       
-                // Methods that creates dialogs, so that can 
+                String method=request.getMethod();
+                // Methods that creates dialogs, so that can
 		// generate transactions
                 if ( method.equals(Request.INVITE) ||
                      method.equals(Request.SUBSCRIBE)
@@ -265,10 +255,10 @@ public class Proxy implements SipListener  {
                         serverTransaction=
 			sipProvider.getNewServerTransaction(request);
                          TransactionsMapping transactionsMapping=
-			    (TransactionsMapping) 
+			    (TransactionsMapping)
 			    serverTransaction.getDialog().getApplicationData();
 	 	         if (transactionsMapping == null) {
-	 		     transactionsMapping = 
+	 		     transactionsMapping =
 			     new TransactionsMapping(serverTransaction);
 		         }
                     }
@@ -280,11 +270,11 @@ public class Proxy implements SipListener  {
                     }
                 }
            }
-            
+
 /***************************************************************************/
 /****** 2. Preprocess routing information (Section 16.4) *******************/
 /***************************************************************************/
-            
+
             /*   The proxy MUST inspect the Request-URI of the request.  If the
             Request-URI of the request contains a value this proxy previously
             placed into a Record-Route header field (see Section 16.6 item 4),
@@ -292,23 +282,23 @@ public class Proxy implements SipListener  {
             value from the Route header field, and remove that value from the
             Route header field.  The proxy MUST then proceed as if it received
             this modified request.
-             .....  (idem to below:)          
+             .....  (idem to below:)
              16.12.  The proxy will inspect the URI in the topmost Route header
             field value.  If it indicates this proxy, the proxy removes it
             from the Route header field (this route node has been
             reached).
            */
-            
+
             ListIterator routes = request.getHeaders(RouteHeader.NAME);
             if (routes!=null) {
                 if ( routes.hasNext() ) {
                     RouteHeader  routeHeader = (RouteHeader) routes.next();
                     Address routeAddress=routeHeader.getAddress();
                     SipURI routeSipURI=(SipURI)routeAddress.getURI();
-                    
+
                     String host = routeSipURI.getHost();
                     int port = routeSipURI.getPort();
-                    
+
                     if (sipStack.getIPAddress().equals(host) ) {
                         Iterator lps=sipStack.getListeningPoints();
                         while(lps!=null && lps.hasNext()) {
@@ -327,7 +317,7 @@ public class Proxy implements SipListener  {
                     }
                 }
             }
-            
+
             /*
             If the Request-URI contains a maddr parameter, the proxy MUST check
             to see if its value is in the set of addresses or domains the proxy
@@ -338,7 +328,7 @@ public class Proxy implements SipListener  {
             non-default port or transport parameter and continue processing as if
             those values had not been present in the request.
              */
-            
+
             URI requestURI=request.getRequestURI();
             if (requestURI.isSipURI()) {
                 SipURI requestSipURI=(SipURI)requestURI;
@@ -372,26 +362,26 @@ public class Proxy implements SipListener  {
             else {
                 // No SipURI, so no Maddr parameter, we pass this check...
             }
-            
-          
-            
+
+
+
 /******************************************************************************/
 /************* 3. Determine target(s) for the request (Section 16.5) **********/
-/*****************************************************************************/            
+/*****************************************************************************/
             /*
-            The set of targets will either be predetermined by the contents of the 
-            request or will be obtained from an abstract location service.  Each 
+            The set of targets will either be predetermined by the contents of the
+            request or will be obtained from an abstract location service.  Each
             target in the set is represented as a URI.
              */
-            
+
             Vector targetURIList=new Vector();
             URI targetURI;
-            
+
            /* If the Request-URI of the request contains an maddr parameter, the
             * Request-URI MUST be placed into the target set as the only target
             * URI, and the proxy MUST proceed to Section 16.6.
-            */    
-            
+            */
+
             if (requestURI.isSipURI()) {
                 SipURI requestSipURI=(SipURI)requestURI;
                 if (requestSipURI.getMAddrParam()!=null ) {
@@ -400,7 +390,7 @@ public class Proxy implements SipListener  {
                     if (ProxyDebug.debug)
                         ProxyDebug.println("Proxy, processRequest(),"+
                         " the only target is the Request-URI (mAddr parameter)");
-                    
+
                     // 4. Forward the request statefully:
                     requestForwarding.forwardRequest(targetURIList,sipProvider,
 						     request,serverTransaction,true);
@@ -408,14 +398,14 @@ public class Proxy implements SipListener  {
                     return;
                 }
             }
-            
+
             /*
               If the domain of the Request-URI indicates a domain this element is
               not responsible for, the Request-URI MUST be placed into the target
               set as the only target, and the element MUST proceed to the task of
               Request Forwarding (Section 16.6).
              */
-            
+
             if (requestURI.isSipURI()) {
                 SipURI requestSipURI=(SipURI)requestURI;
                 if ( !configuration.hasDomain(requestSipURI.getHost() ) ) {
@@ -423,7 +413,7 @@ public class Proxy implements SipListener  {
                         ProxyDebug.println("Proxy, processRequest(),"+
                         " we are not responsible for the domain: Let's check if we have"+
                         " a registration for this domain from another proxy");
-                    
+
                     // We have to check if another proxy did not registered
                     // to us, in this case we have to use the contacts provided
                     // by the registered proxy to create the targets:
@@ -438,7 +428,7 @@ public class Proxy implements SipListener  {
                             requestForwarding.forwardRequest(targetURIList,sipProvider,
                             request,serverTransaction,true);
                             return;
-                             
+
                         }
                         else {
                             targetURIList=new Vector();
@@ -456,11 +446,11 @@ public class Proxy implements SipListener  {
                         targetURI=requestURI;
                         targetURIList.addElement(targetURI);
                     }
-                    
+
                     // 4. Forward the request statelessly:
                     requestForwarding.forwardRequest(targetURIList,sipProvider,
                     request,serverTransaction,false);
-                    
+
                     return;
                 }
                 else {
@@ -468,28 +458,28 @@ public class Proxy implements SipListener  {
                                 " we are responsible for the domain... Let's find the contact...");
                 }
             }
-               
+
               // we use a SIP registrar:
              if ( request.getMethod().equals(Request.REGISTER) ) {
             	 //our code
             	 String name = Registrar.getCleanUri(((FromHeader) request.getHeader(FromHeader.NAME)).getAddress().getURI()).toString();
     	    	 name = name.split("@")[0].split(":")[1];
-    	    	 int user_id = proxyServer.database.search_user(name);
+    	    	 int user_id = Database.getInstance().search_user(name);
     	    	 if(user_id==0){
-    	    		 proxyServer.database.add_user(name);
+    	    		 Database.getInstance().add_user(name);
     	    	 }
     	    	 else{
-    	    		 proxyServer.database.set_online(user_id,1);
+    	    		 Database.getInstance().set_online(user_id,1);
     	    	 }
             	 //our code
-		if (ProxyDebug.debug) 
+		if (ProxyDebug.debug)
 	        	ProxyDebug.println("Incoming request Register");
                 // we call the RegisterProcessing:
                 registrar.processRegister
 			(request,sipProvider,serverTransaction);
                 if (to_be_deleted) {
                 	to_be_deleted = false;
-                	proxyServer.database.set_online(user_id, 0);
+                	Database.getInstance().set_online(user_id, 0);
                 }
 		//Henrik: let the presenceserver do some processing too
 		if ( isPresenceServer()) {
@@ -499,13 +489,13 @@ public class Proxy implements SipListener  {
 
 		return;
              }
-        
+
 
 
 	     /* If we receive a subscription targeted to a user that
 	      * is publishing its state here, send to presence server
 	      */
-	     if ( isPresenceServer() && 
+	     if ( isPresenceServer() &&
 		(request.getMethod().equals(Request.SUBSCRIBE))) {
 		 ProxyDebug.println("Incoming request Subscribe");
 
@@ -516,10 +506,10 @@ public class Proxy implements SipListener  {
 							    serverTransaction);
 		 } else {
 		     // Do we know this guy?
-		 	
-		 	 
+
+
 		     targetURIList = registrar.getContactsURI(request);
-		     if (targetURIList == null ) { 
+		     if (targetURIList == null ) {
 			// If not respond that we dont know him.
 			 ProxyDebug.println
 			("Proxy: received a Subscribe request to " +
@@ -530,35 +520,35 @@ public class Proxy implements SipListener  {
 				(Response.NOT_FOUND,request);
 			 if (serverTransaction!=null)
 			     serverTransaction.sendResponse(response);
-			 else 
+			 else
 			     sipProvider.sendResponse(response);
 			 return;
-		     } else  { 
+		     } else  {
 			 ProxyDebug.println
-				("Trying to forward subscribe to " 
-				+ targetURIList.toString() + 
+				("Trying to forward subscribe to "
+				+ targetURIList.toString() +
 			        "\n" + request.toString());
 			 requestForwarding.forwardRequest
-				(targetURIList,sipProvider, 
+				(targetURIList,sipProvider,
 				request,serverTransaction,false);
-		     
+
 		     }
 		 }
 		 return;
 	     }
 
-	     /** Received a Notify. 
+	     /** Received a Notify.
 	      *  TOADD: Check if it match active VirtualSubscriptions and update it
 	      **/
 	     if ( isPresenceServer() && (request.getMethod().equals
-			(Request.NOTIFY) )) { 
+			(Request.NOTIFY) )) {
 		 System.out.println("Incoming request Notify");
-       
+
 		 Response response=messageFactory.createResponse(481,request);
 		 response.setReasonPhrase("Subscription does not exist");
 		 if (serverTransaction!=null)
 		     serverTransaction.sendResponse(response);
-		 else 
+		 else
 		     sipProvider.sendResponse(response);
 		 ProxyDebug.println ("Proxy: received a Notify request. Probably wrong, responded 481");
 		 return;
@@ -566,62 +556,62 @@ public class Proxy implements SipListener  {
 
 
 	     /** Received an info. **/
-	     if (request.getMethod().equals(Request.INFO)) { 
+	     if (request.getMethod().equals(Request.INFO)) {
 	    	 Response response = messageFactory.createResponse(Response.OK, request);
 	     try {
 	    	 String srcName = Registrar.getCleanUri(((FromHeader) request.getHeader(FromHeader.NAME)).getAddress().getURI()).toString();
 	    	 srcName = srcName.split("@")[0].split(":")[1];
 	    	 System.out.println("Incoming INFO request from " + srcName);
-	    	 int src = database.search_user(srcName);
+	    	 int src = Database.getInstance().search_user(srcName);
 	    	 //int src = 1;
 	    	 if (src <= 0) throw new ErrorResponse(Response.NOT_FOUND, "You are not in the database.");
-		     
-	    	 
-	    	 
+
+
+
 	    	 Object content = request.getContent();
 
              String message1 = null;
              if (content instanceof String) message1 = (String) content;
              else if (content instanceof byte[]) message1 = new String((byte[]) content);
              message1 = message1 == null ? "[null]" : message1;
-	    	 
+
 	    	 String[] message= message1.split("@");
-	    	 
-	    	 
+
+
 			 if (message[0].equals("billing:totalcharge"))
-				 response.setReasonPhrase("Total charge:"+proxyServer.total_charge_request(src));
+				 response.setReasonPhrase("Total charge:"+ProxyServer.getInstance().total_charge_request(src));
 			 else if (message[0].equals("billing:selectplan")){
-				 proxyServer.select_plan(src, Integer.parseInt(message[1]));
-				 response.setReasonPhrase("plan:" + database.get_plan(src));
+				 ProxyServer.getInstance().select_plan(src, Integer.parseInt(message[1]));
+				 response.setReasonPhrase("plan:" + Database.getInstance().get_plan(src));
 			 }
 			 else if (message[0].equals("blocking:block")){
-				 proxyServer.request_block(src, message[1]);
+				 ProxyServer.getInstance().request_block(src, message[1]);
 				 response.setReasonPhrase("block");
 			 }
 			 else if (message[0].equals("blocking:unblock")){
-				 proxyServer.remove_block(src, message[1]);
+				 ProxyServer.getInstance().remove_block(src, message[1]);
 				 response.setReasonPhrase("unblock");
 			 }
 			 else if (message[0].equals("forwarding:forward")){
-			 	proxyServer.forwarding_registration(src, message[1]);
+			 	ProxyServer.getInstance().forwarding_registration(src, message[1]);
 			 	response.setReasonPhrase("forward");
 			 }
 			 else if (message[0].equals("forwarding:unforward")){
-				 proxyServer.forwarding_removal(src);
+				 ProxyServer.getInstance().forwarding_removal(src);
 				 response.setReasonPhrase("unforward");
 			 }
 			 /*else if (message[0].equals("answer")){
-				int caller = proxyServer.database.search_user(message[1]);
-				proxyServer.billing_server.call_charge_start(caller, src);
-				proxyServer.database.set_available(src, 0);
-				proxyServer.database.set_available(caller, 0);
+				int caller = Database.getInstance().search_user(message[1]);
+				billingServer.getInstance().call_charge_start(caller, src);
+				Database.getInstance().set_available(src, 0);
+				Database.getInstance().set_available(caller, 0);
 				return;
 			 }*/
 			 else if (message[0].equals("hangup")){
-				 int remote = proxyServer.database.search_user(message[1]);
-				 proxyServer.database.record_call_end(src, remote);
-				 proxyServer.database.set_available(src, 1);
-				 proxyServer.database.set_available(remote, 1);
+				 int remote = Database.getInstance().search_user(message[1]);
+				 Database.getInstance().record_call_end(src, remote);
+				 Database.getInstance().set_available(src, 1);
+				 Database.getInstance().set_available(remote, 1);
 			 }
 			 else throw new ErrorResponse(Response.NOT_IMPLEMENTED);
 	     }
@@ -632,7 +622,7 @@ public class Proxy implements SipListener  {
 	     finally {
 			 if (serverTransaction!=null)
 			     serverTransaction.sendResponse(response);
-			 else 
+			 else
 			     sipProvider.sendResponse(response);
 	     }
 			return;
@@ -640,12 +630,12 @@ public class Proxy implements SipListener  {
 
 
 	    if ( isPresenceServer() && ( request.getMethod().equalsIgnoreCase("PUBLISH"))) {
-		
+
 		 System.out.println("Incoming request Publish");
-		 
+
 		 ProxyDebug.println("Proxy: received a Publish request.");
 		 Request clonedRequest=(Request)request.clone();
-		 
+
 
 		 if (presenceServer.isStateAgent(clonedRequest)) {
 		     ProxyDebug.println("PresenceServer.isStateAgent");
@@ -661,24 +651,24 @@ public class Proxy implements SipListener  {
 		    Response response=messageFactory.createResponse(Response.NOT_FOUND,request);
 		    if (serverTransaction!=null)
 			serverTransaction.sendResponse(response);
-		    else 
+		    else
 			sipProvider.sendResponse(response);
 		}
 		return;
 	    }
 
-		
 
 
-	
+
+
 	     // Forward to next hop but dont reply OK right away for the
 	  // BYE. Bye is end-to-end not hop by hop!
     /*if (request.getMethod().equals(Request.CANCEL) ) {
     	String srcName = Registrar.getCleanUri(((FromHeader) request.getHeader(FromHeader.NAME)).getAddress().getURI()).toString();
 	   	 srcName = srcName.split("@")[0].split(":")[1];
 	   	 System.out.println("Incoming INFO request from " + srcName);
-	   	 int src = database.search_user(srcName);
-	   	 proxyServer.database.set_available(src, 1);
+	   	 int src = Database.getInstance().search_user(srcName);
+	   	 Database.getInstance().set_available(src, 1);
 	   	 return;
     }*/
 	  if (request.getMethod().equals(Request.BYE) ) {
@@ -689,12 +679,12 @@ public class Proxy implements SipListener  {
 		  return;
 		}
 		Dialog d = serverTransaction.getDialog();
-		TransactionsMapping transactionsMapping = 
+		TransactionsMapping transactionsMapping =
 			(TransactionsMapping) d.getApplicationData();
 		Dialog peerDialog = (Dialog) transactionsMapping.getPeerDialog
 			(serverTransaction);
 		Request clonedRequest = (Request) request.clone();
-		FromHeader from = (FromHeader) 
+		FromHeader from = (FromHeader)
 			clonedRequest.getHeader(FromHeader.NAME);
 		from.removeParameter("tag");
 		ToHeader to = (ToHeader)
@@ -706,17 +696,17 @@ public class Proxy implements SipListener  {
     	 String srcName = Registrar.getCleanUri(((FromHeader) request.getHeader(FromHeader.NAME)).getAddress().getURI()).toString();
     	 srcName = srcName.split("@")[0].split(":")[1];
     	 System.out.println("Incoming BYE request from " + srcName);
-    	 int src = database.search_user(srcName);
-    
+    	 int src = Database.getInstance().search_user(srcName);
+
     	 String dstName = Registrar.getCleanUri(((ToHeader) request.getHeader(ToHeader.NAME)).getAddress().getURI()).toString();
     	 dstName = dstName.split("@")[0].split(":")[1];
     	 System.out.println("Incoming BYE request from " + dstName);
-    	 int dst = database.search_user(dstName);
+    	 int dst = Database.getInstance().search_user(dstName);
 
-		 //proxyServer.call_end(src, dst);
+		 //ProxyServer.getInstance().call_end(src, dst);
 		// our code
 	      if ( peerDialog.getState() != null ) {
-		  ClientTransaction newct = 
+		  ClientTransaction newct =
 				sipProvider.getNewClientTransaction
 				(clonedRequest);
 		  transactionsMapping.addMapping(serverTransaction,newct);
@@ -726,25 +716,25 @@ public class Proxy implements SipListener  {
 		  // the peer dialog is not yet established so bail out.
 		  // this is a client error - client is sending BYE
 		  // before dialog establishment.
-                  if (ProxyDebug.debug) 
+                  if (ProxyDebug.debug)
                       ProxyDebug.println
 			("Proxy, bad dialog state - BYE dropped");
 		  return;
 	      }
 	}
-			
-		
-       
-	
+
+
+
+
             /*
               If the target set for the request has not been predetermined as
               described above, this implies that the element is responsible for the
               domain in the Request-URI, and the element MAY use whatever mechanism
-              it desires to determine where to send the request.  
+              it desires to determine where to send the request.
               ...
-              When accessing the location service constructed by a registrar, the 
+              When accessing the location service constructed by a registrar, the
               Request-URI MUST first be canonicalized as described in Section 10.3
-              before being used as an index.   
+              before being used as an index.
              */
              if (requestURI.isSipURI()) {
                 SipURI requestSipURI=(SipURI)requestURI;
@@ -757,24 +747,24 @@ public class Proxy implements SipListener  {
                     requestSipURI.removeParameter(name);
                 }
              }
-      
-           
+
+
              try {
     	    	 if (request.getMethod().equals(Request.INVITE) ) {
         	    	 String srcName = Registrar.getCleanUri(((FromHeader) request.getHeader(FromHeader.NAME)).getAddress().getURI()).toString();
         	    	 srcName = srcName.split("@")[0].split(":")[1];
         	    	 System.out.println("Incoming INVITE request from " + srcName);
-        	    	 int src = database.search_user(srcName);
-        	    	 
+        	    	 int src = Database.getInstance().search_user(srcName);
+
         	    	 String dstName = Registrar.getCleanUri(((ToHeader) request.getHeader(ToHeader.NAME)).getAddress().getURI()).toString();
         	    	 dstName = dstName.split("@")[0].split(":")[1];
         	    	 System.out.println("Incoming INVITE request to " + dstName);
-        	    	 int dst = database.search_user(dstName);
+        	    	 int dst = Database.getInstance().search_user(dstName);
         	    	 if (dst <= 0) throw new ErrorResponse(Response.NOT_FOUND, "The user you have called is not in the database.");
 
-        	    	 int target = proxyServer.call_start(src, dst);
-        	    	 String targetName = proxyServer.database.get_name(target);
-        	    	 
+        	    	 int target = ProxyServer.getInstance().call_start(src, dst);
+        	    	 String targetName = Database.getInstance().get_name(target);
+
         	    	 ToHeader toHeader = (ToHeader) request.getHeader(ToHeader.NAME);
         	    	 String ipString = toHeader.getAddress().getURI().toString().split("@")[1];
     				 requestURI = addressFactory.createURI("sip:" + targetName + "@" + ipString);
@@ -782,11 +772,11 @@ public class Proxy implements SipListener  {
     				 toHeader.setAddress(addressFactory.createAddress(requestURI));
     				 request.setHeader(toHeader);
 				 }
-				    	 
-             	
 
-    	     
-    	    
+
+
+
+
     	     }
     		 catch (ErrorResponse err) {
             	 Response response = messageFactory.createResponse(Response.OK, request);
@@ -794,18 +784,18 @@ public class Proxy implements SipListener  {
     			 response.setReasonPhrase(err.m_reason);
     			 if (serverTransaction!=null)
     			     serverTransaction.sendResponse(response);
-    			 else 
+    			 else
     			     sipProvider.sendResponse(response);
     			 return;
     		 }
-             
+
 
             if ( registrar.hasRegistration(request)  ) {
-               
+
                 targetURIList=registrar.getContactsURI(request);
-                
+
                 // We fork only INVITE
-                if (targetURIList!=null && targetURIList.size()>1 
+                if (targetURIList!=null && targetURIList.size()>1
                 		&& !request.getMethod().equals("INVITE") ) {
                 	if (ProxyDebug.debug)
                 		ProxyDebug.println
@@ -820,47 +810,47 @@ public class Proxy implements SipListener  {
                 			request,serverTransaction,true);
                 	return;
                 }
-                
+
                 if (targetURIList!=null && !targetURIList.isEmpty()) {
                 	if (ProxyDebug.debug)
                 		ProxyDebug.println
                 		("Proxy, processRequest(), the target set"+
                 				" is the set of the contacts URI from the " +
                 		" location service");
-                /*	
-                	//  ECE355 Changes - Aug. 2005.                
+                /*
+                	//  ECE355 Changes - Aug. 2005.
                 	// Call registry  service, get response (uri - wsdl).
-                	// if response is not null then 
-                	//    do our staff 
+                	// if response is not null then
+                	//    do our staff
                 	//    send to caller decline message by building a decline msg
-                	//    and attach wsdl uri  in the message body  
+                	//    and attach wsdl uri  in the message body
                 	// else .. continue the logic below ...
-                	
-                	
+
+
                 	// Lets assume that wsdl_string contains the message with all the
                 	// service names and uri's for each service in the required format
-                	
+
                     // Query for web services for the receiver of INVITE
                 	//  Use WebServices class to get services for org
-            		
+
                 	String messageBody = "" ;
                 	WebServicesQuery wsq = null ;
             		wsq  = WebServicesQuery.getInstance();
-            		
+
             		//  Get services info for receiver
             		//  A receiver is represented as an organization in the Service Registry
-             		
+
             	    To to = (To)request.getHeader(ToHeader.NAME);
             		String toAddress = to.getUserAtHostPort();
-            		
+
             		// Remove all characters after the @ sign from To address
             		StringBuffer sb = new StringBuffer(toAddress);
             		int endsAt = sb.indexOf("@");
             		String orgNamePattern = sb.substring(0, endsAt);
-            	
-        		    
+
+
             		Collection serviceInfoColl = wsq.findServicesForOrg(orgNamePattern);
-            	   
+
             		// If services are found for this receiver (Org), build DECLINE message and
             		// send to client
             		if (serviceInfoColl != null) {
@@ -868,50 +858,50 @@ public class Proxy implements SipListener  {
             			System.out.println("Found " + serviceInfoColl.size() + " services for o rg " + orgNamePattern) ;
             			// Build message body for DECLINE message with Service Info
             			messageBody = serviceInfoColl.size()+ " -- " ;
-                        
+
         				Iterator servIter = serviceInfoColl.iterator();
             			while (servIter.hasNext()) {
             				ServiceInfo servInfo = (ServiceInfo)servIter.next();
             				messageBody =  messageBody  + servInfo.getDescription()+ " " + servInfo.getWsdluri() + " " + servInfo.getEndPoint()+ " -- ";
-            		        
-            				
+
+
             				System.out.println("Name: " + servInfo.getName()) ;
             				System.out.println("Providing Organization: " + servInfo.getProvidingOrganization()) ;
             				System.out.println("Description: " + servInfo.getDescription()) ;
             				System.out.println("Service End Point " + servInfo.getEndPoint()) ;
             				System.out.println("wsdl wri " + servInfo.getWsdluri()) ;
             				System.out.println("---------------------------------");
-            				
-            				
-            				
+
+
+
             			}
-            			
+
             			System.out.println("ServiceInfo - Message Body  " + messageBody) ;
-            			
+
             			// Build and send DECLINE message with web service info
-            			
+
             			ContentTypeHeader contentTypeHeader = new ContentType(
             					"text", "plain");
-            			
+
             			Response response = messageFactory.createResponse(
             					Response.DECLINE, request, contentTypeHeader,
-            					messageBody); 
-            			
-            			
-            			
+            					messageBody);
+
+
+
             			if (serverTransaction != null)
             				serverTransaction.sendResponse(response);
             			else
             				sipProvider.sendResponse(response);
             			return;
             		}
-            		else 
+            		else
             			System.out.println("There are no services for org " + orgNamePattern) ;
-            		
+
             		}
-                	
+
                 	// End of ECE355 change
-                	 
+
                 	 */
                 	// 4. Forward the request statefully to each target Section 16.6.:
                   	requestForwarding.forwardRequest
@@ -944,22 +934,22 @@ public class Proxy implements SipListener  {
                 	SipURI requestSipURI=(SipURI)requestURI;
 			user = requestSipURI.getUser();
 		    }
-                    
+
                     SipURI hopURI=addressFactory.createSipURI
 			(user,hop.getHost());
                     hopURI.setTransportParam(hop.getTransport());
                     hopURI.setPort(hop.getPort());
                     targetURI=hopURI;
                     targetURIList.addElement(targetURI);
-                    
+
                     // 4. Forward the request statelessly to each target Section 16.6.:
                     requestForwarding.forwardRequest(targetURIList,sipProvider,
                     request,serverTransaction,false);
-                    
+
                     return;
                 }
             }
-                     
+
             /* If the target set remains empty after applying all of the above, the
                proxy MUST return an error response, which SHOULD be the 480
                (Temporarily Unavailable) response.
@@ -969,7 +959,7 @@ public class Proxy implements SipListener  {
              if (serverTransaction!=null)
                     serverTransaction.sendResponse(response);
              else sipProvider.sendResponse(response);
-                   
+
              if (ProxyDebug.debug)
                  ProxyDebug.println("Proxy, processRequest(), unable to set "+
                  " the targets, 480 (Temporarily Unavailable) replied:\n"+
@@ -984,7 +974,7 @@ public class Proxy implements SipListener  {
                     ProxyDebug.logException(ex);
 		    ex.printStackTrace();
                 }
-                
+
                 // This is an internal error:
                 // Let's return a 500 SERVER_INTERNAL_ERROR
                 Response response=messageFactory.createResponse
@@ -992,7 +982,7 @@ public class Proxy implements SipListener  {
                 if (serverTransaction!=null)
                     serverTransaction.sendResponse(response);
                 else sipProvider.sendResponse(response);
-                   
+
                 if (ProxyDebug.debug)
                     ProxyDebug.println("Proxy, processRequest(),"+
                     " 500 SERVER_INTERNAL_ERROR replied:\n"+
@@ -1003,51 +993,51 @@ public class Proxy implements SipListener  {
             }
         }
     }
-    
+
     /** This is a listener method.
      */
     public void processResponse(ResponseEvent responseEvent) {
         try{
-            
-	    
+
+
             Response response = responseEvent.getResponse();
             SipProvider sipProvider = (SipProvider) responseEvent.getSource();
             ClientTransaction clientTransaction=responseEvent.getClientTransaction();
-            
+
             ProxyDebug.println
             ("\n***************************************************************"+
             "\n***************************************************************"+
             "\nResponse "+response.getStatusCode() + " "+response.getReasonPhrase()
             +" received:\n"+response.toString() );
             ProxyDebug.println("Processing Response in progress");
-            
+
             if (ProxyDebug.debug)
                 ProxyUtilities.printTransaction(clientTransaction);
-            
+
 	    //Henrik - added handling of responses addressed to server
 	    //If we use a presenceserver, and if statuscode was OK...
-	    CSeqHeader cseqHeader = (CSeqHeader)response.getHeader(CSeqHeader.NAME); 
+	    CSeqHeader cseqHeader = (CSeqHeader)response.getHeader(CSeqHeader.NAME);
 
 	     if (cseqHeader.getMethod().equals("SUBSCRIBE")) {
 		    presenceServer.processSubscribeResponse((Response)response.clone(), clientTransaction);
 	     } else if (cseqHeader.getMethod().equals("NOTIFY")) {
 		    //presenceServer.processNotifyResponse((Response)response.clone(), clientTransaction);
-	     } 
+	     }
 	     else if (cseqHeader.getMethod().equals("INVITE")) {
 			    if(response.getStatusCode()==200){
 			    	String srcName = Registrar.getCleanUri(((ToHeader) response.getHeader(ToHeader.NAME)).getAddress().getURI()).toString();
-			    	 srcName = srcName.split("@")[0].split(":")[1];
-			    	int dst=proxyServer.database.search_user(srcName);
+			    	srcName = srcName.split("@")[0].split(":")[1];
+			    	int dst = Database.getInstance().search_user(srcName);
 			    	srcName = Registrar.getCleanUri(((FromHeader) response.getHeader(FromHeader.NAME)).getAddress().getURI()).toString();
-			    	 srcName = srcName.split("@")[0].split(":")[1];
-			    	 int src = proxyServer.database.search_user(srcName);
-			    	proxyServer.billing_server.call_charge_start(src, dst);
-			    	proxyServer.database.set_available(src, 0);
-					proxyServer.database.set_available(dst, 0);
+			    	srcName = srcName.split("@")[0].split(":")[1];
+			    	int src = Database.getInstance().search_user(srcName);
+			    	billingServer.getInstance().call_charge_start(src, dst);
+			    	Database.getInstance().set_available(src, 0);
+					Database.getInstance().set_available(dst, 0);
 			    }
 		 }
             responseForwarding.forwardResponse(sipProvider, response,clientTransaction);
-            
+
         } catch (Exception ex) {
             if (ProxyDebug.debug) {
                 ProxyDebug.println("Proxy, processResponse(), internal error, "+
@@ -1056,8 +1046,8 @@ public class Proxy implements SipListener  {
             }
         }
     }
-    
-    
+
+
     /** JAIN Listener method.
      */
     public void processTimeout(TimeoutEvent timeOutEvent) {
@@ -1069,7 +1059,7 @@ public class Proxy implements SipListener  {
             timeOutEvent.getServerTransaction();
 	    Dialog dialog = serverTransaction.getDialog();
 	    if (dialog != null) {
-		transactionsMapping = 
+		transactionsMapping =
 			(TransactionsMapping) dialog.getApplicationData();
                 transactionsMapping.removeMapping(serverTransaction);
 	    }
@@ -1079,7 +1069,7 @@ public class Proxy implements SipListener  {
 	    Dialog dialog = clientTransaction.getDialog();
 	    ServerTransaction st = null;
 	    if (dialog != null) {
-		transactionsMapping = 
+		transactionsMapping =
 		(TransactionsMapping) dialog.getApplicationData();
 		if (transactionsMapping != null)  {
                    st = transactionsMapping.getServerTransaction
@@ -1114,28 +1104,28 @@ public class Proxy implements SipListener  {
                 }
             }
         }
-        
-        
+
+
     }
-    
-    
-    
-    
+
+
+
+
     /***********************  Methods for         ***************
      *    starting and stopping the proxy          		*
      ************************************************************/
-    
+
     /** Start the proxy, this method has to be called after the init method
      * throws Exception that which can be caught by the upper application
      */
     public void start() throws Exception {
-    	//printResultSet(database.connection.getMetaData().getTables(null, null, "%", null));
-   	 
+    	//printResultSet(Database.getInstance().connection.getMetaData().getTables(null, null, "%", null));
+
     	if (configuration!=null
         && configuration.isValidConfiguration()) {
             Properties properties=new Properties();
             // LOGGING property:
-            
+
             if (configuration.enableDebug) {
                 ProxyDebug.debug=true;
                 ProxyDebug.setProxyOutputFile(configuration.outputProxy);
@@ -1146,7 +1136,7 @@ public class Proxy implements SipListener  {
                 if (configuration.debugLogFile!=null) {
                     properties.setProperty("gov.nist.javax.sip.DEBUG_LOG",
                     configuration.debugLogFile);
-                   
+
                 }
                 if (configuration.serverLogFile!=null)
                     properties.setProperty("gov.nist.javax.sip.SERVER_LOG",
@@ -1161,14 +1151,14 @@ public class Proxy implements SipListener  {
                 else
                     properties.setProperty("gov.nist.javax.sip.TRACE_LEVEL",
                     "0");
-           
-                
+
+
             }
             else {
                 System.out.println("DEBUG properties not set!");
             }
              registrar.setExpiresTime(configuration.expiresTime);
-            
+
             // STOP TIME
             if (configuration.stopTime!=null) {
                 try {
@@ -1181,26 +1171,26 @@ public class Proxy implements SipListener  {
                     e.printStackTrace();
                 }
             }
-            
+
             sipStack = null;
-            
+
             SipFactory sipFactory = SipFactory.getInstance();
             sipFactory.setPathName("gov.nist");
-              
+
             headerFactory = sipFactory.createHeaderFactory();
             addressFactory = sipFactory.createAddressFactory();
             messageFactory = sipFactory.createMessageFactory();
-                
+
 
             // Create SipStack object
-            
+
             properties.setProperty("javax.sip.IP_ADDRESS",
             configuration.stackIPAddress);
-            
+
             // We have to add the IP address of the proxy for the domain:
             configuration.domainList.addElement(configuration.stackIPAddress);
             ProxyDebug.println("The proxy is responsible for the domain:"+configuration.stackIPAddress);
-            
+
             properties.setProperty("javax.sip.STACK_NAME",
             configuration.stackName);
             if (configuration.check(configuration.outboundProxy))
@@ -1215,56 +1205,56 @@ public class Proxy implements SipListener  {
 	    // This has to be hardcoded to true. for the proxy.
             properties.setProperty("javax.sip.RETRANSMISSION_FILTER",
                 "on");
-            
-            if (configuration.check(configuration.maxConnections) ) 
+
+            if (configuration.check(configuration.maxConnections) )
                 properties.setProperty("gov.nist.javax.sip.MAX_CONNECTIONS",
                 configuration.maxConnections);
-            if (configuration.check(configuration.maxServerTransactions) ) 
+            if (configuration.check(configuration.maxServerTransactions) )
                 properties.setProperty("gov.nist.javax.sip.MAX_SERVER_TRANSACTIONS",
                 configuration.maxServerTransactions);
-            if (configuration.check(configuration.threadPoolSize) ) 
+            if (configuration.check(configuration.threadPoolSize) )
                 properties.setProperty("gov.nist.javax.sip.THREAD_POOL_SIZE",
                 configuration.threadPoolSize);
-             
+
             if (configuration.domainList!=null)
             for ( int j=0;j<configuration.domainList.size();j++) {
                 String domain=(String)configuration.domainList.elementAt(j);
                 ProxyDebug.println("Here is one domain to take care of:"+domain);
             }
             else ProxyDebug.println("No domain to take care of...");
- 
+
             if (configuration.accessLogViaRMI) {
                 properties.setProperty("gov.nist.javax.sip.ACCESS_LOG_VIA_RMI",
                 "true");
-                
+
                 properties.setProperty("gov.nist.javax.sip.RMI_PORT",
                 configuration.logRMIPort);
-               
+
                 if (configuration.check(configuration.logLifetime) )
                     properties.setProperty("gov.nist.javax.sip.LOG_LIFETIME",
                     configuration.logLifetime);
-                
+
             }
-            
+
             sipStack = sipFactory.createSipStack(properties);
 
-            
-            
-        
+
+
+
             // Authentication part:
             if (configuration.enableAuthentication) {
                 authentication =new Authentication(this);
                 try{
-                    
+
                     Class authMethodClass =
 				Class.forName(configuration.classFile);
                     AuthenticationMethod authMethod
                     = (AuthenticationMethod)
                     authMethodClass.newInstance();
                     authMethod.initialize(configuration.passwordsFile);
-                   
+
                     authentication.setAuthenticationMethod(authMethod);
-                    
+
                 }
                 catch(Exception e) {
                     ProxyDebug.println
@@ -1275,7 +1265,7 @@ public class Proxy implements SipListener  {
 
             // We create the Listening points:
             Vector lps=configuration.getListeningPoints();
-            
+
             for ( int i=0;lps!=null && i<lps.size();i++) {
                 Association a=(Association)lps.elementAt(i);
                 try{
@@ -1287,7 +1277,7 @@ public class Proxy implements SipListener  {
                     a.transport);
 		    this.listeningPoints.add(lp);
                     SipProvider sipProvider = sipStack.createSipProvider(lp);
-		    if (this.defaultProvider == null) 
+		    if (this.defaultProvider == null)
 			this.defaultProvider = sipProvider;
                     sipProvider.addSipListener( this );
                 }
@@ -1298,12 +1288,12 @@ public class Proxy implements SipListener  {
                 }
             }
             // Export the registry for polling by the responder.
-            
+
             if (configuration.exportRegistry )
                 // initialize the registrar for  RMI.
                 this.registrar.initRMIBindings();
-            
-            
+
+
             // Parse static configuration for registrar.
             if (configuration.enableRegistrations) {
                 String value=configuration.registrationsFile;
@@ -1314,28 +1304,28 @@ public class Proxy implements SipListener  {
                     registrar.parseXMLregistrations(value);
             }
             else ProxyDebug.println("No registrations to parse...");
-            
+
             // Register to proxies if any:
             registrar.registerToProxies();
-            
+
         }
         else {
             System.out.println("ERROR: the configuration file is not correct!"+
             " Correct the errors first.");
         }
     }
-    
+
   /** Stop the proxy, this method has to be called after the start method
      * throws Exception that which can be caught by the upper application
      */
     public void stop()  throws Exception {
-        if (sipStack==null) return;     
+        if (sipStack==null) return;
         this.presenceServer.stop();
-        
+
         Iterator sipProviders=sipStack.getSipProviders();
         if (sipProviders!=null) {
             while( sipProviders.hasNext()) {
-                SipProvider sp=(SipProvider)sipProviders.next();                    
+                SipProvider sp=(SipProvider)sipProviders.next();
                 sp.removeSipListener(this);
                 sipStack.deleteSipProvider(sp);
                 sipProviders=sipStack.getSipProviders();
@@ -1359,10 +1349,10 @@ public class Proxy implements SipListener  {
         else {
             ProxyDebug.println("WARNING, STOP_PROXY, The proxy " +
                 " has no listening points to remove!");
-        }        
+        }
         registrar.clean();
     }
-    
+
     /** Exit the proxy,
      * throws Exception that which can be caught by the upper application
      */
@@ -1370,7 +1360,7 @@ public class Proxy implements SipListener  {
         Iterator sipProviders=sipStack.getSipProviders();
         if (sipProviders!=null) {
             while( sipProviders.hasNext()) {
-                SipProvider sp=(SipProvider)sipProviders.next();                    
+                SipProvider sp=(SipProvider)sipProviders.next();
                 sp.removeSipListener(this);
                 sipStack.deleteSipProvider(sp);
                 sipProviders=sipStack.getSipProviders();
@@ -1394,15 +1384,15 @@ public class Proxy implements SipListener  {
         else {
             ProxyDebug.println("WARNING, STOP_PROXY, The proxy " +
                 " has no listening points to remove!");
-        }        
+        }
         ProxyDebug.println("Proxy exit.........................");
 	configuration.listeningPoints.clear();
         registrar.clean();
     }
-    
+
     public ViaHeader getStackViaHeader() {
 	try {
-	  ListeningPoint lp = 
+	  ListeningPoint lp =
 		(ListeningPoint)sipStack.getListeningPoints().next();
 	  String host = sipStack.getIPAddress();
 	  int port = lp.getPort();
@@ -1414,36 +1404,36 @@ public class Proxy implements SipListener  {
 		e.printStackTrace();
 		return null;
 	}
-	
+
     }
-    
+
     public ContactHeader getStackContactHeader() {
 	try {
-	  ListeningPoint lp = 
+	  ListeningPoint lp =
 		(ListeningPoint)sipStack.getListeningPoints().next();
 	  String host = sipStack.getIPAddress();
 	  int port = lp.getPort();
 	  String transport = lp.getTransport();
-          
+
 	  SipURI sipURI=addressFactory.createSipURI(null,host);
           sipURI.setPort(port);
           sipURI.setTransportParam(transport);
           Address contactAddress=addressFactory.createAddress(sipURI);
-          
+
           return headerFactory.createContactHeader(contactAddress);
 	} catch (Exception e) {
 		e.printStackTrace();
 		return null;
 	}
-	
+
     }
-    
-    
+
+
     /*************************************************************************/
     /************ The main method: to launch the proxy          *************/
     /************************************************************************/
-    
-    
+
+
     public static void main(String args[]) {
         try{
             // the Proxy:
@@ -1451,7 +1441,7 @@ public class Proxy implements SipListener  {
 		System.out.println("Config file missing!");
 		System.exit(0);
 	    }
-		
+
 	    System.out.println("Using configuration file " + args[1]);
             String confFile= (String) args[1];
             Proxy proxy=new Proxy(confFile);
